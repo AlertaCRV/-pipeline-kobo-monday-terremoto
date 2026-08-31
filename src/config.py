@@ -11,7 +11,7 @@ DRY_RUN = os.getenv("DRY_RUN", "true").lower() == "true"
 
 KOBO_API_TOKEN = os.getenv("KOBO_API_TOKEN", "")
 KOBO_ASSET_UID = os.getenv("KOBO_ASSET_UID", "")
-KOBO_BASE_URL = os.getenv("KOBO_BASE_URL", "https://kf.kobotoolbox.org")
+KOBO_BASE_URL = os.getenv("KOBO_BASE_URL", "https://kobo.ifrc.org")
 
 MONDAY_API_TOKEN = os.getenv("MONDAY_API_TOKEN", "")
 MONDAY_BOARD_ID = os.getenv("MONDAY_BOARD_ID", "")
