@@ -34,7 +34,7 @@ def create_item(item_name: str, column_values: dict) -> dict:
     payload = {
         "query": """
             mutation ($board: ID!, $name: String!, $vals: JSON!) {
-              create_item(board_id: $board, item_name: $name, column_values: $vals) {
+              create_item(board_id: $board, item_name: $name, column_values: $vals, create_labels_if_missing: true) {
                 id
               }
             }
