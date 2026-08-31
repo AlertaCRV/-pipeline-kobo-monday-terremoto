@@ -1,0 +1,25 @@
+name: Probar escritura real en Monday (datos ficticios)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  probar-monday:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Escribir comunidades ficticias en Monday
+        env:
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+          MONDAY_BOARD_ID: ${{ secrets.MONDAY_BOARD_ID }}
+        run: |
+          cd src
+          python probar_escritura_monday.py
