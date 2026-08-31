@@ -1,24 +1,62 @@
 {
   "weights": {
-    "situacion_critica": {"Sí (anula → Alta)": "N/A", "No": 0},
-    "prioridad_preliminar": {"Alta": 3, "Media": 2, "Baja": 1, "(vacío)": 0},
-    "evaluacion_tecnica": {"Sí": 1, "No": 0},
-    "riesgos_terremoto": {"Sí": 1, "No": 0},
-    "riesgo_retorno": {"Sí": 1, "No": 0},
-    "riesgos_proteccion": {"Sí": 1, "No": 0},
-    "via_denuncia": {"No / Poco accesible": 1, "Accesible": 0},
-    "estado_establecimiento": {"Dañado": 1, "Parcial": 0.5, "Operativo": 0},
-    "riesgo_duplicacion": {"Sí (reduce)": -2, "No": 0},
-    "restricciones_operacionales": {"Severa (anula → Baja)": "N/A", "Leve / Ninguna": 0},
-    "acceso_vial": {"Bueno": 3, "Restringido": 1, "No transitable": 0},
-    "punto_servicio": {"Sí": 2, "No": 0},
-    "electricidad": {"Sí": 1, "Parcial": 0.5, "No": 0},
-    "condiciones_entorno": {"Ninguna preexistente": 1, "Riesgo identificado": 0}
+    "prioridad_preliminar": {
+      "Alta": 3, "Media": 2, "Baja": 1, "No requiere intervención humanitaria": 0
+    },
+    "riesgo_retorno": {"Sí": 1, "No": 0, "No se sabe": 0},
+    "riesgo_duplicacion": {"Sí": -2, "No": 0, "No se sabe": 0},
+    "via_denuncia": {
+      "No": 1,
+      "Sí, existe, pero es poco conocida o poco utilizada": 1,
+      "Sí, existe una vía conocida y accesible": 0,
+      "No se sabe": 0
+    },
+    "estado_establecimiento": {
+      "Cerrado / inoperativo": 1,
+      "Operativo parcialmente": 0.5,
+      "Operativo": 0,
+      "No se tiene / No se sabe": 0
+    },
+    "acceso_vial": {
+      "Libre, sin obstáculos importantes": 3,
+      "Con algunas restricciones": 1,
+      "Bloqueado o muy limitado": 0,
+      "No se sabe": 0
+    },
+    "punto_servicio": {
+      "Sí, adecuado": 2,
+      "Sí, pero requiere organización o adaptación": 1,
+      "No se identifica": 0,
+      "No se sabe": 0
+    },
+    "electricidad": {
+      "Sí, estable": 1,
+      "Sí, limitada / intermitente": 0.5,
+      "No": 0,
+      "No se sabe": 0
+    },
+    "restricciones_operacionales": {
+      "Seguridad": -3,
+      "Estado de las vías": -2,
+      "Riesgos del terreno": -2,
+      "Horarios de acceso": -1,
+      "Clima / lluvias": -1,
+      "Restricciones para vehículos": -1,
+      "Falta de espacio": -1,
+      "Otra": -1,
+      "No se identifican restricciones importantes": 0
+    }
   },
   "thresholds": {
     "urgencia_alta": 7,
     "urgencia_media": 3,
     "factibilidad_alta": 5,
     "colapso_media": "Alta"
+  },
+  "condiciones_entorno_ninguna_label": "No se observan condiciones desfavorables",
+  "multiselect_binario": {
+    "riesgos_terremoto": {"neutros": ["No se observan riesgos relevantes", "No se sabe"]},
+    "riesgos_proteccion": {"neutros": ["No se observan riesgos de protección", "No se sabe / no fue posible verificar"]},
+    "evaluacion_tecnica": {"neutros": ["No"]}
   }
 }
