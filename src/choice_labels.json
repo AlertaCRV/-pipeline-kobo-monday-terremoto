@@ -1,0 +1,396 @@
+{
+ "salud_primaria": {
+  "dentro": "Sí, dentro de la comunidad / campamento",
+  "cerca": "Sí, cerca",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "riesgo_duplicacion": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "situacion_critica": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "suficiencia_sanitarios_camp": {
+  "suficiente": "Son suficientes para la población actual",
+  "presion": "Cubren la necesidad, pero se observa presión/colas",
+  "insuficiente": "Claramente insuficientes",
+  "ns": "No se sabe / no fue posible evaluar"
+ },
+ "prioridad_preliminar": {
+  "alta": "Alta",
+  "media": "Media",
+  "baja": "Baja",
+  "no_requiere": "No requiere intervención humanitaria"
+ },
+ "riesgo_retorno": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "vectores_com": {
+  "mosquitos": "Zancudos / mosquitos",
+  "moscas": "Moscas",
+  "roedores": "Roedores",
+  "estancada": "Agua estancada / posibles criaderos",
+  "basura": "Basura acumulada",
+  "ninguno": "No se reportan ni observan estas condiciones",
+  "otro": "Otro"
+ },
+ "brechas_necesidades": {
+  "agua": "Agua",
+  "alimentos": "Alimentos",
+  "medicamentos": "Medicamentos",
+  "salud": "Atención en salud",
+  "smaps": "Apoyo psicosocial",
+  "wash": "Saneamiento e higiene",
+  "proteccion": "Protección (ayuda frente a maltrato, abuso o riesgos a personas)",
+  "alojamiento": "Alojamiento / abrigo",
+  "higiene": "Artículos de higiene",
+  "logistica": "Apoyo logístico / infraestructura",
+  "medios_vida": "Medios de vida / ingresos",
+  "otro": "Otro"
+ },
+ "apoyo_reactivacion": {
+  "infra": "Reconstrucción o reparación de infraestructura comercial o productiva",
+  "capital_semilla": "Capital semilla, insumos o reposición de herramientas",
+  "credito": "Acceso a crédito o financiamiento",
+  "vias": "Rehabilitación de vías de acceso o transporte",
+  "servicios_basicos": "Restablecimiento de electricidad/agua para actividades productivas",
+  "demanda": "Apoyo para reactivar la demanda o el consumo local",
+  "capacitacion": "Capacitación o asistencia técnica",
+  "ninguno": "Ninguno: los medios de vida no se vieron afectados",
+  "ns": "No sabe",
+  "otro": "Otro"
+ },
+ "enfermedades_camp": {
+  "gastro": "Diarreas, vómitos o molestias gastrointestinales",
+  "fiebre": "Fiebre",
+  "respiratorias": "Enfermedades o síntomas respiratorios",
+  "vectores": "Enfermedades o síntomas posiblemente asociados a vectores",
+  "ninguno": "No se reporta aumento",
+  "ns": "No se sabe"
+ },
+ "acceso_vial": {
+  "libre": "Libre, sin obstáculos importantes",
+  "restricciones": "Con algunas restricciones",
+  "bloqueado": "Bloqueado o muy limitado",
+  "ns": "No se sabe"
+ },
+ "tipo_campamento": {
+  "aire_libre": "Al aire libre",
+  "autogestionado": "Autogestionado",
+  "formal": "Formal establecido"
+ },
+ "frecuencia_agua_com": {
+  "continua": "Suministro continuo",
+  "semana": "Una vez o más por semana",
+  "menos_semana": "Menos de una vez por semana",
+  "mes": "Una vez al mes",
+  "menos_mes": "Menos de una vez al mes",
+  "emergencia": "Solo por eventos puntuales / emergencias",
+  "ns": "No se sabe"
+ },
+ "agua_suficiente_com": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "sectores_prioritarios": {
+  "salud": "Salud",
+  "wash": "WASH",
+  "alojamiento": "Alojamiento / vivienda",
+  "pgi": "PGI / Protección",
+  "cea": "CEA",
+  "smaps": "SMAPS",
+  "basicas": "Necesidades básicas",
+  "medios": "Medios de vida",
+  "otro": "Otro"
+ },
+ "necesidades_principales": {
+  "agua": "Agua",
+  "alimentos": "Alimentos",
+  "medicamentos": "Medicamentos",
+  "salud": "Atención en salud",
+  "smaps": "Apoyo psicosocial",
+  "wash": "Saneamiento e higiene",
+  "proteccion": "Protección (ayuda frente a maltrato, abuso o riesgos a personas)",
+  "alojamiento": "Alojamiento / abrigo",
+  "higiene": "Artículos de higiene",
+  "logistica": "Apoyo logístico / infraestructura",
+  "medios_vida": "Medios de vida / ingresos",
+  "otro": "Otro"
+ },
+ "destruidas": {
+  "vivienda": "Casas o viviendas unifamiliares",
+  "multifamiliar": "Edificios multifamiliares o apartamentos",
+  "comercio": "Locales comerciales o negocios",
+  "escuela": "Escuelas o centros educativos",
+  "salud": "Centros o establecimientos de salud",
+  "publica": "Oficinas o instalaciones públicas",
+  "comunitario": "Centros comunitarios u otros espacios colectivos",
+  "otro": "Otro tipo de edificación",
+  "ninguno": "No hay edificaciones con daños importantes",
+  "ns": "No se sabe"
+ },
+ "fuente_agua_com": {
+  "red": "Red pública",
+  "cisterna": "Camión cisterna",
+  "pozo": "Pozo",
+  "superficial": "Río / quebrada / fuente superficial",
+  "tanque": "Tanque comunitario / almacenamiento",
+  "embotellada": "Agua embotellada",
+  "otro": "Otro",
+  "ns": "No se sabe"
+ },
+ "tipo_area": {
+  "comunidad": "Comunidad",
+  "campamento": "Campamento transitorio"
+ },
+ "servicios_afectados": {
+  "agua": "Agua",
+  "electricidad": "Electricidad",
+  "saneamiento": "Saneamiento",
+  "salud": "Servicios de salud",
+  "vialidad": "Vialidad o transporte",
+  "telecom": "Telecomunicaciones",
+  "residuos": "Recolección de residuos",
+  "otro": "Otro",
+  "ninguno": "Ninguno",
+  "ns": "No se sabe"
+ },
+ "prioridad_1": {
+  "agua": "Agua",
+  "alimentos": "Alimentos",
+  "medicamentos": "Medicamentos",
+  "salud": "Atención en salud",
+  "smaps": "Apoyo psicosocial",
+  "wash": "Saneamiento e higiene",
+  "proteccion": "Protección (ayuda frente a maltrato, abuso o riesgos a personas)",
+  "alojamiento": "Alojamiento / abrigo",
+  "higiene": "Artículos de higiene",
+  "logistica": "Apoyo logístico / infraestructura",
+  "medios_vida": "Medios de vida / ingresos",
+  "otro": "Otro"
+ },
+ "servicios_smaps": {
+  "ninguno": "No existe ningún servicio o actividad SMAPS",
+  "individual": "Atención individual",
+  "grupos": "Grupos de apoyo",
+  "ludicas": "Actividades recreativas / lúdicas para NNA",
+  "comunitarias": "Actividades comunitarias / talleres psicoeducativos",
+  "espiritual": "Acompañamiento espiritual / religioso",
+  "otro": "Otro"
+ },
+ "malestar_emocional": {
+  "no": "No se reporta afectación importante",
+  "algunas": "Sí, en algunas personas",
+  "varias": "Sí, de manera importante en varias personas",
+  "ns": "No se sabe / no fue posible valorar"
+ },
+ "estado_sanitarios_camp": {
+  "adecuado": "Adecuado",
+  "mejora": "Requiere mejora",
+  "critico": "Crítico",
+  "ns": "No se sabe"
+ },
+ "necesidad_salud": {
+  "primaria": "Atención primaria",
+  "medicamentos": "Medicamentos / insumos",
+  "lesiones": "Atención de lesiones",
+  "materna": "Salud materna / neonatal",
+  "cronicas": "Atención a enfermedades crónicas",
+  "referencia": "Referencia / transporte sanitario",
+  "promocion": "Promoción de salud / prevención",
+  "otro": "Otra",
+  "nd": "No se puede determinar"
+ },
+ "intencion_permanencia_campamento": {
+  "alquilar": "Alquilar temporalmente una vivienda o habitación.",
+  "permanecerTemporalmente": "Permanecer temporalmente con familiares o amistades.",
+  "permanecercampamento": "Permanecer en el campamento hasta contar con una solución más estable.",
+  "reubicarse": "Reubicarse de forma permanente en otro lugar.",
+  "no_sabe": "No sabe / no tiene información suficiente.",
+  "otra": "Otra:"
+ },
+ "acceso_mercados": {
+  "acceso_fisico": "Falta de acceso físico: mercados cerrados, destruidos o vías bloqueadas/sin transporte",
+  "poder_adquisitivo": "Falta de poder adquisitivo: hay productos, pero no hay dinero/ingresos para comprarlos",
+  "desabastecimiento": "Desabastecimiento: hay acceso y dinero, pero no hay productos",
+  "sin_afectacion": "Sin afectación",
+  "ns": "No sabe",
+  "otro": "Otro"
+ },
+ "grupos_smaps": {
+  "nna": "NNA",
+  "jovenes": "Adolescentes / jóvenes",
+  "mayores": "Personas mayores",
+  "desplazadas": "Personas desplazadas",
+  "perdidas": "Personas que sufrieron pérdidas importantes",
+  "cuidadores": "Cuidadores",
+  "respuesta": "Personal / voluntariado de respuesta",
+  "otro": "Otro",
+  "nd": "No se puede determinar"
+ },
+ "necesidades_alojamiento": {
+  "articulos": "Artículos esenciales / abrigo",
+  "lonas": "Lonas u otros materiales temporales",
+  "reparaciones": "Reparaciones menores",
+  "tecnica": "Asistencia técnica para reparación",
+  "temporal": "Alojamiento temporal",
+  "estructural": "Evaluación estructural especializada",
+  "otro": "Otro"
+ },
+ "riesgos_proteccion": {
+  "nna": "NNA no acompañados o separados",
+  "aislamiento": "Personas mayores o con discapacidad aisladas",
+  "violencia": "Violencia, acoso, discriminación o exclusión",
+  "aglomeraciones": "Aglomeraciones con riesgo de estampida o acoso",
+  "documentacion": "Pérdida de documentación",
+  "nna_sin_cuidado": "Niños, niñas o adolescentes sin cuidado adecuado",
+  "ninguno": "No se observan riesgos de protección",
+  "ns": "No se sabe / no fue posible verificar"
+ },
+ "danadas": {
+  "vivienda": "Casas o viviendas unifamiliares",
+  "multifamiliar": "Edificios multifamiliares o apartamentos",
+  "comercio": "Locales comerciales o negocios",
+  "escuela": "Escuelas o centros educativos",
+  "salud": "Centros o establecimientos de salud",
+  "publica": "Oficinas o instalaciones públicas",
+  "comunitario": "Centros comunitarios u otros espacios colectivos",
+  "otro": "Otro tipo de edificación",
+  "ninguno": "No hay edificaciones con daños importantes",
+  "ns": "No se sabe"
+ },
+ "condiciones_entorno": {
+  "ninguna": "No se observan condiciones desfavorables",
+  "pendientes": "Pendientes pronunciadas o terreno irregular",
+  "inundacion": "Riesgo habitual de inundación",
+  "deslizamiento": "Riesgo habitual de deslizamiento",
+  "polvo": "Polvo excesivo",
+  "calor": "Calor elevado / exposición solar intensa",
+  "hacinamiento": "Mala ventilación o hacinamiento",
+  "otro": "Otro",
+  "ns": "No se sabe / no fue posible observar"
+ },
+ "lavado_manos_camp": {
+  "adecuados": "Adecuados",
+  "insuficientes": "Insuficientes",
+  "inexistentes": "Inexistentes",
+  "ns": "No se sabe"
+ },
+ "aguas_negras": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "evaluacion_tecnica": {
+  "no": "No",
+  "salud": "Sí - Salud",
+  "wash": "Sí - WASH",
+  "alojamiento": "Sí - Alojamiento / estructural",
+  "pgi": "Sí - Protección / PGI",
+  "smaps": "Sí - SMAPS",
+  "logistica": "Sí - Logística / acceso",
+  "otro": "Sí - Otro"
+ },
+ "calidad_agua_com": {
+  "transparente": "Transparente",
+  "turbia": "Turbia",
+  "olor": "Olor fuerte",
+  "sabor": "Sabor extraño",
+  "ns": "No se sabe"
+ },
+ "riesgos_terremoto": {
+  "estructuras": "Estructuras inestables o con riesgo de colapso",
+  "deslizamiento": "Deslizamientos o movimientos de terreno",
+  "inundacion": "Riesgo de inundación",
+  "caida": "Caída de objetos, muros, postes u otros elementos",
+  "vias": "Vías bloqueadas o de difícil acceso",
+  "otro": "Otro riesgo",
+  "ninguno": "No se observan riesgos relevantes",
+  "ns": "No se sabe"
+ },
+ "clasificacion_comunidad": {
+  "urbana": "Urbana",
+  "periurbana": "Periurbana",
+  "rural": "Rural"
+ },
+ "electricidad": {
+  "estable": "Sí, estable",
+  "limitada": "Sí, limitada / intermitente",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "dificultad_agua_com": {
+  "sin": "Sin dificultad relevante",
+  "algunas": "Con algunas dificultades",
+  "considerable": "Con dificultad considerable",
+  "ns": "No se sabe"
+ },
+ "actores_actuales": {
+  "autoridades": "Autoridades / servicios públicos",
+  "crv": "Cruz Roja Venezolana",
+  "movimiento": "Otros componentes del Movimiento",
+  "onu": "Naciones Unidas",
+  "ong": "ONG nacionales / internacionales",
+  "comunitarias": "Organizaciones comunitarias",
+  "sociedad": "Iniciativas de sociedad civil",
+  "privado": "Sector privado",
+  "iglesias": "Iglesias / organizaciones religiosas",
+  "otro": "Otro",
+  "ninguno": "No se identifican actores"
+ },
+ "agua_suficiente_camp": {
+  "si": "Sí",
+  "no": "No",
+  "ns": "No se sabe"
+ },
+ "punto_servicio": {
+  "adecuado": "Sí, adecuado",
+  "adaptacion": "Sí, pero requiere organización o adaptación",
+  "no": "No se identifica",
+  "ns": "No se sabe"
+ },
+ "restricciones_operacionales": {
+  "seguridad": "Seguridad",
+  "horarios": "Horarios de acceso",
+  "vias": "Estado de las vías",
+  "clima": "Clima / lluvias",
+  "terreno": "Riesgos del terreno",
+  "vehiculos": "Restricciones para vehículos",
+  "espacio": "Falta de espacio",
+  "otro": "Otra",
+  "ninguna": "No se identifican restricciones importantes"
+ },
+ "fuente_agua_camp": {
+  "red": "Red pública",
+  "cisterna": "Camión cisterna",
+  "pozo": "Pozo",
+  "superficial": "Río / quebrada / fuente superficial",
+  "tanque": "Tanque comunitario / almacenamiento",
+  "embotellada": "Agua embotellada",
+  "otro": "Otro",
+  "ns": "No se sabe"
+ },
+ "asistencia_recibida": {
+  "cubre": "Sí, y cubre en buena medida las necesidades identificadas",
+  "limitada": "Sí, pero ha sido limitada o insuficiente",
+  "no": "No ha recibido asistencia",
+  "ns": "No se sabe"
+ },
+ "vectores_camp": {
+  "mosquitos": "Zancudos / mosquitos",
+  "moscas": "Moscas",
+  "roedores": "Roedores",
+  "estancada": "Agua estancada / posibles criaderos",
+  "basura": "Basura acumulada",
+  "ninguno": "No se reportan ni observan estas condiciones",
+  "otro": "Otro"
+ }
+}
