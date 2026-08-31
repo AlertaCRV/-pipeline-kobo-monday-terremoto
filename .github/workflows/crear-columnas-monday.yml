@@ -1,0 +1,29 @@
+name: Crear columnas en Monday (una sola vez)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  crear-columnas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Crear columnas en Monday
+        env:
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+          MONDAY_BOARD_ID: ${{ secrets.MONDAY_BOARD_ID }}
+        run: python src/create_columns.py
+
+      - name: Guardar resultado como archivo descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: columnas-creadas
+          path: columnas_creadas.json
