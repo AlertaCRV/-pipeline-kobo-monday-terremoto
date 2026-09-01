@@ -17,7 +17,11 @@ MONDAY_API_TOKEN = os.getenv("MONDAY_API_TOKEN", "")
 MONDAY_BOARD_ID = os.getenv("MONDAY_BOARD_ID", "")
 MONDAY_API_URL = "https://api.monday.com/v2"
 
-# Mapeo campo Kobo -> id de columna Monday (completado tras crear las 66 columnas)
+# Mapeo campo Kobo -> id de columna Monday
+# Las 5 variables viejas de la sección 15 (acceso_vial, punto_servicio,
+# electricidad, restricciones_operacionales, condiciones_entorno) se
+# eliminaron de este mapeo porque sus columnas en Monday van a borrarse
+# (quedaron reemplazadas por condiciones_distribucion).
 MONDAY_COLUMN_MAP = {
     "tipo_area": "color_mm6r3ja7",
     "estado": "color_mm6rjg61",
@@ -70,19 +74,14 @@ MONDAY_COLUMN_MAP = {
     "malestar_emocional": "color_mm6rw2nv",
     "servicios_smaps": "dropdown_mm6rf0e5",
     "grupos_smaps": "dropdown_mm6rb721",
-    "acceso_vial": "color_mm6rxr4r",
-    "punto_servicio": "color_mm6rvm1e",
-    "electricidad": "color_mm6r120s",
-    "restricciones_operacionales": "dropdown_mm6rfh5b",
-    "condiciones_entorno": "dropdown_mm6rs8h",
-    "restriccion_principal": "long_text_mm6rycm4",
-    "prioridad_preliminar": "color_mm6rvvfn",
     "sectores_prioritarios": "dropdown_mm6rw0wh",
     "evaluacion_tecnica": "dropdown_mm6rme59",
     "situacion_critica": "color_mm6rcjds",
+    "prioridad_preliminar": "color_mm6rvvfn",
     "puntos_urgencia": "numeric_mm6rzmct",
     "nivel_urgencia": "color_mm6rr2g5",
     "puntos_factibilidad": "numeric_mm6rfwcg",
     "nivel_factibilidad": "color_mm6rkghg",
     "cuadrante": "color_mm6rzjwx",
+    "condiciones_distribucion": "dropdown_mm6s4s4x",
 }
