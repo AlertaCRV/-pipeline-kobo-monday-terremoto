@@ -5,11 +5,12 @@ scoring.py y monday_client.py.
 Incluye la traducción automática de códigos de Kobo (ej. "alta") a las
 etiquetas legibles que usa scoring.py (ej. "Alta"), usando los diccionarios
 choice_labels.json (campos cortos) y choice_labels_geo.json (Estado/Municipio/
-Parroquia), ambos extraídos directamente del cuestionario v9.
+Parroquia).
 
-También "aplana" los nombres de campo: Kobo los entrega con el prefijo del
-grupo (ej. "valoracion/situacion_critica" en vez de "situacion_critica");
-aquí se toma solo la última parte después del último "/".
+NOTA: el separador entre etiquetas de selección múltiple es ";" (no ","),
+porque varias etiquetas del cuestionario (ej. "Vialidad en mal estado...
+(huecos, baches, fallas de borde)") contienen comas dentro de su propio
+texto, y usar coma como separador rompía el cálculo del score.
 """
 import json
 from pathlib import Path
@@ -30,7 +31,7 @@ def translate_value(campo: str, raw_value):
     tabla = CHOICE_LABELS[campo]
     codigos = str(raw_value).split()
     etiquetas = [tabla.get(c, c) for c in codigos]
-    return ", ".join(etiquetas)
+    return "; ".join(etiquetas)
 
 
 def flatten_submission(raw: dict) -> dict:
