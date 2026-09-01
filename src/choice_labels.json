@@ -75,12 +75,6 @@
   "ninguno": "No se reporta aumento",
   "ns": "No se sabe"
  },
- "acceso_vial": {
-  "libre": "Libre, sin obstáculos importantes",
-  "restricciones": "Con algunas restricciones",
-  "bloqueado": "Bloqueado o muy limitado",
-  "ns": "No se sabe"
- },
  "tipo_campamento": {
   "aire_libre": "Al aire libre",
   "autogestionado": "Autogestionado",
@@ -267,17 +261,6 @@
   "ninguno": "No hay edificaciones con daños importantes",
   "ns": "No se sabe"
  },
- "condiciones_entorno": {
-  "ninguna": "No se observan condiciones desfavorables",
-  "pendientes": "Pendientes pronunciadas o terreno irregular",
-  "inundacion": "Riesgo habitual de inundación",
-  "deslizamiento": "Riesgo habitual de deslizamiento",
-  "polvo": "Polvo excesivo",
-  "calor": "Calor elevado / exposición solar intensa",
-  "hacinamiento": "Mala ventilación o hacinamiento",
-  "otro": "Otro",
-  "ns": "No se sabe / no fue posible observar"
- },
  "lavado_manos_camp": {
   "adecuados": "Adecuados",
   "insuficientes": "Insuficientes",
@@ -321,12 +304,6 @@
   "periurbana": "Periurbana",
   "rural": "Rural"
  },
- "electricidad": {
-  "estable": "Sí, estable",
-  "limitada": "Sí, limitada / intermitente",
-  "no": "No",
-  "ns": "No se sabe"
- },
  "dificultad_agua_com": {
   "sin": "Sin dificultad relevante",
   "algunas": "Con algunas dificultades",
@@ -350,23 +327,6 @@
   "si": "Sí",
   "no": "No",
   "ns": "No se sabe"
- },
- "punto_servicio": {
-  "adecuado": "Sí, adecuado",
-  "adaptacion": "Sí, pero requiere organización o adaptación",
-  "no": "No se identifica",
-  "ns": "No se sabe"
- },
- "restricciones_operacionales": {
-  "seguridad": "Seguridad",
-  "horarios": "Horarios de acceso",
-  "vias": "Estado de las vías",
-  "clima": "Clima / lluvias",
-  "terreno": "Riesgos del terreno",
-  "vehiculos": "Restricciones para vehículos",
-  "espacio": "Falta de espacio",
-  "otro": "Otra",
-  "ninguna": "No se identifican restricciones importantes"
  },
  "fuente_agua_camp": {
   "red": "Red pública",
@@ -404,5 +364,20 @@
   "parcial": "Operativo parcialmente",
   "cerrado": "Cerrado / inoperativo",
   "ns": "No se tiene / No se sabe"
+ },
+ "condiciones_distribucion": {
+  "vialidad_mal_estado": "Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)",
+  "calles_angostas_carga": "Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones",
+  "calles_angostas_salud": "Calles angostas dificultan acceso de unidades móviles de salud",
+  "tendido_electrico": "Tendido eléctrico puede dificultar paso de vehículos de mediana y gran altura",
+  "clima_hostil": "Clima sociocomunitario hostil (enfrentamientos entre líderes)",
+  "liderazgo_debil": "Comunidad poco organizada y/o liderazgo debilitado",
+  "actividad_delictiva": "Sospecha de actividad delictiva o informes sobre enfrentamientos armados",
+  "sin_espacios_techados": "Ausencia de espacios techados para distribuciones y jornadas",
+  "espacios_limitados": "Espacios para distribuciones y jornadas con limitaciones físicas y/o de seguridad para el personal",
+  "conectividad_intermitente": "Cobertura telefónica o conectividad para coordinación intermitente o inexistente",
+  "permisos_autoridades": "Se requiere permiso o autorización de autoridades del Estado, cuerpos de seguridad u organismos similares",
+  "otro": "Otra",
+  "ninguna": "No se identifican condiciones que dificulten las entregas o distribuciones"
  }
 }
