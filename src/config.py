@@ -17,11 +17,6 @@ MONDAY_API_TOKEN = os.getenv("MONDAY_API_TOKEN", "")
 MONDAY_BOARD_ID = os.getenv("MONDAY_BOARD_ID", "")
 MONDAY_API_URL = "https://api.monday.com/v2"
 
-# Mapeo campo Kobo -> id de columna Monday
-# Las 5 variables viejas de la sección 15 (acceso_vial, punto_servicio,
-# electricidad, restricciones_operacionales, condiciones_entorno) se
-# eliminaron de este mapeo porque sus columnas en Monday van a borrarse
-# (quedaron reemplazadas por condiciones_distribucion).
 MONDAY_COLUMN_MAP = {
     "tipo_area": "color_mm6r3ja7",
     "estado": "color_mm6rjg61",
@@ -84,4 +79,16 @@ MONDAY_COLUMN_MAP = {
     "nivel_factibilidad": "color_mm6rkghg",
     "cuadrante": "color_mm6rzjwx",
     "condiciones_distribucion": "dropdown_mm6s4s4x",
+}
+
+# Mapeo Cuadrante -> ID de grupo en Monday (para colocar cada evaluacion
+# nueva directo en su grupo correcto). Los 2 cuadrantes nuevos de la
+# matriz 2x3 (Factibilidad v2) se fusionan hacia grupos existentes.
+CUADRANTE_GROUP_MAP = {
+    "Intervenir ya": "topics",
+    "Intervenir con gestión de riesgo": "group_mm6t643r",  # fusionado -> Resolver acceso primero
+    "Resolver acceso primero": "group_mm6t643r",
+    "Oportunidad": "group_mm6tg4cs",
+    "Programar con preparación": "group_mm6t72tj",  # fusionado -> Monitorear
+    "Monitorear": "group_mm6t72tj",
 }
