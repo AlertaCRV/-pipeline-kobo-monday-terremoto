@@ -51,7 +51,7 @@ def run(since_id: int = None):
         item_name = build_item_name(flat)
         column_values = build_column_values(kpi_record, score)
 
-        result = upsert_item(item_name, column_values)
+        result = upsert_item(item_name, column_values, cuadrante=score["cuadrante"])
         results.append({"item_name": item_name, "cuadrante": score["cuadrante"], "result": result})
 
         print(f"  -> {item_name}: {score['nivel_urgencia']} urgencia / "
