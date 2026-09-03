@@ -10,6 +10,7 @@ Version 4:
   - Numero romano grande y centrado en cada cuadrante (semi-transparente).
   - Colores con mas contraste entre zonas.
   - Puntos del mismo color; se separan si caen muy cerca (linea guia).
+  - Flechas bidireccionales junto al nombre de cada eje.
 """
 import os
 import math
@@ -177,8 +178,8 @@ axes_svg = (
     f'<line x1="{MARGIN_L}" y1="{MARGIN_T}" x2="{MARGIN_L}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>'
     f'<line x1="{MARGIN_L}" y1="{MARGIN_T+PLOT_H}" x2="{MARGIN_L+PLOT_W}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>'
     + "".join(ticks_svg) +
-    f'<text x="{MARGIN_L+PLOT_W/2}" y="{H-6}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif">Factibilidad</text>'
-    f'<text x="14" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif" transform="rotate(-90 14 {MARGIN_T+PLOT_H/2})">Urgencia</text>'
+    f'<text x="{MARGIN_L+PLOT_W/2}" y="{H-6}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif">Factibilidad \u2194</text>'
+    f'<text x="14" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif" transform="rotate(-90 14 {MARGIN_T+PLOT_H/2})">Urgencia \u2195</text>'
 )
 
 raw_points = [{"item": it, "x": sx(it["pf"]), "y": sy(it["pu"])} for it in items]
