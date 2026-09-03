@@ -5,6 +5,9 @@ de tarjetas, para consulta rapida y amigable de gerencia.
 NO incluye datos de contacto (nombre ni telefono del lider/referente) --
 esos quedan solo en Monday, nunca en esta pagina publica.
 
+Incluye un filtro de fecha (Desde / Hasta) que se aplica en el navegador,
+sin necesidad de volver a generar la pagina.
+
 Se guarda en docs/comunidades.html. Se corre despues de cada sincronizacion.
 """
 import os
@@ -15,7 +18,6 @@ MONDAY_API_TOKEN = os.environ["MONDAY_API_TOKEN"]
 MONDAY_BOARD_ID = os.environ["MONDAY_BOARD_ID"]
 MONDAY_API_URL = "https://api.monday.com/v2"
 
-# Solo estas columnas -- deliberadamente NO incluye referente ni telefono_referente
 COLS = {
     "fecha_eval": "date_mm6v1zxa",
     "estado": "color_mm6rjg61",
@@ -110,7 +112,7 @@ for it in items:
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
 
     card = f'''
-    <div class="card">
+    <div class="card" data-fecha="{esc(it["fecha"])}">
       <div class="card-top" style="background:{color}">
         <span class="num">{numero}</span>
         <span class="cuadrante-nombre">{esc(it["cuadrante"])}</span>
@@ -171,6 +173,13 @@ html_parts.append(".tags { display:flex; flex-wrap:wrap; gap:5px; }")
 html_parts.append(".tag { font-size:11px; background:#F0F2F5; color:#3A4048; padding:2px 8px; border-radius:10px; }")
 html_parts.append(".muted { font-size:11.5px; color:#B0B7BF; font-style:italic; }")
 html_parts.append(".acciones { font-size:12px; color:#3A4048; line-height:1.4; background:#FAFBFC; border-left:3px solid #C7CDD3; padding:6px 10px; border-radius:0 6px 6px 0; }")
+html_parts.append(".filtro-bar { display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:#fff; border:1px solid #E1E6EC; border-radius:8px; padding:10px 16px; margin-bottom:16px; }")
+html_parts.append(".filtro-bar label { font-size:12px; color:#5B6672; display:flex; align-items:center; gap:6px; }")
+html_parts.append(".filtro-bar input[type=date] { border:1px solid #D6DBE1; border-radius:5px; padding:4px 6px; font-size:12px; font-family:inherit; }")
+html_parts.append(".filtro-bar button { background:#EDEFF2; border:none; border-radius:14px; padding:5px 12px; font-size:12px; cursor:pointer; color:#3A4048; }")
+html_parts.append(".filtro-bar button:hover { background:#E1E4E8; }")
+html_parts.append(".contador-filtro { font-size:11.5px; color:#8A93A0; margin-left:auto; }")
+html_parts.append(".sin-resultados { text-align:center; color:#8A93A0; font-size:13px; padding:40px 0; }")
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
@@ -179,8 +188,43 @@ html_parts.append('<div class="topbar"><div><h1>Resumen por comunidad</h1>'
                    '<a href="index.html">Ver matriz de cuadrantes \u2192</a></div>')
 html_parts.append('<div class="wrap">')
 html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now} \u00b7 {len(items)} evaluaciones \u00b7 Ordenadas por prioridad</div>')
-html_parts.append('<div class="grid">' + "".join(cards_html) + '</div>')
+html_parts.append(
+    '<div class="filtro-bar">'
+    '<label>Desde <input type="date" id="fecha-desde" onchange="filtrarPorFecha()"></label>'
+    '<label>Hasta <input type="date" id="fecha-hasta" onchange="filtrarPorFecha()"></label>'
+    '<button onclick="limpiarFiltro()">Limpiar filtro</button>'
+    '<span id="contador-filtro" class="contador-filtro"></span>'
+    '</div>'
+)
+html_parts.append('<div class="grid" id="grid-comunidades">' + "".join(cards_html) + '</div>')
+html_parts.append('<div id="sin-resultados" class="sin-resultados" style="display:none;">No hay comunidades evaluadas en ese periodo.</div>')
 html_parts.append('</div>')
+html_parts.append("""
+<script>
+function filtrarPorFecha() {
+  const desde = document.getElementById('fecha-desde').value;
+  const hasta = document.getElementById('fecha-hasta').value;
+  const tarjetas = document.querySelectorAll('#grid-comunidades .card');
+  let visibles = 0;
+  tarjetas.forEach(function(card) {
+    const fecha = card.getAttribute('data-fecha');
+    let mostrar = true;
+    if (desde && (!fecha || fecha < desde)) mostrar = false;
+    if (hasta && (!fecha || fecha > hasta)) mostrar = false;
+    card.style.display = mostrar ? '' : 'none';
+    if (mostrar) visibles++;
+  });
+  document.getElementById('contador-filtro').textContent = visibles + ' de ' + tarjetas.length + ' comunidades visibles';
+  document.getElementById('sin-resultados').style.display = (visibles === 0) ? 'block' : 'none';
+}
+function limpiarFiltro() {
+  document.getElementById('fecha-desde').value = '';
+  document.getElementById('fecha-hasta').value = '';
+  filtrarPorFecha();
+}
+document.addEventListener('DOMContentLoaded', filtrarPorFecha);
+</script>
+""")
 html_parts.append("</body></html>")
 
 html = "\n".join(html_parts)
