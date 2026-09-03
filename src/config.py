@@ -79,16 +79,16 @@ MONDAY_COLUMN_MAP = {
     "nivel_factibilidad": "color_mm6rkghg",
     "cuadrante": "color_mm6rzjwx",
     "condiciones_distribucion": "dropdown_mm6s4s4x",
+    "referente": "text_mm6v9jk7",
+    "telefono_referente": "text_mm6vaxs",
+    "acciones_siguientes": "text_mm6vfd10",
 }
 
-# Mapeo Cuadrante -> ID de grupo en Monday (para colocar cada evaluacion
-# nueva directo en su grupo correcto). Los 2 cuadrantes nuevos de la
-# matriz 2x3 (Factibilidad v2) se fusionan hacia grupos existentes.
 CUADRANTE_GROUP_MAP = {
     "Intervenir ya": "topics",
-    "Intervenir con gestión de riesgo": "group_mm6t643r",  # fusionado -> Resolver acceso primero
+    "Intervenir con gestión de riesgo": "group_mm6t643r",
     "Resolver acceso primero": "group_mm6t643r",
     "Oportunidad": "group_mm6tg4cs",
-    "Programar con preparación": "group_mm6t72tj",  # fusionado -> Monitorear
+    "Programar con preparación": "group_mm6t72tj",
     "Monitorear": "group_mm6t72tj",
 }
