@@ -1,282 +1,61 @@
 [
- {
-  "campo": "tipo_area",
-  "tipo": "Selección única",
-  "pregunta": "Tipo de área"
- },
- {
-  "campo": "estado",
-  "tipo": "Selección única",
-  "pregunta": "Estado"
- },
- {
-  "campo": "municipio",
-  "tipo": "Selección única",
-  "pregunta": "Municipio"
- },
- {
-  "campo": "parroquia",
-  "tipo": "Selección única",
-  "pregunta": "Parroquia"
- },
- {
-  "campo": "sector_comunidad",
-  "tipo": "Texto",
-  "pregunta": "Comunidad/Sector"
- },
- {
-  "campo": "nombre_campamento",
-  "tipo": "Texto",
-  "pregunta": "Campamento"
- },
- {
-  "campo": "tipo_campamento",
-  "tipo": "Selección única",
-  "pregunta": "Tipo de campamento"
- },
- {
-  "campo": "ubicacion",
-  "tipo": "Geolocalización",
-  "pregunta": "Ubicación"
- },
- {
-  "campo": "clasificacion_comunidad",
-  "tipo": "Selección única",
-  "pregunta": "Clasificación de comunidad"
- },
- {
-  "campo": "necesidades_principales",
-  "tipo": "Selección múltiple",
-  "pregunta": "Necesidades principales"
- },
- {
-  "campo": "prioridad_1",
-  "tipo": "Selección única",
-  "pregunta": "Prioridad 1"
- },
- {
-  "campo": "asistencia_recibida",
-  "tipo": "Selección única",
-  "pregunta": "Asistencia recibida"
- },
- {
-  "campo": "brechas_necesidades",
-  "tipo": "Selección múltiple",
-  "pregunta": "Brechas sin atender"
- },
- {
-  "campo": "actores_actuales",
-  "tipo": "Selección múltiple",
-  "pregunta": "Actores apoyando actualmente"
- },
- {
-  "campo": "riesgo_duplicacion",
-  "tipo": "Selección única",
-  "pregunta": "Riesgo de duplicación"
- },
- {
-  "campo": "familias_actuales",
-  "tipo": "Número",
-  "pregunta": "Familias (total)"
- },
- {
-  "campo": "personas_actuales",
-  "tipo": "Número",
-  "pregunta": "Personas (total)"
- },
- {
-  "campo": "familias_afectadas",
-  "tipo": "Número",
-  "pregunta": "Familias afectadas"
- },
- {
-  "campo": "familias_no_permanecen",
-  "tipo": "Número",
-  "pregunta": "Familias que no permanecen"
- },
- {
-  "campo": "destruidas",
-  "tipo": "Selección múltiple",
-  "pregunta": "Edificaciones destruidas"
- },
- {
-  "campo": "danadas",
-  "tipo": "Selección múltiple",
-  "pregunta": "Edificaciones dañadas"
- },
- {
-  "campo": "danadas_vivienda_n",
-  "tipo": "Número",
-  "pregunta": "Viviendas dañadas"
- },
- {
-  "campo": "danadas_multifamiliar_n",
-  "tipo": "Número",
-  "pregunta": "Apartamentos dañados"
- },
- {
-  "campo": "servicios_afectados",
-  "tipo": "Selección múltiple",
-  "pregunta": "Servicios afectados"
- },
- {
-  "campo": "riesgos_terremoto",
-  "tipo": "Selección múltiple",
-  "pregunta": "Riesgos terremoto/réplicas"
- },
- {
-  "campo": "salud_primaria",
-  "tipo": "Selección única",
-  "pregunta": "Atención médica primaria activa"
- },
- {
-  "campo": "necesidad_salud",
-  "tipo": "Selección múltiple",
-  "pregunta": "Principal necesidad de salud"
- },
- {
-  "campo": "agua_suficiente_com",
-  "tipo": "Selección única",
-  "pregunta": "Agua suficiente (comunidad)"
- },
- {
-  "campo": "fuente_agua_com",
-  "tipo": "Selección única",
-  "pregunta": "Fuente de agua (comunidad)"
- },
- {
-  "campo": "frecuencia_agua_com",
-  "tipo": "Selección única",
-  "pregunta": "Frecuencia de agua (comunidad)"
- },
- {
-  "campo": "calidad_agua_com",
-  "tipo": "Selección única",
-  "pregunta": "Calidad de agua (comunidad)"
- },
- {
-  "campo": "aguas_negras",
-  "tipo": "Selección única",
-  "pregunta": "Aguas negras / fugas"
- },
- {
-  "campo": "vectores_com",
-  "tipo": "Selección múltiple",
-  "pregunta": "Vectores/enfermedades (comunidad)"
- },
- {
-  "campo": "dificultad_agua_com",
-  "tipo": "Selección única",
-  "pregunta": "Dificultad para obtener agua (comunidad)"
- },
- {
-  "campo": "fuente_agua_camp",
-  "tipo": "Selección única",
-  "pregunta": "Fuente de agua (campamento)"
- },
- {
-  "campo": "agua_suficiente_camp",
-  "tipo": "Selección única",
-  "pregunta": "Agua suficiente (campamento)"
- },
- {
-  "campo": "vectores_camp",
-  "tipo": "Selección múltiple",
-  "pregunta": "Vectores/enfermedades (campamento)"
- },
- {
-  "campo": "enfermedades_camp",
-  "tipo": "Selección múltiple",
-  "pregunta": "Enfermedades reportadas (campamento)"
- },
- {
-  "campo": "lavado_manos_camp",
-  "tipo": "Selección única",
-  "pregunta": "Puntos de lavado de manos (campamento)"
- },
- {
-  "campo": "estado_sanitarios_camp",
-  "tipo": "Selección única",
-  "pregunta": "Estado de sanitarios (campamento)"
- },
- {
-  "campo": "suficiencia_sanitarios_camp",
-  "tipo": "Selección única",
-  "pregunta": "Suficiencia de sanitarios (campamento)"
- },
- {
-  "campo": "necesidades_alojamiento",
-  "tipo": "Selección múltiple",
-  "pregunta": "Necesidades de alojamiento"
- },
- {
-  "campo": "riesgo_retorno",
-  "tipo": "Selección única",
-  "pregunta": "Riesgo que impide el retorno"
- },
- {
-  "campo": "familias_alojamiento",
-  "tipo": "Número",
-  "pregunta": "Familias que requieren alojamiento"
- },
- {
-  "campo": "intencion_permanencia_campamento",
-  "tipo": "Selección única",
-  "pregunta": "Intención de permanencia (campamento)"
- },
- {
-  "campo": "acceso_mercados",
-  "tipo": "Selección única",
-  "pregunta": "Acceso a mercados"
- },
- {
-  "campo": "apoyo_reactivacion",
-  "tipo": "Selección múltiple",
-  "pregunta": "Apoyo para reactivación económica"
- },
- {
-  "campo": "riesgos_proteccion",
-  "tipo": "Selección múltiple",
-  "pregunta": "Riesgos de protección"
- },
- {
-  "campo": "malestar_emocional",
-  "tipo": "Selección única",
-  "pregunta": "Malestar emocional relevante"
- },
- {
-  "campo": "servicios_smaps",
-  "tipo": "Selección múltiple",
-  "pregunta": "Servicios SMAPS disponibles"
- },
- {
-  "campo": "grupos_smaps",
-  "tipo": "Selección múltiple",
-  "pregunta": "Grupos que requieren apoyo SMAPS"
- },
- {
-  "campo": "prioridad_preliminar",
-  "tipo": "Selección única",
-  "pregunta": "Prioridad preliminar"
- },
- {
-  "campo": "sectores_prioritarios",
-  "tipo": "Selección múltiple",
-  "pregunta": "Sectores prioritarios"
- },
- {
-  "campo": "evaluacion_tecnica",
-  "tipo": "Selección múltiple",
-  "pregunta": "Requiere evaluación técnica"
- },
- {
-  "campo": "situacion_critica",
-  "tipo": "Selección única",
-  "pregunta": "Situación crítica"
- },
- {
-  "campo": "condiciones_distribucion",
-  "tipo": "Selección múltiple",
-  "pregunta": "Marque todas las condiciones que podrían dificultar o impedir las entregas o distribuciones en esta comunidad o campamento:"
- }
+ {"campo":"tipo_area","tipo":"Selección única","pregunta":"Tipo de área"},
+ {"campo":"estado","tipo":"Selección única","pregunta":"Estado"},
+ {"campo":"municipio","tipo":"Selección única","pregunta":"Municipio"},
+ {"campo":"parroquia","tipo":"Selección única","pregunta":"Parroquia"},
+ {"campo":"sector_comunidad","tipo":"Texto","pregunta":"Comunidad/Sector"},
+ {"campo":"nombre_campamento","tipo":"Texto","pregunta":"Campamento"},
+ {"campo":"tipo_campamento","tipo":"Selección única","pregunta":"Tipo de campamento"},
+ {"campo":"ubicacion","tipo":"Geolocalización","pregunta":"Ubicación"},
+ {"campo":"clasificacion_comunidad","tipo":"Selección única","pregunta":"Clasificación de comunidad"},
+ {"campo":"necesidades_principales","tipo":"Selección múltiple","pregunta":"Necesidades principales"},
+ {"campo":"prioridad_1","tipo":"Selección única","pregunta":"Prioridad 1"},
+ {"campo":"asistencia_recibida","tipo":"Selección única","pregunta":"Asistencia recibida"},
+ {"campo":"brechas_necesidades","tipo":"Selección múltiple","pregunta":"Brechas sin atender"},
+ {"campo":"actores_actuales","tipo":"Selección múltiple","pregunta":"Actores apoyando actualmente"},
+ {"campo":"riesgo_duplicacion","tipo":"Selección única","pregunta":"Riesgo de duplicación"},
+ {"campo":"familias_actuales","tipo":"Número","pregunta":"Familias (total)"},
+ {"campo":"personas_actuales","tipo":"Número","pregunta":"Personas (total)"},
+ {"campo":"familias_afectadas","tipo":"Número","pregunta":"Familias afectadas"},
+ {"campo":"familias_no_permanecen","tipo":"Número","pregunta":"Familias que no permanecen"},
+ {"campo":"destruidas","tipo":"Selección múltiple","pregunta":"Edificaciones destruidas"},
+ {"campo":"danadas","tipo":"Selección múltiple","pregunta":"Edificaciones dañadas"},
+ {"campo":"danadas_vivienda_n","tipo":"Número","pregunta":"Viviendas dañadas"},
+ {"campo":"danadas_multifamiliar_n","tipo":"Número","pregunta":"Apartamentos dañados"},
+ {"campo":"servicios_afectados","tipo":"Selección múltiple","pregunta":"Servicios afectados"},
+ {"campo":"riesgos_terremoto","tipo":"Selección múltiple","pregunta":"Riesgos terremoto/réplicas"},
+ {"campo":"salud_primaria","tipo":"Selección única","pregunta":"Atención médica primaria activa"},
+ {"campo":"necesidad_salud","tipo":"Selección múltiple","pregunta":"Principal necesidad de salud"},
+ {"campo":"agua_suficiente_com","tipo":"Selección única","pregunta":"Agua suficiente (comunidad)"},
+ {"campo":"fuente_agua_com","tipo":"Selección única","pregunta":"Fuente de agua (comunidad)"},
+ {"campo":"frecuencia_agua_com","tipo":"Selección única","pregunta":"Frecuencia de agua (comunidad)"},
+ {"campo":"calidad_agua_com","tipo":"Selección única","pregunta":"Calidad de agua (comunidad)"},
+ {"campo":"aguas_negras","tipo":"Selección única","pregunta":"Aguas negras / fugas"},
+ {"campo":"vectores_com","tipo":"Selección múltiple","pregunta":"Vectores/enfermedades (comunidad)"},
+ {"campo":"dificultad_agua_com","tipo":"Selección única","pregunta":"Dificultad para obtener agua (comunidad)"},
+ {"campo":"fuente_agua_camp","tipo":"Selección única","pregunta":"Fuente de agua (campamento)"},
+ {"campo":"agua_suficiente_camp","tipo":"Selección única","pregunta":"Agua suficiente (campamento)"},
+ {"campo":"vectores_camp","tipo":"Selección múltiple","pregunta":"Vectores/enfermedades (campamento)"},
+ {"campo":"enfermedades_camp","tipo":"Selección múltiple","pregunta":"Enfermedades reportadas (campamento)"},
+ {"campo":"lavado_manos_camp","tipo":"Selección única","pregunta":"Puntos de lavado de manos (campamento)"},
+ {"campo":"estado_sanitarios_camp","tipo":"Selección única","pregunta":"Estado de sanitarios (campamento)"},
+ {"campo":"suficiencia_sanitarios_camp","tipo":"Selección única","pregunta":"Suficiencia de sanitarios (campamento)"},
+ {"campo":"necesidades_alojamiento","tipo":"Selección múltiple","pregunta":"Necesidades de alojamiento"},
+ {"campo":"riesgo_retorno","tipo":"Selección única","pregunta":"Riesgo que impide el retorno"},
+ {"campo":"familias_alojamiento","tipo":"Número","pregunta":"Familias que requieren alojamiento"},
+ {"campo":"intencion_permanencia_campamento","tipo":"Selección única","pregunta":"Intención de permanencia (campamento)"},
+ {"campo":"acceso_mercados","tipo":"Selección única","pregunta":"Acceso a mercados"},
+ {"campo":"apoyo_reactivacion","tipo":"Selección múltiple","pregunta":"Apoyo para reactivación económica"},
+ {"campo":"riesgos_proteccion","tipo":"Selección múltiple","pregunta":"Riesgos de protección"},
+ {"campo":"malestar_emocional","tipo":"Selección única","pregunta":"Malestar emocional relevante"},
+ {"campo":"servicios_smaps","tipo":"Selección múltiple","pregunta":"Servicios SMAPS disponibles"},
+ {"campo":"grupos_smaps","tipo":"Selección múltiple","pregunta":"Grupos que requieren apoyo SMAPS"},
+ {"campo":"prioridad_preliminar","tipo":"Selección única","pregunta":"Prioridad preliminar"},
+ {"campo":"sectores_prioritarios","tipo":"Selección múltiple","pregunta":"Sectores prioritarios"},
+ {"campo":"evaluacion_tecnica","tipo":"Selección múltiple","pregunta":"Requiere evaluación técnica"},
+ {"campo":"situacion_critica","tipo":"Selección única","pregunta":"Situación crítica"},
+ {"campo":"condiciones_distribucion","tipo":"Selección múltiple","pregunta":"Marque todas las condiciones que podrían dificultar o impedir las entregas o distribuciones en esta comunidad o campamento:"},
+ {"campo":"referente","tipo":"Texto","pregunta":"Nombre del líder, referente o persona de contacto principal."},
+ {"campo":"telefono_referente","tipo":"Texto","pregunta":"Teléfono de contacto del líder o referente."},
+ {"campo":"acciones_siguientes","tipo":"Texto","pregunta":"Principales acciones siguientes recomendadas por el equipo."}
 ]
