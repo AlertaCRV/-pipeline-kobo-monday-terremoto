@@ -255,7 +255,7 @@ html_parts.append('<meta charset="UTF-8">')
 html_parts.append("<title>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</title>")
 html_parts.append("<style>")
 html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#fff; color:#20303F; margin:0; }')
-html_parts.append(".topbar { background:#1C4269; color:#fff; padding:10px 28px; }")
+html_parts.append(".topbar { background:#1C4269; color:#fff; padding:10px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }")
 html_parts.append(".topbar h1 { margin:0; font-size:16px; font-weight:700; }")
 html_parts.append(".topbar .sub { font-size:11px; color:#AFC1D6; margin-top:2px; }")
 html_parts.append(".wrap { padding:12px 28px 18px; max-width:1280px; margin:0 auto; }")
@@ -275,8 +275,9 @@ html_parts.append("@media (max-width:760px){ .layout{flex-direction:column;} .le
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
-html_parts.append('<div class="topbar"><h1>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</h1>'
-                   '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>')
+html_parts.append('<div class="topbar"><div><h1>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</h1>'
+                   '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
+                   '<a href="comunidades.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen por comunidad \u2192</a></div>')
 html_parts.append('<div class="wrap">')
 html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now}</div>')
 html_parts.append('<div class="layout">')
