@@ -29,14 +29,22 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 .tag { font-size:11px; background:#F0F2F5; color:#3A4048; padding:2px 8px; border-radius:10px; }
 .muted { font-size:11.5px; color:#B0B7BF; font-style:italic; }
 .acciones { font-size:12px; color:#3A4048; line-height:1.4; background:#FAFBFC; border-left:3px solid #C7CDD3; padding:6px 10px; border-radius:0 6px 6px 0; }
+.filtro-bar { display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:#fff; border:1px solid #E1E6EC; border-radius:8px; padding:10px 16px; margin-bottom:16px; }
+.filtro-bar label { font-size:12px; color:#5B6672; display:flex; align-items:center; gap:6px; }
+.filtro-bar input[type=date] { border:1px solid #D6DBE1; border-radius:5px; padding:4px 6px; font-size:12px; font-family:inherit; }
+.filtro-bar button { background:#EDEFF2; border:none; border-radius:14px; padding:5px 12px; font-size:12px; cursor:pointer; color:#3A4048; }
+.filtro-bar button:hover { background:#E1E4E8; }
+.contador-filtro { font-size:11.5px; color:#8A93A0; margin-left:auto; }
+.sin-resultados { text-align:center; color:#8A93A0; font-size:13px; padding:40px 0; }
 </style>
 </head>
 <body>
 <div class="topbar"><div><h1>Resumen por comunidad</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><a href="index.html">Ver matriz de cuadrantes →</a></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-03 15:03 · 12 evaluaciones · Ordenadas por prioridad</div>
-<div class="grid">
-    <div class="card">
+<div class="updated">Última actualización: 2026-09-03 15:49 · 12 evaluaciones · Ordenadas por prioridad</div>
+<div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="filtrarPorFecha()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="filtrarPorFecha()"></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
+<div class="grid" id="grid-comunidades">
+    <div class="card" data-fecha="2026-08-25">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -61,7 +69,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-08-18">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -86,7 +94,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -111,7 +119,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-08-29">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -136,7 +144,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -161,7 +169,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-08-25">
       <div class="card-top" style="background:#A63A2E">
         <span class="num">I</span>
         <span class="cuadrante-nombre">Intervenir ya</span>
@@ -186,7 +194,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#8C2F26">
         <span class="num">II</span>
         <span class="cuadrante-nombre">Resolver acceso primero</span>
@@ -211,7 +219,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#8C2F26">
         <span class="num">II</span>
         <span class="cuadrante-nombre">Resolver acceso primero</span>
@@ -236,7 +244,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#C9822E">
         <span class="num">III</span>
         <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
@@ -261,7 +269,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-01">
       <div class="card-top" style="background:#C9822E">
         <span class="num">III</span>
         <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
@@ -294,7 +302,32 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
       </div>
     </div>
     
-    <div class="card">
+    <div class="card" data-fecha="2026-09-02">
+      <div class="card-top" style="background:#C9822E">
+        <span class="num">III</span>
+        <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
+      </div>
+      <div class="card-body">
+        <h3>Macuto (Guaicamacto)</h3>
+        <div class="meta-row">
+          <span class="pill-tipo">Comunidad</span>
+          <span class="fecha">2026-09-02</span>
+        </div>
+        <div class="breadcrumb">La Guaira / Vargas / Macuto</div>
+        <div class="coord">📍 10.611682 -66.88767 0 0</div>
+        <div class="familias">👪 4326 familias</div>
+        <div class="section-label">Sectores prioritarios</div>
+        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
+        <div class="section-label">¿Requiere evaluación técnica?</div>
+        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
+        <div class="section-label">Condiciones que dificultan distribución</div>
+        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
+        <div class="section-label">Acciones recomendadas</div>
+        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
+      </div>
+    </div>
+    
+    <div class="card" data-fecha="2026-09-02">
       <div class="card-top" style="background:#C9822E">
         <span class="num">III</span>
         <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
@@ -318,31 +351,33 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <div class="acciones">En la zona la mayoría de personas que habitaban la zona, fallecieron y siguen sus cuerpos allí, por lo que el censo se sigue realizando a estas alturas por la cantidad de edificios destruídos</div>
       </div>
     </div>
-    
-    <div class="card">
-      <div class="card-top" style="background:#C9822E">
-        <span class="num">III</span>
-        <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
-      </div>
-      <div class="card-body">
-        <h3>Teleférico (5 consejo comunales)</h3>
-        <div class="meta-row">
-          <span class="pill-tipo">Comunidad</span>
-          <span class="fecha">2026-09-02</span>
-        </div>
-        <div class="breadcrumb">La Guaira / Vargas / Macuto</div>
-        <div class="coord">📍 10.611682 -66.88767 0 0</div>
-        <div class="familias">👪 4326 familias</div>
-        <div class="section-label">Sectores prioritarios</div>
-        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
-        <div class="section-label">¿Requiere evaluación técnica?</div>
-        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
-        <div class="section-label">Condiciones que dificultan distribución</div>
-        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
-        <div class="section-label">Acciones recomendadas</div>
-        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
-      </div>
     </div>
-    </div>
+<div id="sin-resultados" class="sin-resultados" style="display:none;">No hay comunidades evaluadas en ese periodo.</div>
 </div>
+
+<script>
+function filtrarPorFecha() {
+  const desde = document.getElementById('fecha-desde').value;
+  const hasta = document.getElementById('fecha-hasta').value;
+  const tarjetas = document.querySelectorAll('#grid-comunidades .card');
+  let visibles = 0;
+  tarjetas.forEach(function(card) {
+    const fecha = card.getAttribute('data-fecha');
+    let mostrar = true;
+    if (desde && (!fecha || fecha < desde)) mostrar = false;
+    if (hasta && (!fecha || fecha > hasta)) mostrar = false;
+    card.style.display = mostrar ? '' : 'none';
+    if (mostrar) visibles++;
+  });
+  document.getElementById('contador-filtro').textContent = visibles + ' de ' + tarjetas.length + ' comunidades visibles';
+  document.getElementById('sin-resultados').style.display = (visibles === 0) ? 'block' : 'none';
+}
+function limpiarFiltro() {
+  document.getElementById('fecha-desde').value = '';
+  document.getElementById('fecha-hasta').value = '';
+  filtrarPorFecha();
+}
+document.addEventListener('DOMContentLoaded', filtrarPorFecha);
+</script>
+
 </body></html>
