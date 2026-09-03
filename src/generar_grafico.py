@@ -4,14 +4,12 @@ usando los datos REALES actuales del tablero de Monday (via API).
 
 Se guarda en docs/index.html -- GitHub Pages la publica automaticamente.
 
-Version 3:
-  - Paleta coherente: cada zona usa una version clara de SU PROPIO color,
-    y ese mismo color aparece a saturacion completa en la leyenda.
-  - Leyenda con una descripcion breve de que significa cada cuadrante,
-    no solo su nombre.
-  - Puntos que caen muy cerca entre si se separan visualmente con una
-    linea guia delgada hacia su posicion real (sin alterar el dato).
-  - Titulo: "Matriz de Urgencia x Factibilidad (Comunidades)".
+Version 4:
+  - Layout en dos columnas: grafico a la izquierda, leyenda a la derecha
+    (para que quepa todo en una pantalla).
+  - Numero romano grande y centrado en cada cuadrante (semi-transparente).
+  - Colores con mas contraste entre zonas.
+  - Puntos del mismo color; se separan si caen muy cerca (linea guia).
 """
 import os
 import math
@@ -62,7 +60,7 @@ def hex_to_rgb(h):
     h = h.lstrip("#")
     return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
-def tint(hexcolor, amount=0.88):
+def tint(hexcolor, amount=0.72):
     r, g, b = hex_to_rgb(hexcolor)
     r = round(r + (255 - r) * amount)
     g = round(g + (255 - g) * amount)
@@ -103,8 +101,8 @@ x_pad = (x_max - x_min) * 0.15 or 2
 y_pad = (y_max - y_min) * 0.15 or 2
 x_min -= x_pad; x_max += x_pad; y_min -= y_pad; y_max += y_pad
 
-W, H = 900, 600
-MARGIN_L, MARGIN_R, MARGIN_T, MARGIN_B = 62, 26, 22, 60
+W, H = 800, 560
+MARGIN_L, MARGIN_R, MARGIN_T, MARGIN_B = 60, 24, 20, 58
 PLOT_W = W - MARGIN_L - MARGIN_R
 PLOT_H = H - MARGIN_T - MARGIN_B
 
@@ -133,7 +131,6 @@ def fmt(v): return str(int(v)) if float(v).is_integer() else f"{v:g}"
 
 x_ticks, y_ticks = marcas(x_min, x_max), marcas(y_min, y_max)
 
-# ---- Fondo de cuadrantes (tinte del color propio de cada zona) ----
 fac_bounds = sorted(set(b for b in [x_min, UMBRAL_FAC_MEDIA, UMBRAL_FAC_ALTA, x_max] if x_min <= b <= x_max) | {x_min, x_max})
 urg_bounds = sorted(set(b for b in [y_min, UMBRAL_URG, y_max] if y_min <= b <= y_max) | {y_min, y_max})
 
@@ -146,23 +143,17 @@ for i in range(len(urg_bounds) - 1):
         mid_x = (x0 + x1) / 2
         fac_key = "alta_fac" if mid_x >= UMBRAL_FAC_ALTA else ("media_fac" if mid_x >= UMBRAL_FAC_MEDIA else "baja_fac")
         base_color, numero, zona_nombre, _ = ZONE_INFO.get((urg_key, fac_key), ("#DDDDDD", "", "", ""))
-        color = tint(base_color, 0.72)
+        color = tint(base_color)
         rx, ry = sx(x0), sy(y1)
         rw, rh = sx(x1) - sx(x0), sy(y0) - sy(y1)
         rects_svg.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" fill="{color}" stroke="#fff" stroke-width="2"/>')
-        if rw > 55 and rh > 22:
-            labels_svg.append(
-                f'<text x="{rx+8:.1f}" y="{ry+15:.1f}" font-size="10" fill="{base_color}" '
-                f'font-weight="700" font-family="Open Sans, sans-serif">{numero}. {zona_nombre}</text>'
-            )
         cx_zone, cy_zone = rx + rw / 2, ry + rh / 2
         labels_svg.append(
-            f'<text x="{cx_zone:.1f}" y="{cy_zone+11:.1f}" text-anchor="middle" font-size="34" '
-            f'font-weight="700" fill="{base_color}" fill-opacity="0.28" '
-            f'font-family="Open Sans, sans-serif">{numero}</text>'
+            f'<text x="{cx_zone:.1f}" y="{cy_zone+13:.1f}" text-anchor="middle" font-size="38" '
+            f'font-weight="700" fill="{base_color}" fill-opacity="0.32" '
+            f'font-family="Georgia, serif">{numero}</text>'
         )
 
-# ---- Lineas divisorias ----
 lines_svg = []
 for umbral in (UMBRAL_FAC_ALTA, UMBRAL_FAC_MEDIA):
     if x_min <= umbral <= x_max:
@@ -172,7 +163,6 @@ if y_min <= UMBRAL_URG <= y_max:
     ly = sy(UMBRAL_URG)
     lines_svg.append(f'<line x1="{MARGIN_L}" y1="{ly:.1f}" x2="{MARGIN_L+PLOT_W}" y2="{ly:.1f}" stroke="#C7CDD3" stroke-dasharray="4,4" stroke-width="1" />')
 
-# ---- Ejes ----
 ticks_svg = []
 for t in x_ticks:
     tx = sx(t)
@@ -183,17 +173,15 @@ for t in y_ticks:
     ticks_svg.append(f'<line x1="{MARGIN_L-5}" y1="{ty:.1f}" x2="{MARGIN_L}" y2="{ty:.1f}" stroke="#8A93A0" stroke-width="1"/>')
     ticks_svg.append(f'<text x="{MARGIN_L-9}" y="{ty+3.5:.1f}" text-anchor="end" font-size="10" fill="#66768A" font-family="Open Sans, sans-serif">{fmt(t)}</text>')
 
-axes_svg = f'''
-<line x1="{MARGIN_L}" y1="{MARGIN_T}" x2="{MARGIN_L}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>
-<line x1="{MARGIN_L}" y1="{MARGIN_T+PLOT_H}" x2="{MARGIN_L+PLOT_W}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>
-{"".join(ticks_svg)}
-<text x="{MARGIN_L+PLOT_W/2}" y="{H-6}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif">Factibilidad</text>
-<text x="14" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif" transform="rotate(-90 14 {MARGIN_T+PLOT_H/2})">Urgencia</text>
-'''
+axes_svg = (
+    f'<line x1="{MARGIN_L}" y1="{MARGIN_T}" x2="{MARGIN_L}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>'
+    f'<line x1="{MARGIN_L}" y1="{MARGIN_T+PLOT_H}" x2="{MARGIN_L+PLOT_W}" y2="{MARGIN_T+PLOT_H}" stroke="#3A4048" stroke-width="1.4"/>'
+    + "".join(ticks_svg) +
+    f'<text x="{MARGIN_L+PLOT_W/2}" y="{H-6}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif">Factibilidad</text>'
+    f'<text x="14" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif" transform="rotate(-90 14 {MARGIN_T+PLOT_H/2})">Urgencia</text>'
+)
 
-# ---- Separar puntos que caen muy cerca (sin alterar el dato real) ----
 raw_points = [{"item": it, "x": sx(it["pf"]), "y": sy(it["pu"])} for it in items]
-
 parent = list(range(len(raw_points)))
 def find(i):
     while parent[i] != i:
@@ -204,7 +192,7 @@ def union(i, j):
     ri, rj = find(i), find(j)
     if ri != rj: parent[ri] = rj
 
-RADIUS_CLUSTER = 24
+RADIUS_CLUSTER = 22
 for i in range(len(raw_points)):
     for j in range(i + 1, len(raw_points)):
         dx = raw_points[i]["x"] - raw_points[j]["x"]
@@ -224,13 +212,12 @@ for idxs in clusters.values():
         continue
     cx = sum(raw_points[i]["x"] for i in idxs) / n
     cy = sum(raw_points[i]["y"] for i in idxs) / n
-    spread_r = 14 + 5 * n
+    spread_r = 13 + 5 * n
     for k, i in enumerate(idxs):
         angle = 2 * math.pi * k / n
         raw_points[i]["dx"] = cx + spread_r * math.cos(angle)
         raw_points[i]["dy"] = cy + spread_r * math.sin(angle)
 
-# ---- Puntos + lineas guia ----
 max_familias = max([i["familias"] for i in items], default=1) or 1
 leader_svg, points_svg = [], []
 for p in raw_points:
@@ -240,71 +227,75 @@ for p in raw_points:
     if moved:
         leader_svg.append(f'<line x1="{p["x"]:.1f}" y1="{p["y"]:.1f}" x2="{dx:.1f}" y2="{dy:.1f}" stroke="#B7BEC7" stroke-width="1"/>')
         leader_svg.append(f'<circle cx="{p["x"]:.1f}" cy="{p["y"]:.1f}" r="2.2" fill="#B7BEC7"/>')
-    r = 6 + 13 * (it["familias"] / max_familias) ** 0.5
+    r = 6 + 12 * (it["familias"] / max_familias) ** 0.5
     tooltip = f"{it['name']}\\nFamilias: {int(it['familias'])}"
     points_svg.append(
         f'<g class="punto"><circle cx="{dx:.1f}" cy="{dy:.1f}" r="{r:.1f}" fill="{PUNTO_COLOR}" '
         f'fill-opacity="0.82" stroke="#0F2A47" stroke-width="1.2"><title>{tooltip}</title></circle>'
-        f'<text x="{dx:.1f}" y="{dy - r - 6:.1f}" text-anchor="middle" font-size="10.5" '
-        f'fill="#2A3038" font-family="Open Sans, sans-serif">{it["name"][:26]}</text></g>'
+        f'<text x="{dx:.1f}" y="{dy - r - 6:.1f}" text-anchor="middle" font-size="10" '
+        f'fill="#2A3038" font-family="Open Sans, sans-serif">{it["name"][:24]}</text></g>'
     )
 
-# ---- Leyenda con descripcion ----
 legend_rows = []
 for (u, f), (color, numero, nombre, desc) in ZONE_INFO.items():
     legend_rows.append(
-        f'<div class="legend-row"><span class="swatch" style="background:{color}"></span>'
-        f'<div><div class="legend-title">{numero}. {nombre}</div><div class="legend-desc">{desc}</div></div></div>'
+        f'<div class="legend-row"><span class="num-badge" style="background:{color}">{numero}</span>'
+        f'<div><div class="legend-title">{nombre}</div><div class="legend-desc">{desc}</div></div></div>'
     )
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
-html = f'''<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Matriz de Urgencia × Factibilidad (Comunidades)</title>
-<style>
-  body {{ font-family: "Open Sans", -apple-system, Segoe UI, Roboto, sans-serif; background:#fff; color:#20303F; margin:0; }}
-  .topbar {{ background:#1C4269; color:#fff; padding:20px 32px; }}
-  .topbar h1 {{ margin:0; font-size:20px; font-weight:700; }}
-  .topbar .sub {{ font-size:12px; color:#AFC1D6; margin-top:4px; }}
-  .wrap {{ padding:26px 32px 40px; max-width:1000px; margin:0 auto; }}
-  .updated {{ font-size:11.5px; color:#8A93A0; margin-bottom:14px; }}
-  svg {{ border:1px solid #E1E6EC; border-radius:10px; background:#fff; }}
-  .legend {{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px 24px; margin-top:22px; }}
-  .legend-row {{ display:flex; align-items:flex-start; gap:10px; }}
-  .swatch {{ width:13px; height:13px; border-radius:3px; flex-shrink:0; margin-top:3px; }}
-  .legend-title {{ font-size:13px; font-weight:700; color:#20303F; }}
-  .legend-desc {{ font-size:12px; color:#5B6672; margin-top:1px; line-height:1.35; }}
-  .punto text {{ pointer-events:none; }}
-  .punto circle {{ cursor:pointer; }}
-  .nota {{ font-size:11.5px; color:#8A93A0; margin-top:20px; }}
-</style>
-</head>
-<body>
-<div class="topbar">
-  <h1>Matriz de Urgencia × Factibilidad (Comunidades)</h1>
-  <div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div>
-</div>
-<div class="wrap">
-  <div class="updated">Última actualización: {now}</div>
-  <svg viewBox="0 0 {W} {H}" width="100%" height="auto">
-    {"".join(rects_svg)}
-    {"".join(labels_svg)}
-    {"".join(lines_svg)}
-    {axes_svg}
-    {"".join(leader_svg)}
-    {"".join(points_svg)}
-  </svg>
-  <div class="legend">
-    {"".join(legend_rows)}
-  </div>
-  <div class="nota">El tamaño de cada punto representa el número de familias. Los puntos muy próximos se separan levemente para poder distinguirlos; la línea gris indica su posición real. Pasa el mouse sobre un punto para ver el nombre y el número de familias.</div>
-</div>
-</body>
-</html>
-'''
+svg_content = (
+    "".join(rects_svg) + "".join(labels_svg) + "".join(lines_svg) + axes_svg
+    + "".join(leader_svg) + "".join(points_svg)
+)
+legend_content = "".join(legend_rows)
+
+html_parts = []
+html_parts.append("<!DOCTYPE html>")
+html_parts.append('<html lang="es">')
+html_parts.append("<head>")
+html_parts.append('<meta charset="UTF-8">')
+html_parts.append("<title>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</title>")
+html_parts.append("<style>")
+html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#fff; color:#20303F; margin:0; }')
+html_parts.append(".topbar { background:#1C4269; color:#fff; padding:18px 28px; }")
+html_parts.append(".topbar h1 { margin:0; font-size:19px; font-weight:700; }")
+html_parts.append(".topbar .sub { font-size:12px; color:#AFC1D6; margin-top:4px; }")
+html_parts.append(".wrap { padding:18px 28px 26px; max-width:1280px; margin:0 auto; }")
+html_parts.append(".updated { font-size:11px; color:#8A93A0; margin-bottom:10px; }")
+html_parts.append(".layout { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }")
+html_parts.append(".chart-col { flex:1 1 560px; min-width:400px; }")
+html_parts.append("svg { border:1px solid #E1E6EC; border-radius:10px; background:#fff; width:100%; height:auto; display:block; }")
+html_parts.append(".legend-col { flex:0 0 300px; max-width:320px; }")
+html_parts.append('.legend-col h2 { font-size:12px; margin:4px 0 12px; color:#20303F; text-transform:uppercase; letter-spacing:.4px; }')
+html_parts.append(".legend { display:flex; flex-direction:column; gap:13px; }")
+html_parts.append(".legend-row { display:flex; align-items:flex-start; gap:10px; }")
+html_parts.append(".num-badge { flex-shrink:0; width:22px; height:22px; border-radius:5px; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; }")
+html_parts.append(".legend-title { font-size:12.5px; font-weight:700; color:#20303F; }")
+html_parts.append(".legend-desc { font-size:11.5px; color:#5B6672; margin-top:1px; line-height:1.3; }")
+html_parts.append(".nota { font-size:11px; color:#8A93A0; margin-top:14px; }")
+html_parts.append("@media (max-width:760px){ .layout{flex-direction:column;} .legend-col{max-width:100%;} }")
+html_parts.append("</style>")
+html_parts.append("</head>")
+html_parts.append("<body>")
+html_parts.append('<div class="topbar"><h1>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</h1>'
+                   '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>')
+html_parts.append('<div class="wrap">')
+html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now}</div>')
+html_parts.append('<div class="layout">')
+html_parts.append('<div class="chart-col">')
+html_parts.append(f'<svg viewBox="0 0 {W} {H}">{svg_content}</svg>')
+html_parts.append('<div class="nota">El tama\u00f1o de cada punto representa el n\u00famero de familias. '
+                   'Los puntos muy pr\u00f3ximos se separan levemente para poder distinguirlos; la l\u00ednea gris '
+                   'indica su posici\u00f3n real. Pasa el mouse sobre un punto para ver el nombre y el n\u00famero de familias.</div>')
+html_parts.append('</div>')
+html_parts.append('<div class="legend-col"><h2>Cuadrantes</h2><div class="legend">' + legend_content + '</div></div>')
+html_parts.append('</div>')
+html_parts.append('</div>')
+html_parts.append("</body></html>")
+
+html = "\n".join(html_parts)
 
 os.makedirs(os.path.join(os.path.dirname(__file__), "..", "docs"), exist_ok=True)
 with open(os.path.join(os.path.dirname(__file__), "..", "docs", "index.html"), "w", encoding="utf-8") as f:
