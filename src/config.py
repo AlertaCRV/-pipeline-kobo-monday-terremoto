@@ -82,6 +82,7 @@ MONDAY_COLUMN_MAP = {
     "referente": "text_mm6v9jk7",
     "telefono_referente": "text_mm6vaxs",
     "acciones_siguientes": "text_mm6vfd10",
+    "fecha_eval": "date_mm6v1zxa",
 }
 
 CUADRANTE_GROUP_MAP = {
