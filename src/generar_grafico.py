@@ -5,9 +5,16 @@ usando los datos REALES actuales del tablero de Monday (via API).
 Se guarda en docs/index.html en la raiz del repositorio -- esa carpeta la
 publica GitHub Pages automaticamente como sitio web.
 
-Se corre despues de cada sincronizacion (sync-kobo-monday.yml la llama).
+Version 2:
+  - Los puntos son todos del mismo color (navy).
+  - Cada cuadrante de fondo tiene su propio color distintivo, con su
+    nombre etiquetado dentro de la zona.
+  - Tooltip simplificado: solo nombre y numero de familias.
+  - Ejes con nombre corto ("Factibilidad" / "Urgencia") y con marcas
+    numericas visibles.
 """
 import os
+import math
 import datetime
 import requests
 
@@ -40,15 +47,17 @@ query ($board: ID!, $cols: [String!]) {
 }
 """
 
-CUADRANTE_COLOR = {
-    "Intervenir ya": "#C4302B",
-    "Intervenir con gestión de riesgo": "#C97B14",
-    "Resolver acceso primero": "#C97B14",
-    "Oportunidad": "#8A6D00",
-    "Programar con preparación": "#5C6B73",
-    "Monitorear": "#999999",
+PUNTO_COLOR = "#1C4269"  # todos los puntos del mismo color (navy CRV)
+
+# Color de fondo distinto por cada uno de los 6 cuadrantes reales
+ZONE_COLOR = {
+    ("alta_urg", "alta_fac"):  ("#FBE6E5", "Intervenir ya"),
+    ("alta_urg", "media_fac"): ("#FCEEDD", "Intervenir con gestión de riesgo"),
+    ("alta_urg", "baja_fac"):  ("#FDF3D0", "Resolver acceso primero"),
+    ("baja_urg", "alta_fac"):  ("#F3F8DD", "Oportunidad"),
+    ("baja_urg", "media_fac"): ("#E3F1FA", "Programar con preparación"),
+    ("baja_urg", "baja_fac"):  ("#EFEFEF", "Monitorear"),
 }
-DEFAULT_COLOR = "#2C6FB0"
 
 resp = requests.post(
     MONDAY_API_URL,
@@ -77,14 +86,11 @@ for it in items_raw:
         "name": it["name"],
         "pu": pu,
         "pf": pf,
-        "nivel_urg": vals.get(COLS["nivel_urgencia"]) or "",
-        "nivel_fac": vals.get(COLS["nivel_factibilidad"]) or "",
         "cuadrante": vals.get(COLS["cuadrante"]) or "Sin cuadrante",
         "familias": familias,
-        "tipo_area": vals.get(COLS["tipo_area"]) or "",
     })
 
-# ---- Calcular rango de ejes con margen ----
+# ---- Rango de ejes con margen ----
 if items:
     xs = [i["pf"] for i in items]
     ys = [i["pu"] for i in items]
@@ -98,8 +104,8 @@ y_pad = (y_max - y_min) * 0.15 or 2
 x_min -= x_pad; x_max += x_pad
 y_min -= y_pad; y_max += y_pad
 
-W, H = 900, 560
-MARGIN_L, MARGIN_R, MARGIN_T, MARGIN_B = 70, 30, 30, 60
+W, H = 900, 580
+MARGIN_L, MARGIN_R, MARGIN_T, MARGIN_B = 65, 30, 25, 65
 PLOT_W = W - MARGIN_L - MARGIN_R
 PLOT_H = H - MARGIN_T - MARGIN_B
 
@@ -113,27 +119,44 @@ UMBRAL_URG = 7
 UMBRAL_FAC_ALTA = 0
 UMBRAL_FAC_MEDIA = -4
 
-# Fondo de cuadrantes (bandas)
-bands = []
-fac_bounds = [x_min, UMBRAL_FAC_MEDIA, UMBRAL_FAC_ALTA, x_max]
-fac_bounds = sorted(set(b for b in fac_bounds if x_min <= b <= x_max) | {x_min, x_max})
+# ---- Marcas numericas (ticks) ----
+def marcas(vmin, vmax, n=6):
+    span = vmax - vmin
+    if span <= 0:
+        return [vmin]
+    raw_step = span / n
+    magnitude = 10 ** math.floor(math.log10(raw_step)) if raw_step > 0 else 1
+    step = magnitude
+    for mult in (1, 2, 2.5, 5, 10):
+        step = magnitude * mult
+        if step >= raw_step:
+            break
+    start = math.floor(vmin / step) * step
+    out = []
+    v = start
+    while v <= vmax + step * 0.001:
+        if v >= vmin - step * 0.001:
+            out.append(round(v, 2))
+        v += step
+    return out
+
+x_ticks = marcas(x_min, x_max)
+y_ticks = marcas(y_min, y_max)
+
+def fmt(v):
+    return str(int(v)) if float(v).is_integer() else f"{v:g}"
+
+# ---- Fondo de cuadrantes ----
+fac_bounds = sorted(set(b for b in [x_min, UMBRAL_FAC_MEDIA, UMBRAL_FAC_ALTA, x_max] if x_min <= b <= x_max) | {x_min, x_max})
 urg_bounds = sorted(set(b for b in [y_min, UMBRAL_URG, y_max] if y_min <= b <= y_max) | {y_min, y_max})
 
-band_colors = {
-    ("alta_urg", "baja_fac"): "#FBE6E5",
-    ("alta_urg", "media_fac"): "#FCF0DC",
-    ("alta_urg", "alta_fac"): "#FBE6E5",
-    ("baja_urg", "baja_fac"): "#F2F2F2",
-    ("baja_urg", "media_fac"): "#F2F2F2",
-    ("baja_urg", "alta_fac"): "#FFF9DB",
-}
-
 rects_svg = []
+labels_svg = []
 for i in range(len(urg_bounds) - 1):
-    y0, y1 = urg_bounds[i], urg_bounds[i+1]
+    y0, y1 = urg_bounds[i], urg_bounds[i + 1]
     urg_key = "alta_urg" if y0 >= UMBRAL_URG - 0.01 else "baja_urg"
     for j in range(len(fac_bounds) - 1):
-        x0, x1 = fac_bounds[j], fac_bounds[j+1]
+        x0, x1 = fac_bounds[j], fac_bounds[j + 1]
         mid_x = (x0 + x1) / 2
         if mid_x >= UMBRAL_FAC_ALTA:
             fac_key = "alta_fac"
@@ -141,58 +164,62 @@ for i in range(len(urg_bounds) - 1):
             fac_key = "media_fac"
         else:
             fac_key = "baja_fac"
-        color = band_colors.get((urg_key, fac_key), "#FFFFFF")
+        color, zona_nombre = ZONE_COLOR.get((urg_key, fac_key), ("#FFFFFF", ""))
         rx, ry = sx(x0), sy(y1)
         rw, rh = sx(x1) - sx(x0), sy(y0) - sy(y1)
         rects_svg.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" fill="{color}" />')
+        if rw > 55 and rh > 25:
+            labels_svg.append(
+                f'<text x="{rx+8:.1f}" y="{ry+16:.1f}" font-size="10.5" fill="#7a7a7a" '
+                f'font-style="italic" font-family="Open Sans, sans-serif">{zona_nombre}</text>'
+            )
 
-# Lineas divisorias
+# ---- Lineas divisorias ----
 lines_svg = []
-if x_min <= UMBRAL_FAC_ALTA <= x_max:
-    lx = sx(UMBRAL_FAC_ALTA)
-    lines_svg.append(f'<line x1="{lx:.1f}" y1="{MARGIN_T}" x2="{lx:.1f}" y2="{MARGIN_T+PLOT_H}" stroke="#999" stroke-dasharray="5,4" stroke-width="1.5" />')
-if x_min <= UMBRAL_FAC_MEDIA <= x_max:
-    lx = sx(UMBRAL_FAC_MEDIA)
-    lines_svg.append(f'<line x1="{lx:.1f}" y1="{MARGIN_T}" x2="{lx:.1f}" y2="{MARGIN_T+PLOT_H}" stroke="#bbb" stroke-dasharray="3,3" stroke-width="1" />')
+for umbral in (UMBRAL_FAC_ALTA, UMBRAL_FAC_MEDIA):
+    if x_min <= umbral <= x_max:
+        lx = sx(umbral)
+        lines_svg.append(f'<line x1="{lx:.1f}" y1="{MARGIN_T}" x2="{lx:.1f}" y2="{MARGIN_T+PLOT_H}" stroke="#999" stroke-dasharray="5,4" stroke-width="1.3" />')
 if y_min <= UMBRAL_URG <= y_max:
     ly = sy(UMBRAL_URG)
-    lines_svg.append(f'<line x1="{MARGIN_L}" y1="{ly:.1f}" x2="{MARGIN_L+PLOT_W}" y2="{ly:.1f}" stroke="#999" stroke-dasharray="5,4" stroke-width="1.5" />')
+    lines_svg.append(f'<line x1="{MARGIN_L}" y1="{ly:.1f}" x2="{MARGIN_L+PLOT_W}" y2="{ly:.1f}" stroke="#999" stroke-dasharray="5,4" stroke-width="1.3" />')
 
-# Ejes
+# ---- Ejes + marcas numericas ----
+ticks_svg = []
+for t in x_ticks:
+    tx = sx(t)
+    ticks_svg.append(f'<line x1="{tx:.1f}" y1="{MARGIN_T+PLOT_H}" x2="{tx:.1f}" y2="{MARGIN_T+PLOT_H+5}" stroke="#333" stroke-width="1"/>')
+    ticks_svg.append(f'<text x="{tx:.1f}" y="{MARGIN_T+PLOT_H+18}" text-anchor="middle" font-size="10.5" fill="#555" font-family="Open Sans, sans-serif">{fmt(t)}</text>')
+for t in y_ticks:
+    ty = sy(t)
+    ticks_svg.append(f'<line x1="{MARGIN_L-5}" y1="{ty:.1f}" x2="{MARGIN_L}" y2="{ty:.1f}" stroke="#333" stroke-width="1"/>')
+    ticks_svg.append(f'<text x="{MARGIN_L-9}" y="{ty+3.5:.1f}" text-anchor="end" font-size="10.5" fill="#555" font-family="Open Sans, sans-serif">{fmt(t)}</text>')
+
 axes_svg = f'''
 <line x1="{MARGIN_L}" y1="{MARGIN_T}" x2="{MARGIN_L}" y2="{MARGIN_T+PLOT_H}" stroke="#333" stroke-width="1.5"/>
 <line x1="{MARGIN_L}" y1="{MARGIN_T+PLOT_H}" x2="{MARGIN_L+PLOT_W}" y2="{MARGIN_T+PLOT_H}" stroke="#333" stroke-width="1.5"/>
-<text x="{MARGIN_L+PLOT_W/2}" y="{H-15}" text-anchor="middle" font-size="13" fill="#333" font-family="Open Sans, sans-serif">Puntos Factibilidad</text>
-<text x="18" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13" fill="#333" font-family="Open Sans, sans-serif" transform="rotate(-90 18 {MARGIN_T+PLOT_H/2})">Puntos Urgencia</text>
+{"".join(ticks_svg)}
+<text x="{MARGIN_L+PLOT_W/2}" y="{H-8}" text-anchor="middle" font-size="13.5" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif">Factibilidad</text>
+<text x="16" y="{MARGIN_T+PLOT_H/2}" text-anchor="middle" font-size="13.5" font-weight="600" fill="#20303F" font-family="Open Sans, sans-serif" transform="rotate(-90 16 {MARGIN_T+PLOT_H/2})">Urgencia</text>
 '''
 
-# Puntos
+# ---- Puntos ----
 max_familias = max([i["familias"] for i in items], default=1) or 1
 points_svg = []
 for it in items:
     cx, cy = sx(it["pf"]), sy(it["pu"])
     r = 6 + 14 * (it["familias"] / max_familias) ** 0.5
-    color = CUADRANTE_COLOR.get(it["cuadrante"], DEFAULT_COLOR)
-    tooltip = (f"{it['name']} ({it['tipo_area']})\\n"
-               f"Cuadrante: {it['cuadrante']}\\n"
-               f"Urgencia: {it['nivel_urg']} ({it['pu']:.1f} pts)\\n"
-               f"Factibilidad: {it['nivel_fac']} ({it['pf']:.1f} pts)\\n"
-               f"Familias: {int(it['familias'])}")
+    tooltip = f"{it['name']}\\nFamilias: {int(it['familias'])}"
     points_svg.append(
-        f'<g class="punto"><circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" fill="{color}" '
-        f'fill-opacity="0.75" stroke="{color}" stroke-width="2"><title>{tooltip}</title></circle>'
+        f'<g class="punto"><circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" fill="{PUNTO_COLOR}" '
+        f'fill-opacity="0.78" stroke="{PUNTO_COLOR}" stroke-width="1.5"><title>{tooltip}</title></circle>'
         f'<text x="{cx:.1f}" y="{cy - r - 6:.1f}" text-anchor="middle" font-size="10.5" '
         f'fill="#333" font-family="Open Sans, sans-serif">{it["name"][:28]}</text></g>'
     )
 
-legend_items = list(dict.fromkeys(CUADRANTE_COLOR.keys()))
-legend_svg = ""
-ly = 20
 legend_rows = []
-for name, color in CUADRANTE_COLOR.items():
-    legend_rows.append(
-        f'<div class="legend-row"><span class="swatch" style="background:{color}"></span>{name}</div>'
-    )
+for (u, f), (color, nombre) in ZONE_COLOR.items():
+    legend_rows.append(f'<div class="legend-row"><span class="swatch" style="background:{color}"></span>{nombre}</div>')
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
@@ -211,7 +238,7 @@ html = f'''<!DOCTYPE html>
   svg {{ border:1px solid #E1E6EC; border-radius:8px; background:#fff; }}
   .legend {{ display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; font-size:13px; }}
   .legend-row {{ display:flex; align-items:center; gap:6px; }}
-  .swatch {{ width:14px; height:14px; border-radius:3px; display:inline-block; }}
+  .swatch {{ width:14px; height:14px; border-radius:3px; display:inline-block; border:1px solid #ddd; }}
   .punto text {{ pointer-events:none; }}
   .punto circle {{ cursor:pointer; }}
   .nota {{ font-size:12px; color:#999; margin-top:18px; }}
@@ -223,9 +250,10 @@ html = f'''<!DOCTYPE html>
   <div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div>
 </div>
 <div class="wrap">
-  <div class="updated">Última actualización: {now} (se regenera automáticamente con cada sincronización)</div>
+  <div class="updated">Última actualización: {now}</div>
   <svg viewBox="0 0 {W} {H}" width="100%" height="auto">
     {"".join(rects_svg)}
+    {"".join(labels_svg)}
     {"".join(lines_svg)}
     {axes_svg}
     {"".join(points_svg)}
@@ -233,7 +261,7 @@ html = f'''<!DOCTYPE html>
   <div class="legend">
     {"".join(legend_rows)}
   </div>
-  <div class="nota">El tamaño de cada punto representa el número de familias. Pasa el mouse sobre un punto para ver el detalle completo.</div>
+  <div class="nota">El tamaño de cada punto representa el número de familias. Pasa el mouse sobre un punto para ver el nombre y el número de familias.</div>
 </div>
 </body>
 </html>
