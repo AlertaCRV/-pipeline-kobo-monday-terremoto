@@ -5,9 +5,6 @@ de tarjetas, para consulta rapida y amigable de gerencia.
 NO incluye datos de contacto (nombre ni telefono del lider/referente) --
 esos quedan solo en Monday, nunca en esta pagina publica.
 
-Incluye un filtro de fecha (Desde / Hasta) que se aplica en el navegador,
-sin necesidad de volver a generar la pagina.
-
 Se guarda en docs/comunidades.html. Se corre despues de cada sincronizacion.
 """
 import os
@@ -31,6 +28,7 @@ COLS = {
     "cuadrante": "color_mm6rzjwx",
     "acciones_siguientes": "text_mm6vfd10",
     "tipo_area": "color_mm6r3ja7",
+    "mapa_fotos": "text_mm6vbwtv",
 }
 COL_IDS = list(COLS.values())
 
@@ -86,6 +84,7 @@ for it in items_raw:
         "cuadrante": vals.get(COLS["cuadrante"]) or "Sin cuadrante",
         "acciones": vals.get(COLS["acciones_siguientes"]) or "",
         "tipo_area": vals.get(COLS["tipo_area"]) or "",
+        "mapa_fotos": vals.get(COLS["mapa_fotos"]) or "",
     })
 
 def orden_key(it):
@@ -111,6 +110,15 @@ for it in items:
     breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"]] if x)
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
 
+    if it["mapa_fotos"] and it["mapa_fotos"].startswith("http"):
+        enlace_mapa_html = (f'<div class="section-label">Mapa y fotos</div>'
+                             f'<a class="mapa-link" href="{esc(it["mapa_fotos"])}" target="_blank" rel="noopener">📍 Ver mapa y fotos</a>')
+    elif it["mapa_fotos"]:
+        enlace_mapa_html = (f'<div class="section-label">Mapa y fotos</div>'
+                             f'<div class="acciones">{esc(it["mapa_fotos"])}</div>')
+    else:
+        enlace_mapa_html = ""
+
     card = f'''
     <div class="card" data-fecha="{esc(it["fecha"])}">
       <div class="card-top" style="background:{color}">
@@ -132,6 +140,7 @@ for it in items:
         <div class="tags">{tag_list(it["eval_tecnica"]) or '<span class="muted">No</span>'}</div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags">{tag_list(it["condiciones"]) or '<span class="muted">Ninguna</span>'}</div>
+        {enlace_mapa_html}
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">{acciones_txt}</div>
       </div>
@@ -180,6 +189,8 @@ html_parts.append(".filtro-bar button { background:#EDEFF2; border:none; border-
 html_parts.append(".filtro-bar button:hover { background:#E1E4E8; }")
 html_parts.append(".contador-filtro { font-size:11.5px; color:#8A93A0; margin-left:auto; }")
 html_parts.append(".sin-resultados { text-align:center; color:#8A93A0; font-size:13px; padding:40px 0; }")
+html_parts.append(".mapa-link { display:inline-block; font-size:12px; color:#2C6FB0; text-decoration:none; font-weight:600; }")
+html_parts.append(".mapa-link:hover { text-decoration:underline; }")
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
