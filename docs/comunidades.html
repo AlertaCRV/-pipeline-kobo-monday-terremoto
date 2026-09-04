@@ -21,7 +21,8 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 .card-body h3 { margin:0 0 6px; font-size:15px; color:#20303F; }
 .meta-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
 .pill-tipo { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#E7F0FA; color:#2C6FB0; padding:2px 8px; border-radius:10px; }
-.fecha { font-size:11px; color:#8A93A0; }
+.pill-progreso { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#EAF3E8; color:#3F7D3F; padding:2px 8px; border-radius:10px; }
+.fecha { font-size:11px; color:#8A93A0; margin-left:auto; }
 .breadcrumb { font-size:11.5px; color:#5B6672; margin-bottom:4px; }
 .coord, .familias { font-size:12px; color:#3A4048; margin-bottom:3px; }
 .section-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:#8A93A0; margin-top:10px; margin-bottom:4px; }
@@ -43,7 +44,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 <body>
 <div class="topbar"><div><h1>Resumen por comunidad</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><a href="index.html">Ver matriz de cuadrantes →</a></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-03 16:01 · 12 evaluaciones · Ordenadas por prioridad</div>
+<div class="updated">Última actualización: 2026-09-04 01:38 · 12 evaluaciones · Ordenadas por prioridad</div>
 <div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="filtrarPorFecha()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="filtrarPorFecha()"></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
 <div class="grid" id="grid-comunidades">
     <div class="card" data-fecha="2026-08-25">
@@ -55,6 +56,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>6 comunas Primer Jabillo, Guarairarepano, Tanque Ceibal, Las animas, Lucha y Victoria, Pueblo Unido</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-08-25</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Catia La Mar</div>
@@ -66,6 +68,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="muted">Ninguna</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones"><span class="muted">Sin acciones registradas</span></div>
@@ -81,6 +84,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>El Playon</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Intervenida</span>
           <span class="fecha">2026-08-18</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Macuto</div>
@@ -92,6 +96,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span><span class="tag">Sí - WASH</span><span class="tag">Sí - Alojamiento / estructural</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="muted">Ninguna</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Ya se realizó atenciones en salud con UMS se sugiere Distribución de insumos esenciales y evaluación de WASH y Shelter</div>
@@ -107,6 +112,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>La Soublette</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Catia La Mar</div>
@@ -118,6 +124,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - WASH</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">No se identifican condiciones que dificulten las entregas o distribuciones</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Si bien existen servicios de cisternas que abastecen a la comunidad de agua, estos son servicios contratados por los mismos miembros de la comunidad y se ha vuelto una práctica poco sostenible, y la casa comunal cuenta con la donación de un tanque de agua de 1000L y un sistema de potabilización, pero debido a las fallas del suministro interno, el agua no llega a la casa comunal y por ende no hay agua que filtrar. Además, la comunidad indica gran preocupación por la salud mental de la misma. Para cualquier tipo de intervenciones se tienen dos espacios, la casa comunal y una cancha comunitaria</div>
@@ -133,6 +140,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>Las Salinas</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Intervenida</span>
           <span class="fecha">2026-08-29</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Catia La Mar</div>
@@ -144,6 +152,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">No se identifican condiciones que dificulten las entregas o distribuciones</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Distribucion de kits de higiene, jerry cans y colchones a familias priorizadas, adultos mayores.</div>
@@ -159,6 +168,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>Playa Escondida</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Caraballeda</div>
@@ -170,6 +180,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="muted">Ninguna</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">La prioridad principal es el acceso al agua, seguido de la atencion medica, dado a que contaban con un centro ambulatorio que ya no esta en funcionamiento dado a los terremotos. El tema de SMAPS es una prioridad para todo el sector</div>
@@ -185,6 +196,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>UCM Mirabal, 8 comunas, Respiro parte Baja, Respiro parte Alta, Sector 1, Sector 2, Sector 3, Sector 4, Sector 5</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Contactada</span>
           <span class="fecha">2026-08-25</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Catia La Mar</div>
@@ -196,6 +208,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - WASH</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="muted">Ninguna</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones"><span class="muted">Sin acciones registradas</span></div>
@@ -211,6 +224,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>Las Lomas</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Caraballeda</div>
@@ -222,6 +236,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - Alojamiento / estructural</span><span class="tag">Sí - Logística / acceso</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Espacios para distribuciones y jornadas con limitaciones físicas y/o de seguridad para el personal</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">La comunidad tiene reunion hoy y se espera tener un censo de la comunidad</div>
@@ -237,6 +252,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>Macundamar</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Caraballeda</div>
@@ -248,6 +264,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span><span class="tag">Otra</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones"><span class="muted">Sin acciones registradas</span></div>
@@ -263,6 +280,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>Caciquetanagua</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Caraballeda</div>
@@ -274,6 +292,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Prioridad actividades SMAPS</div>
@@ -289,6 +308,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <h3>La Esperanza</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-01</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Carayaca</div>
@@ -300,6 +320,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)</span><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">La comunidad es muy sensible a todo tipo de vibracines y ruidos fuertes, mayor comunicación previa con la comunidad en caso se asistir con vehículos pesados para poner al pendiente los posibles ruidos y/o movimientos de la calle.
@@ -320,35 +341,10 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
       </div>
       <div class="card-body">
-        <h3>Macuto (Guaicamacto)</h3>
-        <div class="meta-row">
-          <span class="pill-tipo">Comunidad</span>
-          <span class="fecha">2026-09-02</span>
-        </div>
-        <div class="breadcrumb">La Guaira / Vargas / Macuto</div>
-        <div class="coord">📍 10.611682 -66.88767 0 0</div>
-        <div class="familias">👪 4326 familias</div>
-        <div class="section-label">Sectores prioritarios</div>
-        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
-        <div class="section-label">¿Requiere evaluación técnica?</div>
-        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
-        <div class="section-label">Condiciones que dificultan distribución</div>
-        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
-        <div class="section-label">Mapa y fotos</div><a class="mapa-link" href="https://www.google.com/maps/d/edit?mid=1vlryqCsY-x0nWGz1ZjpHenYOBYR-zes&amp;usp=sharing" target="_blank" rel="noopener">📍 Ver mapa y fotos</a>
-        <div class="section-label">Acciones recomendadas</div>
-        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
-      </div>
-    </div>
-    
-    <div class="card" data-fecha="2026-09-02">
-      <div class="card-top" style="background:#C9822E">
-        <span class="num">III</span>
-        <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
-      </div>
-      <div class="card-body">
         <h3>Tamarindo</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
           <span class="fecha">2026-09-02</span>
         </div>
         <div class="breadcrumb">La Guaira / Vargas / Caraballeda</div>
@@ -360,9 +356,38 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <div class="tags"><span class="tag">Sí - WASH</span><span class="tag">Sí - Alojamiento / estructural</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">En la zona la mayoría de personas que habitaban la zona, fallecieron y siguen sus cuerpos allí, por lo que el censo se sigue realizando a estas alturas por la cantidad de edificios destruídos</div>
+      </div>
+    </div>
+    
+    <div class="card" data-fecha="2026-09-02">
+      <div class="card-top" style="background:#C9822E">
+        <span class="num">III</span>
+        <span class="cuadrante-nombre">Intervenir con gestión de riesgo</span>
+      </div>
+      <div class="card-body">
+        <h3>Teleférico (5 consejo comunales)</h3>
+        <div class="meta-row">
+          <span class="pill-tipo">Comunidad</span>
+          <span class="pill-progreso">Evaluada</span>
+          <span class="fecha">2026-09-02</span>
+        </div>
+        <div class="breadcrumb">La Guaira / Vargas / Macuto</div>
+        <div class="coord">📍 10.611682 -66.88767 0 0</div>
+        <div class="familias">👪 4326 familias</div>
+        <div class="section-label">Sectores prioritarios</div>
+        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
+        <div class="section-label">¿Requiere evaluación técnica?</div>
+        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
+        <div class="section-label">Condiciones que dificultan distribución</div>
+        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
+        
+        <div class="section-label">Acciones recomendadas</div>
+        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
       </div>
     </div>
     </div>
