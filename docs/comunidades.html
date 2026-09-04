@@ -44,10 +44,10 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 <body>
 <div class="topbar"><div><h1>Resumen por comunidad</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><a href="index.html">Ver matriz de cuadrantes →</a></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-04 02:21 · 12 evaluaciones · Ordenadas por prioridad</div>
-<div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label><label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Contactada">Contactada</option><option value="Evaluada">Evaluada</option><option value="Intervenida">Intervenida</option></select></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
+<div class="updated">Última actualización: 2026-09-04 02:25 · 12 evaluaciones · Ordenadas por prioridad</div>
+<div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label><label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Contactada">Contactada</option><option value="Evaluada">Evaluada</option><option value="Intervenida">Intervenida</option></select></label><label>Evaluación de seguridad <select id="filtro-seguridad" onchange="aplicarFiltros()"><option value="">Todas</option><option value="No">No</option><option value="Sí">Sí</option><option value="Sin dato">Sin dato</option></select></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
 <div class="grid" id="grid-comunidades">
-    <div class="card" data-fecha="2026-08-25" data-progreso="Intervenida">
+    <div class="card" data-fecha="2026-08-25" data-progreso="Intervenida" data-seguridad="Sin dato">
       <div class="card-top" style="background:#3F7D6B">
         <span class="progreso-nombre">Intervenida</span>
       </div>
@@ -74,7 +74,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-18" data-progreso="Intervenida">
+    <div class="card" data-fecha="2026-08-18" data-progreso="Intervenida" data-seguridad="Sin dato">
       <div class="card-top" style="background:#3F7D6B">
         <span class="progreso-nombre">Intervenida</span>
       </div>
@@ -101,7 +101,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -128,7 +128,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-29" data-progreso="Intervenida">
+    <div class="card" data-fecha="2026-08-29" data-progreso="Intervenida" data-seguridad="Sí">
       <div class="card-top" style="background:#3F7D6B">
         <span class="progreso-nombre">Intervenida</span>
       </div>
@@ -155,7 +155,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -182,7 +182,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-25" data-progreso="Contactada">
+    <div class="card" data-fecha="2026-08-25" data-progreso="Contactada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#C9822E">
         <span class="progreso-nombre">Contactada</span>
       </div>
@@ -209,7 +209,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -236,7 +236,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -263,7 +263,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -290,7 +290,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-01" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-01" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -325,7 +325,7 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="No">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -352,7 +352,7 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -387,15 +387,18 @@ function aplicarFiltros() {
   const desde = document.getElementById('fecha-desde').value;
   const hasta = document.getElementById('fecha-hasta').value;
   const progreso = document.getElementById('filtro-progreso').value;
+  const seguridad = document.getElementById('filtro-seguridad').value;
   const tarjetas = document.querySelectorAll('#grid-comunidades .card');
   let visibles = 0;
   tarjetas.forEach(function(card) {
     const fecha = card.getAttribute('data-fecha');
     const progresoCard = card.getAttribute('data-progreso');
+    const seguridadCard = card.getAttribute('data-seguridad');
     let mostrar = true;
     if (desde && (!fecha || fecha < desde)) mostrar = false;
     if (hasta && (!fecha || fecha > hasta)) mostrar = false;
     if (progreso && progresoCard !== progreso) mostrar = false;
+    if (seguridad && seguridadCard !== seguridad) mostrar = false;
     card.style.display = mostrar ? '' : 'none';
     if (mostrar) visibles++;
   });
@@ -406,6 +409,7 @@ function limpiarFiltro() {
   document.getElementById('fecha-desde').value = '';
   document.getElementById('fecha-hasta').value = '';
   document.getElementById('filtro-progreso').value = '';
+  document.getElementById('filtro-seguridad').value = '';
   aplicarFiltros();
 }
 document.addEventListener('DOMContentLoaded', aplicarFiltros);
