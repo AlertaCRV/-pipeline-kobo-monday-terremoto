@@ -2,12 +2,13 @@
 Prueba de escritura real en Monday, usando las 5 comunidades ficticias
 (sin conectar a Kobo todavía -- eso se hace en un paso aparte).
 
-Este script SIEMPRE escribe de verdad en Monday (usa el MONDAY_API_TOKEN y
-MONDAY_BOARD_ID reales de los GitHub Secrets), reutilizando el mismo código
-de monday_client.py que usa el pipeline real (sync.py) -- así prueba de
-verdad la lógica de agrupación por Progreso y no una copia desactualizada.
-No usa la variable DRY_RUN (monday_client la ignora aquí porque se llama
-directo, no a través de sync.py).
+Reutiliza el mismo código de monday_client.py que usa el pipeline real
+(sync.py) -- así prueba de verdad la lógica de agrupación por Progreso y
+no una copia desactualizada. Como monday_client.upsert_item respeta
+DRY_RUN (definido en config.py), el workflow que corre este script debe
+fijar DRY_RUN=false para que escriba de verdad en Monday; si se corre sin
+esa variable (o en local, donde DRY_RUN es "true" por defecto), solo
+imprime el payload sin llamar a la API.
 """
 import json
 from pathlib import Path
