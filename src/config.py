@@ -83,8 +83,14 @@ MONDAY_COLUMN_MAP = {
     "telefono_referente": "text_mm6vaxs",
     "acciones_siguientes": "text_mm6vfd10",
     "fecha_eval": "date_mm6v1zxa",
+    "En_el_marco_del_diagn_stico_te": "color_mm6vwnfn",  # Evaluación de seguridad
+    "Nombre_de_la_persona_ionario_de_seguridad": "text_mm6vmk98",  # Persona
+    "progreso": "color_mm6vybqh",  # Progreso (no viene de Kobo, se fija en monday_client.py)
 }
 
+# Grupos antiguos, basados en Cuadrante. Ya no se usan para ubicar items
+# nuevos (ver PROGRESO_GROUP_MAP más abajo); se conservan solo por si
+# reorganizar_grupos.py necesita consultarlos para migraciones históricas.
 CUADRANTE_GROUP_MAP = {
     "Intervenir ya": "topics",
     "Intervenir con gestión de riesgo": "group_mm6t643r",
@@ -93,3 +99,18 @@ CUADRANTE_GROUP_MAP = {
     "Programar con preparación": "group_mm6t72tj",
     "Monitorear": "group_mm6t72tj",
 }
+
+# El tablero ahora se agrupa por Progreso (Intervenida/Contactada/Evaluada),
+# no por Cuadrante. IDs obtenidos al correr crear_grupos_progreso.py +
+# listar_grupos.py.
+PROGRESO_GROUP_MAP = {
+    "Intervenida": "group_TBD_INTERVENIDA",
+    "Contactada": "group_TBD_CONTACTADA",
+    "Evaluada": "group_TBD_EVALUADA",
+}
+
+# Toda evaluación nueva sincronizada desde Kobo entra por defecto a este
+# estado de Progreso (grupo + valor de columna), porque recién fue
+# diagnosticada y aún no ha sido contactada ni intervenida. El equipo la
+# mueve manualmente conforme avanza el trabajo real.
+PROGRESO_DEFAULT = "Evaluada"

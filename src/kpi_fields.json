@@ -298,5 +298,15 @@
   "campo": "fecha_eval",
   "tipo": "Fecha",
   "pregunta": "Fecha de la visita."
+ },
+ {
+  "campo": "En_el_marco_del_diagn_stico_te",
+  "tipo": "Selección única",
+  "pregunta": "En el marco del diagnóstico territorial que se acaba de realizar, ¿existe un Informe de Seguridad o documento técnico que permite operacionalizar las acciones de prevención y mitigación de riesgos al momento de la intervención?"
+ },
+ {
+  "campo": "Nombre_de_la_persona_ionario_de_seguridad",
+  "tipo": "Texto",
+  "pregunta": "Nombre de la persona que completó el informe o cuestionario de seguridad."
  }
 ]

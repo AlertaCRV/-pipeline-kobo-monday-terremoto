@@ -29,6 +29,9 @@ COLS = {
     "acciones_siguientes": "text_mm6vfd10",
     "tipo_area": "color_mm6r3ja7",
     "mapa_fotos": "text_mm6vbwtv",
+    "evaluacion_seguridad": "color_mm6vwnfn",
+    "persona_seguridad": "text_mm6vmk98",
+    "progreso": "color_mm6vybqh",
 }
 COL_IDS = list(COLS.values())
 
@@ -85,6 +88,9 @@ for it in items_raw:
         "acciones": vals.get(COLS["acciones_siguientes"]) or "",
         "tipo_area": vals.get(COLS["tipo_area"]) or "",
         "mapa_fotos": vals.get(COLS["mapa_fotos"]) or "",
+        "evaluacion_seguridad": vals.get(COLS["evaluacion_seguridad"]) or "",
+        "persona_seguridad": vals.get(COLS["persona_seguridad"]) or "",
+        "progreso": vals.get(COLS["progreso"]) or "",
     })
 
 def orden_key(it):
@@ -109,6 +115,12 @@ for it in items:
     ubicacion_txt = it["ubicacion"] or "Sin coordenadas"
     breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"]] if x)
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
+    progreso_txt = it["progreso"] or "Sin dato"
+
+    seguridad_tags = tag_list(it["evaluacion_seguridad"]) or '<span class="muted">Sin dato</span>'
+    seguridad_html = f'<div class="section-label">Evaluación de seguridad</div><div class="tags">{seguridad_tags}</div>'
+    if it["persona_seguridad"]:
+        seguridad_html += f'<div class="acciones">Completado por: {esc(it["persona_seguridad"])}</div>'
 
     if it["mapa_fotos"] and it["mapa_fotos"].startswith("http"):
         enlace_mapa_html = (f'<div class="section-label">Mapa y fotos</div>'
@@ -129,6 +141,7 @@ for it in items:
         <h3>{esc(it["name"])}</h3>
         <div class="meta-row">
           <span class="pill-tipo">{esc(it["tipo_area"])}</span>
+          <span class="pill-progreso">{esc(progreso_txt)}</span>
           <span class="fecha">{esc(it["fecha"]) or "Sin fecha"}</span>
         </div>
         <div class="breadcrumb">{esc(breadcrumb) or "Sin ubicación administrativa"}</div>
@@ -140,6 +153,7 @@ for it in items:
         <div class="tags">{tag_list(it["eval_tecnica"]) or '<span class="muted">No</span>'}</div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags">{tag_list(it["condiciones"]) or '<span class="muted">Ninguna</span>'}</div>
+        {seguridad_html}
         {enlace_mapa_html}
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">{acciones_txt}</div>
@@ -174,7 +188,8 @@ html_parts.append(".card-body { padding:14px 16px 16px; }")
 html_parts.append(".card-body h3 { margin:0 0 6px; font-size:15px; color:#20303F; }")
 html_parts.append(".meta-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }")
 html_parts.append(".pill-tipo { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#E7F0FA; color:#2C6FB0; padding:2px 8px; border-radius:10px; }")
-html_parts.append(".fecha { font-size:11px; color:#8A93A0; }")
+html_parts.append(".pill-progreso { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#EAF3E8; color:#3F7D3F; padding:2px 8px; border-radius:10px; }")
+html_parts.append(".fecha { font-size:11px; color:#8A93A0; margin-left:auto; }")
 html_parts.append(".breadcrumb { font-size:11.5px; color:#5B6672; margin-bottom:4px; }")
 html_parts.append(".coord, .familias { font-size:12px; color:#3A4048; margin-bottom:3px; }")
 html_parts.append(".section-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:#8A93A0; margin-top:10px; margin-bottom:4px; }")

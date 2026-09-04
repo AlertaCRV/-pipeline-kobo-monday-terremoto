@@ -9,11 +9,11 @@ que se habria enviado, para poder revisar el resultado sin credenciales.
 """
 import json
 import requests
-from config import DRY_RUN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID, MONDAY_COLUMN_MAP, CUADRANTE_GROUP_MAP
+from config import DRY_RUN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID, MONDAY_COLUMN_MAP, PROGRESO_GROUP_MAP, PROGRESO_DEFAULT
 
 
 def build_column_values(record: dict, score: dict) -> dict:
-    combined = {**record, **score}
+    combined = {**record, **score, "progreso": PROGRESO_DEFAULT}
     column_values = {}
     for campo, valor in combined.items():
         col_id = MONDAY_COLUMN_MAP.get(campo)
@@ -22,8 +22,8 @@ def build_column_values(record: dict, score: dict) -> dict:
     return column_values
 
 
-def upsert_item(item_name: str, column_values: dict, cuadrante: str = None) -> dict:
-    group_id = CUADRANTE_GROUP_MAP.get(cuadrante)
+def upsert_item(item_name: str, column_values: dict) -> dict:
+    group_id = PROGRESO_GROUP_MAP.get(PROGRESO_DEFAULT)
 
     payload = {
         "query": """
