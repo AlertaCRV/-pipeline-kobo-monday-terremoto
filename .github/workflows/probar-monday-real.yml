@@ -18,6 +18,7 @@ jobs:
 
       - name: Escribir comunidades ficticias en Monday
         env:
+          DRY_RUN: "false"
           MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
           MONDAY_BOARD_ID: ${{ secrets.MONDAY_BOARD_ID }}
         run: |
