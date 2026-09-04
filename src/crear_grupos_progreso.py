@@ -36,7 +36,9 @@ mutation ($board: ID!, $name: String!) {
 
 UPDATE_GROUP_COLOR_MUTATION = """
 mutation ($board: ID!, $group: String!, $value: String!) {
-  update_group (board_id: $board, group_id: $group, group_attribute: color, new_value: $value)
+  update_group (board_id: $board, group_id: $group, group_attribute: color, new_value: $value) {
+    id
+  }
 }
 """
 

@@ -104,9 +104,9 @@ CUADRANTE_GROUP_MAP = {
 # no por Cuadrante. IDs obtenidos al correr crear_grupos_progreso.py +
 # listar_grupos.py.
 PROGRESO_GROUP_MAP = {
-    "Intervenida": "group_TBD_INTERVENIDA",
-    "Contactada": "group_TBD_CONTACTADA",
-    "Evaluada": "group_TBD_EVALUADA",
+    "Intervenida": "group_mm6wxey0",
+    "Contactada": "group_mm6ws63p",
+    "Evaluada": "group_mm6w12kt",
 }
 
 # Toda evaluación nueva sincronizada desde Kobo entra por defecto a este
