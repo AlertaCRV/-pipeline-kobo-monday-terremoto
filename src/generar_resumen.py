@@ -121,7 +121,8 @@ for it in items:
     breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"], it["comuna"]] if x)
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
 
-    comuna_html = f'<div class="comuna-nombre">{esc(it["comuna"])}</div>' if it["comuna"] else ""
+    comuna_valor = esc(it["comuna"]) if it["comuna"] else '<span class="muted">Sin dato</span>'
+    comuna_html = f'<div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">{comuna_valor}</div>'
 
     seguridad_partes = [p.strip() for p in it["evaluacion_seguridad"].split(";")] if it["evaluacion_seguridad"] else []
     if seguridad_partes:
@@ -195,7 +196,8 @@ html_parts.append(".card { background:#fff; border-radius:10px; overflow:hidden;
 html_parts.append(".card-top { padding:8px 14px; display:flex; align-items:center; gap:8px; color:#fff; }")
 html_parts.append(".card-top .progreso-nombre { font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; }")
 html_parts.append(".card-body { padding:14px 16px 16px; }")
-html_parts.append(".card-body .comuna-nombre { margin:0 0 2px; font-size:17px; font-weight:800; color:#14202C; }")
+html_parts.append(".card-body .comuna-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:#8A93A0; margin-bottom:1px; }")
+html_parts.append(".card-body .comuna-nombre { margin:0 0 6px; font-size:17px; font-weight:800; color:#14202C; }")
 html_parts.append(".card-body h3 { margin:0 0 6px; font-size:15px; color:#20303F; }")
 html_parts.append(".meta-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }")
 html_parts.append(".pill-tipo { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#E7F0FA; color:#2C6FB0; padding:2px 8px; border-radius:10px; }")
