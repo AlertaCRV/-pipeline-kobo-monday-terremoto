@@ -17,7 +17,8 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 .card-top { padding:8px 14px; display:flex; align-items:center; gap:8px; color:#fff; }
 .card-top .progreso-nombre { font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
 .card-body { padding:14px 16px 16px; }
-.card-body .comuna-nombre { margin:0 0 2px; font-size:17px; font-weight:800; color:#14202C; }
+.card-body .comuna-label { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; color:#8A93A0; margin-bottom:1px; }
+.card-body .comuna-nombre { margin:0 0 6px; font-size:17px; font-weight:800; color:#14202C; }
 .card-body h3 { margin:0 0 6px; font-size:15px; color:#20303F; }
 .meta-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
 .pill-tipo { font-size:10.5px; font-weight:700; text-transform:uppercase; background:#E7F0FA; color:#2C6FB0; padding:2px 8px; border-radius:10px; }
@@ -43,7 +44,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 <body>
 <div class="topbar"><div><h1>Resumen por comunidad</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><a href="index.html">Ver matriz de cuadrantes →</a></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-04 02:07 · 12 evaluaciones · Ordenadas por prioridad</div>
+<div class="updated">Última actualización: 2026-09-04 02:13 · 12 evaluaciones · Ordenadas por prioridad</div>
 <div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label><label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Contactada">Contactada</option><option value="Evaluada">Evaluada</option><option value="Intervenida">Intervenida</option></select></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
 <div class="grid" id="grid-comunidades">
     <div class="card" data-fecha="2026-08-25" data-progreso="Intervenida">
@@ -51,7 +52,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Intervenida</span>
       </div>
       <div class="card-body">
-        
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
         <h3>6 comunas Primer Jabillo, Guarairarepano, Tanque Ceibal, Las animas, Lucha y Victoria, Pueblo Unido</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -78,7 +79,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Intervenida</span>
       </div>
       <div class="card-body">
-        
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
         <h3>El Playon</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -105,7 +106,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">La Soublette</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">La Soublette</div>
         <h3>La Soublette</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -132,7 +133,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Intervenida</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Las Salinas</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Las Salinas</div>
         <h3>Las Salinas</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -159,7 +160,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Circuito Fabricio Ojeda</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Circuito Fabricio Ojeda</div>
         <h3>Playa Escondida</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -186,7 +187,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Contactada</span>
       </div>
       <div class="card-body">
-        
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
         <h3>UCM Mirabal, 8 comunas, Respiro parte Baja, Respiro parte Alta, Sector 1, Sector 2, Sector 3, Sector 4, Sector 5</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -213,7 +214,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Circuito Fabricio Ojeda</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Circuito Fabricio Ojeda</div>
         <h3>Las Lomas</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -240,7 +241,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Tanaguarena</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Tanaguarena</div>
         <h3>Macundamar</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -267,7 +268,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Fabricio Ojeda</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Fabricio Ojeda</div>
         <h3>Caciquetanagua</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -294,7 +295,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">La Esperanza revolucionaria</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">La Esperanza revolucionaria</div>
         <h3>La Esperanza</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -329,7 +330,7 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Comuna Socialista Guaicamacuto</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Comuna Socialista Guaicamacuto</div>
         <h3>Macuto</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
@@ -356,7 +357,7 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-nombre">Fabricio Ojeda (Tanaguarenas)</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Fabricio Ojeda (Tanaguarenas)</div>
         <h3>Tamarindo</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
