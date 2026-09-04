@@ -132,6 +132,7 @@ for it in items:
     else:
         seguridad_tags = '<span class="muted">Sin dato</span>'
     seguridad_html = f'<div class="section-label">Evaluación de seguridad</div><div class="tags">{seguridad_tags}</div>'
+    seguridad_filtro = it["evaluacion_seguridad"] or "Sin dato"
 
     if it["mapa_fotos"] and it["mapa_fotos"].startswith("http"):
         mapa_valor_html = f'<a class="mapa-link" href="{esc(it["mapa_fotos"])}" target="_blank" rel="noopener">📍 Ver mapa y fotos</a>'
@@ -142,7 +143,7 @@ for it in items:
     mapa_html = f'<div class="section-label">Mapa y fotos</div>{mapa_valor_html}'
 
     card = f'''
-    <div class="card" data-fecha="{esc(it["fecha"])}" data-progreso="{esc(progreso_txt)}">
+    <div class="card" data-fecha="{esc(it["fecha"])}" data-progreso="{esc(progreso_txt)}" data-seguridad="{esc(seguridad_filtro)}">
       <div class="card-top" style="background:{color}">
         <span class="progreso-nombre">{esc(progreso_txt)}</span>
       </div>
@@ -173,6 +174,10 @@ for it in items:
 
 progreso_valores = sorted({it["progreso"] for it in items if it["progreso"]})
 opciones_progreso = "".join(f'<option value="{esc(p)}">{esc(p)}</option>' for p in progreso_valores)
+
+seguridad_valores = sorted({it["evaluacion_seguridad"] for it in items if it["evaluacion_seguridad"]})
+opciones_seguridad = "".join(f'<option value="{esc(p)}">{esc(p)}</option>' for p in seguridad_valores)
+opciones_seguridad += '<option value="Sin dato">Sin dato</option>'
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
@@ -232,6 +237,8 @@ html_parts.append(
     '<label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label>'
     f'<label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()">'
     f'<option value="">Todos</option>{opciones_progreso}</select></label>'
+    f'<label>Evaluación de seguridad <select id="filtro-seguridad" onchange="aplicarFiltros()">'
+    f'<option value="">Todas</option>{opciones_seguridad}</select></label>'
     '<button onclick="limpiarFiltro()">Limpiar filtro</button>'
     '<span id="contador-filtro" class="contador-filtro"></span>'
     '</div>'
@@ -245,15 +252,18 @@ function aplicarFiltros() {
   const desde = document.getElementById('fecha-desde').value;
   const hasta = document.getElementById('fecha-hasta').value;
   const progreso = document.getElementById('filtro-progreso').value;
+  const seguridad = document.getElementById('filtro-seguridad').value;
   const tarjetas = document.querySelectorAll('#grid-comunidades .card');
   let visibles = 0;
   tarjetas.forEach(function(card) {
     const fecha = card.getAttribute('data-fecha');
     const progresoCard = card.getAttribute('data-progreso');
+    const seguridadCard = card.getAttribute('data-seguridad');
     let mostrar = true;
     if (desde && (!fecha || fecha < desde)) mostrar = false;
     if (hasta && (!fecha || fecha > hasta)) mostrar = false;
     if (progreso && progresoCard !== progreso) mostrar = false;
+    if (seguridad && seguridadCard !== seguridad) mostrar = false;
     card.style.display = mostrar ? '' : 'none';
     if (mostrar) visibles++;
   });
@@ -264,6 +274,7 @@ function limpiarFiltro() {
   document.getElementById('fecha-desde').value = '';
   document.getElementById('fecha-hasta').value = '';
   document.getElementById('filtro-progreso').value = '';
+  document.getElementById('filtro-seguridad').value = '';
   aplicarFiltros();
 }
 document.addEventListener('DOMContentLoaded', aplicarFiltros);
