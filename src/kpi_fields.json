@@ -308,5 +308,10 @@
   "campo": "Nombre_de_la_persona_ionario_de_seguridad",
   "tipo": "Texto",
   "pregunta": "Nombre de la persona que completó el informe o cuestionario de seguridad."
+ },
+ {
+  "campo": "comuna_nombre",
+  "tipo": "Texto",
+  "pregunta": "¿Cuál es el nombre de la comuna donde se ubica esta comunidad?"
  }
 ]

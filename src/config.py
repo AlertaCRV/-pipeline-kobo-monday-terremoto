@@ -22,6 +22,7 @@ MONDAY_COLUMN_MAP = {
     "estado": "color_mm6rjg61",
     "municipio": "color_mm6rcbv4",
     "parroquia": "color_mm6r6yre",
+    "comuna_nombre": "text_mm6watd6",
     "sector_comunidad": "long_text_mm6r1nky",
     "nombre_campamento": "long_text_mm6r5k8r",
     "tipo_campamento": "color_mm6rvkj1",

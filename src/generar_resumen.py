@@ -20,6 +20,7 @@ COLS = {
     "estado": "color_mm6rjg61",
     "municipio": "color_mm6rcbv4",
     "parroquia": "color_mm6r6yre",
+    "comuna": "text_mm6watd6",
     "ubicacion": "long_text_mm6rwcs",
     "familias_actuales": "numeric_mm6r640v",
     "sectores_prioritarios": "dropdown_mm6rw0wh",
@@ -79,6 +80,7 @@ for it in items_raw:
         "estado": vals.get(COLS["estado"]) or "",
         "municipio": vals.get(COLS["municipio"]) or "",
         "parroquia": vals.get(COLS["parroquia"]) or "",
+        "comuna": vals.get(COLS["comuna"]) or "",
         "ubicacion": vals.get(COLS["ubicacion"]) or "",
         "familias": vals.get(COLS["familias_actuales"]) or "",
         "sectores": vals.get(COLS["sectores_prioritarios"]) or "",
@@ -113,7 +115,7 @@ for it in items:
     color, numero = ZONE_INFO.get(it["cuadrante"], ("#999999", "?"))
     familias_txt = f'{int(float(it["familias"]))} familias' if it["familias"] else "Familias: sin dato"
     ubicacion_txt = it["ubicacion"] or "Sin coordenadas"
-    breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"]] if x)
+    breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"], it["comuna"]] if x)
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
     progreso_txt = it["progreso"] or "Sin dato"
 
