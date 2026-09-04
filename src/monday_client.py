@@ -1,15 +1,16 @@
 """
 Cliente minimo para crear/actualizar items en Monday.com via su API GraphQL.
 
-Ahora coloca cada item directamente en su grupo correcto (segun el
-Cuadrante calculado), usando CUADRANTE_GROUP_MAP de config.py.
+Todos los items nuevos van al unico grupo del tablero (MONDAY_DEFAULT_GROUP_ID
+en config.py). El estado real de avance se registra en la columna Progreso,
+no separando items en distintos grupos.
 
 En DRY_RUN=true no se hace ninguna llamada de red: se imprime el payload
 que se habria enviado, para poder revisar el resultado sin credenciales.
 """
 import json
 import requests
-from config import DRY_RUN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID, MONDAY_COLUMN_MAP, PROGRESO_GROUP_MAP, PROGRESO_DEFAULT
+from config import DRY_RUN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID, MONDAY_COLUMN_MAP, MONDAY_DEFAULT_GROUP_ID, PROGRESO_DEFAULT
 
 
 def build_column_values(record: dict, score: dict) -> dict:
@@ -23,7 +24,7 @@ def build_column_values(record: dict, score: dict) -> dict:
 
 
 def upsert_item(item_name: str, column_values: dict) -> dict:
-    group_id = PROGRESO_GROUP_MAP.get(PROGRESO_DEFAULT)
+    group_id = MONDAY_DEFAULT_GROUP_ID
 
     payload = {
         "query": """

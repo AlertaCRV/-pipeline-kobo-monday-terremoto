@@ -100,17 +100,13 @@ CUADRANTE_GROUP_MAP = {
     "Monitorear": "group_mm6t72tj",
 }
 
-# El tablero ahora se agrupa por Progreso (Intervenida/Contactada/Evaluada),
-# no por Cuadrante. IDs obtenidos al correr crear_grupos_progreso.py +
-# listar_grupos.py.
-PROGRESO_GROUP_MAP = {
-    "Intervenida": "group_mm6wxey0",
-    "Contactada": "group_mm6ws63p",
-    "Evaluada": "group_mm6w12kt",
-}
+# El tablero usa un solo grupo para todos los items (ya no se separa en
+# 3 tablas por Progreso). El estado real de avance se maneja a mano en la
+# columna Progreso (status), no moviendo items entre grupos.
+MONDAY_DEFAULT_GROUP_ID = "group_mm6w12kt"  # "Comunidades" (antes "Evaluada")
 
-# Toda evaluación nueva sincronizada desde Kobo entra por defecto a este
-# estado de Progreso (grupo + valor de columna), porque recién fue
-# diagnosticada y aún no ha sido contactada ni intervenida. El equipo la
-# mueve manualmente conforme avanza el trabajo real.
+# Toda evaluación nueva sincronizada desde Kobo entra con este valor en la
+# columna Progreso, porque recién fue diagnosticada y aún no ha sido
+# contactada ni intervenida. El equipo cambia la etiqueta manualmente
+# conforme avanza el trabajo real.
 PROGRESO_DEFAULT = "Evaluada"
