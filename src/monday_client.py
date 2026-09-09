@@ -36,6 +36,29 @@ def build_column_values(record: dict, score: dict) -> dict:
     return column_values
 
 
+def fetch_valid_column_ids() -> set:
+    """
+    Devuelve el conjunto de column_id que realmente existen HOY en el
+    tablero. Si alguien borra o cambia una columna en Monday sin avisar,
+    esto evita que TODA una actualizacion falle por una sola columna
+    invalida (Monday rechaza change_multiple_column_values entero si un
+    solo column_id no existe).
+    """
+    if DRY_RUN:
+        return set(MONDAY_COLUMN_MAP.values()) | {KOBO_ID_COLUMN_ID, FOTOS_COLUMN_ID} | MONDAY_ONLY_COLUMN_IDS
+
+    query = "query ($board: ID!) { boards (ids: [$board]) { columns { id } } }"
+    headers = {"Authorization": MONDAY_API_TOKEN, "Content-Type": "application/json"}
+    resp = requests.post(MONDAY_API_URL, json={"query": query, "variables": {"board": MONDAY_BOARD_ID}},
+                          headers=headers, timeout=30)
+    resp.raise_for_status()
+    data = resp.json()
+    if "errors" in data:
+        print("  ⚠️ No se pudo leer la lista de columnas:", data["errors"])
+        return set(MONDAY_COLUMN_MAP.values()) | {KOBO_ID_COLUMN_ID, FOTOS_COLUMN_ID} | MONDAY_ONLY_COLUMN_IDS
+    return {c["id"] for c in data["data"]["boards"][0]["columns"]}
+
+
 def fetch_kobo_id_map() -> dict:
     """
     Devuelve {kobo_id: item_id} para todos los items actuales del tablero,

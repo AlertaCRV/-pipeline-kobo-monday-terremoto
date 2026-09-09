@@ -23,7 +23,7 @@ from transform import flatten_submission, select_kpi_record, build_item_name, ex
 from scoring import compute_score
 from monday_client import (
     build_column_values, upsert_item, update_item, get_created_item_id,
-    upload_photos_to_item, fetch_kobo_id_map,
+    upload_photos_to_item, fetch_kobo_id_map, fetch_valid_column_ids,
 )
 
 
@@ -33,11 +33,14 @@ def run():
     kobo_id_map = fetch_kobo_id_map()
     print(f"Items existentes en Monday (con ID Kobo reconocido): {len(kobo_id_map)}\n")
 
+    columnas_validas = fetch_valid_column_ids()
+
     submissions = get_new_submissions(since_id=0)
     print(f"Submissions encontradas en Kobo: {len(submissions)}\n")
 
     results = []
     creados, actualizados = 0, 0
+    columnas_invalidas_avisadas = set()
     for raw in submissions:
         kobo_id = str(raw.get("_id", ""))
         flat = flatten_submission(raw)
@@ -45,6 +48,13 @@ def run():
         kpi_record = select_kpi_record(flat)
         item_name = build_item_name(flat)
         column_values = build_column_values(kpi_record, score)
+
+        invalidas = set(column_values) - columnas_validas
+        if invalidas - columnas_invalidas_avisadas:
+            print(f"  ⚠️ Columnas que ya no existen en Monday (se omiten): {invalidas - columnas_invalidas_avisadas}")
+            columnas_invalidas_avisadas |= invalidas
+        if invalidas:
+            column_values = {k: v for k, v in column_values.items() if k not in invalidas}
 
         if kobo_id in kobo_id_map:
             item_id = kobo_id_map[kobo_id]
