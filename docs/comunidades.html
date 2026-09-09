@@ -44,12 +44,12 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 <body>
 <div class="topbar"><div><h1>Resumen por comunidad</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><a href="index.html">Ver matriz de cuadrantes →</a></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-04 12:46 · 12 evaluaciones · Ordenadas por prioridad</div>
-<div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label><label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Contactada">Contactada</option><option value="Evaluada">Evaluada</option><option value="Intervenida">Intervenida</option></select></label><label>Evaluación de seguridad <select id="filtro-seguridad" onchange="aplicarFiltros()"><option value="">Todas</option><option value="No">No</option><option value="Sí">Sí</option><option value="Sin dato">Sin dato</option></select></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
+<div class="updated">Última actualización: 2026-09-09 18:04 · 13 evaluaciones · Ordenadas por prioridad</div>
+<div class="filtro-bar"><label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label><label>Hasta <input type="date" id="fecha-hasta" onchange="aplicarFiltros()"></label><label>Progreso <select id="filtro-progreso" onchange="aplicarFiltros()"><option value="">Todos</option><option value="Evaluada">Evaluada</option></select></label><label>Evaluación de seguridad <select id="filtro-seguridad" onchange="aplicarFiltros()"><option value="">Todas</option><option value="Sí">Sí</option><option value="Sin dato">Sin dato</option></select></label><button onclick="limpiarFiltro()">Limpiar filtro</button><span id="contador-filtro" class="contador-filtro"></span></div>
 <div class="grid" id="grid-comunidades">
-    <div class="card" data-fecha="2026-08-25" data-progreso="Intervenida" data-seguridad="Sin dato">
-      <div class="card-top" style="background:#3F7D6B">
-        <span class="progreso-nombre">Intervenida</span>
+    <div class="card" data-fecha="2026-08-25" data-progreso="Evaluada" data-seguridad="Sin dato">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
         <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
@@ -74,9 +74,9 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-18" data-progreso="Intervenida" data-seguridad="Sin dato">
-      <div class="card-top" style="background:#3F7D6B">
-        <span class="progreso-nombre">Intervenida</span>
+    <div class="card" data-fecha="2026-08-18" data-progreso="Evaluada" data-seguridad="Sin dato">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
         <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
@@ -101,18 +101,18 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">La Soublette</div>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
         <h3>La Soublette</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
           <span class="fecha">2026-09-02</span>
         </div>
-        <div class="breadcrumb">La Guaira / Vargas / Catia La Mar / La Soublette</div>
+        <div class="breadcrumb">La Guaira / Vargas / Catia La Mar</div>
         <div class="coord">📍 10.5943216 -67.0379244 19.900001525878906 21.601</div>
         <div class="familias">👪 396 familias</div>
         <div class="section-label">Sectores prioritarios</div>
@@ -121,16 +121,16 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - WASH</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">No se identifican condiciones que dificulten las entregas o distribuciones</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Gabriel IFRC)</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Si bien existen servicios de cisternas que abastecen a la comunidad de agua, estos son servicios contratados por los mismos miembros de la comunidad y se ha vuelto una práctica poco sostenible, y la casa comunal cuenta con la donación de un tanque de agua de 1000L y un sistema de potabilización, pero debido a las fallas del suministro interno, el agua no llega a la casa comunal y por ende no hay agua que filtrar. Además, la comunidad indica gran preocupación por la salud mental de la misma. Para cualquier tipo de intervenciones se tienen dos espacios, la casa comunal y una cancha comunitaria</div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-29" data-progreso="Intervenida" data-seguridad="Sí">
-      <div class="card-top" style="background:#3F7D6B">
-        <span class="progreso-nombre">Intervenida</span>
+    <div class="card" data-fecha="2026-08-29" data-progreso="Evaluada" data-seguridad="Sin dato">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
         <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Las Salinas</div>
@@ -148,14 +148,14 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">No se identifican condiciones que dificulten las entregas o distribuciones</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Gabriel)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Distribucion de kits de higiene, jerry cans y colchones a familias priorizadas, adultos mayores.</div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -175,16 +175,16 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="muted">Ninguna</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Omar)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">La prioridad principal es el acceso al agua, seguido de la atencion medica, dado a que contaban con un centro ambulatorio que ya no esta en funcionamiento dado a los terremotos. El tema de SMAPS es una prioridad para todo el sector</div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-08-25" data-progreso="Contactada" data-seguridad="Sin dato">
-      <div class="card-top" style="background:#C9822E">
-        <span class="progreso-nombre">Contactada</span>
+    <div class="card" data-fecha="2026-08-25" data-progreso="Evaluada" data-seguridad="Sin dato">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
         <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre"><span class="muted">Sin dato</span></div>
@@ -209,7 +209,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -229,14 +229,14 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">Sí - Alojamiento / estructural</span><span class="tag">Sí - Logística / acceso</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Espacios para distribuciones y jornadas con limitaciones físicas y/o de seguridad para el personal</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Omar)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">La comunidad tiene reunion hoy y se espera tener un censo de la comunidad</div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -256,14 +256,14 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span><span class="tag">Otra</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Omar)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones"><span class="muted">Sin acciones registradas</span></div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -283,26 +283,26 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
         <div class="tags"><span class="tag">No</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Omar)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">Prioridad actividades SMAPS</div>
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-01" data-progreso="Evaluada" data-seguridad="Sin dato">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
       <div class="card-body">
-        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">La Esperanza revolucionaria</div>
-        <h3>La Esperanza</h3>
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Casco Central de Caraballeda</div>
+        <h3>Casco Central</h3>
         <div class="meta-row">
           <span class="pill-tipo">Comunidad</span>
-          <span class="fecha">2026-09-01</span>
+          <span class="fecha">2026-09-02</span>
         </div>
-        <div class="breadcrumb">La Guaira / Vargas / Carayaca / La Esperanza revolucionaria</div>
-        <div class="coord">📍 Sin coordenadas</div>
+        <div class="breadcrumb">La Guaira / Vargas / Caraballeda / Casco Central de Caraballeda</div>
+        <div class="coord">📍 10.607468 -66.848697 0 0</div>
         <div class="familias">👪 5997 familias</div>
         <div class="section-label">Sectores prioritarios</div>
         <div class="tags"><span class="tag">SMAPS</span><span class="tag">Medios de vida</span></div>
@@ -325,34 +325,7 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
       </div>
     </div>
     
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="No">
-      <div class="card-top" style="background:#8C2F26">
-        <span class="progreso-nombre">Evaluada</span>
-      </div>
-      <div class="card-body">
-        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Comuna Socialista Guaicamacuto</div>
-        <h3>Macuto</h3>
-        <div class="meta-row">
-          <span class="pill-tipo">Comunidad</span>
-          <span class="fecha">2026-09-02</span>
-        </div>
-        <div class="breadcrumb">La Guaira / Vargas / Macuto / Comuna Socialista Guaicamacuto</div>
-        <div class="coord">📍 10.611682 -66.88767 0 0</div>
-        <div class="familias">👪 4326 familias</div>
-        <div class="section-label">Sectores prioritarios</div>
-        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
-        <div class="section-label">¿Requiere evaluación técnica?</div>
-        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
-        <div class="section-label">Condiciones que dificultan distribución</div>
-        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">No</span></div>
-        <div class="section-label">Mapa y fotos</div><a class="mapa-link" href="https://www.google.com/maps/d/edit?mid=1vlryqCsY-x0nWGz1ZjpHenYOBYR-zes&amp;usp=sharing" target="_blank" rel="noopener">📍 Ver mapa y fotos</a>
-        <div class="section-label">Acciones recomendadas</div>
-        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
-      </div>
-    </div>
-    
-    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sí">
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
       <div class="card-top" style="background:#8C2F26">
         <span class="progreso-nombre">Evaluada</span>
       </div>
@@ -372,10 +345,64 @@ Está evaluación abarca la comunidad de caraballeda general, sus distintas comu
         <div class="tags"><span class="tag">Sí - WASH</span><span class="tag">Sí - Alojamiento / estructural</span></div>
         <div class="section-label">Condiciones que dificultan distribución</div>
         <div class="tags"><span class="tag">Vialidad en mal estado dificulta el paso de unidades móviles y vehículos de carga (huecos, baches, fallas de borde)</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span><span class="tag">Cobertura telefónica o conectividad para coordinación intermitente o inexistente</span></div>
-        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Omar)</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
         <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">En la zona la mayoría de personas que habitaban la zona, fallecieron y siguen sus cuerpos allí, por lo que el censo se sigue realizando a estas alturas por la cantidad de edificios destruídos</div>
+      </div>
+    </div>
+    
+    <div class="card" data-fecha="2026-09-02" data-progreso="Evaluada" data-seguridad="Sin dato">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
+      </div>
+      <div class="card-body">
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Comuna Socialista Guaicamacuto</div>
+        <h3>Teleférico (5 consejo comunales)</h3>
+        <div class="meta-row">
+          <span class="pill-tipo">Comunidad</span>
+          <span class="fecha">2026-09-02</span>
+        </div>
+        <div class="breadcrumb">La Guaira / Vargas / Macuto / Comuna Socialista Guaicamacuto</div>
+        <div class="coord">📍 10.611682 -66.88767 0 0</div>
+        <div class="familias">👪 4326 familias</div>
+        <div class="section-label">Sectores prioritarios</div>
+        <div class="tags"><span class="tag">Salud</span><span class="tag">WASH</span><span class="tag">Alojamiento / vivienda</span><span class="tag">SMAPS</span><span class="tag">Necesidades básicas</span><span class="tag">Medios de vida</span></div>
+        <div class="section-label">¿Requiere evaluación técnica?</div>
+        <div class="tags"><span class="tag">Sí - Salud</span><span class="tag">Sí - WASH</span></div>
+        <div class="section-label">Condiciones que dificultan distribución</div>
+        <div class="tags"><span class="tag">Calles angostas impiden acceso de camiones y vehículos de carga para distribuciones</span><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="muted">Sin dato</span></div>
+        <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
+        <div class="section-label">Acciones recomendadas</div>
+        <div class="acciones">(1) Se recomienda hacer distribuciones en los siguientes sectores: Teleférico (5 consejo comunales, 2381 familias);  Cayaurima y Guaicoto (2 consejo comunal, 1016 familias); Bellavemonte, Simón Rodriguez y Nuestra Venezuela (3 consejo comunal, 929 familias). (2) Se recomienda: A. Evaluación de salud en ambulatorio Leon Ávila del sector Montezuma (C.C. Bellavemonte). B. Evaluación WASH en sector Montezuma y  Teleférico.</div>
+      </div>
+    </div>
+    
+    <div class="card" data-fecha="2026-09-08" data-progreso="Evaluada" data-seguridad="Sí">
+      <div class="card-top" style="background:#8C2F26">
+        <span class="progreso-nombre">Evaluada</span>
+      </div>
+      <div class="card-body">
+        <div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">Circuito Comunal Catia La Mar I</div>
+        <h3>Negro Primero</h3>
+        <div class="meta-row">
+          <span class="pill-tipo">Comunidad</span>
+          <span class="fecha">2026-09-08</span>
+        </div>
+        <div class="breadcrumb">La Guaira / Vargas / Carlos Soublette / Circuito Comunal Catia La Mar I</div>
+        <div class="coord">📍 10.598305370462795 -67.03902745767206 0 0</div>
+        <div class="familias">👪 5592 familias</div>
+        <div class="section-label">Sectores prioritarios</div>
+        <div class="tags"><span class="tag">Medios de vida</span></div>
+        <div class="section-label">¿Requiere evaluación técnica?</div>
+        <div class="tags"><span class="tag">Sí - Otro</span></div>
+        <div class="section-label">Condiciones que dificultan distribución</div>
+        <div class="tags"><span class="tag">Ausencia de espacios techados para distribuciones y jornadas</span></div>
+        <div class="section-label">Evaluación de seguridad</div><div class="tags"><span class="tag">Sí (Gabriel)</span></div>
+        <div class="section-label">Mapa y fotos</div><span class="muted">Sin dato</span>
+        <div class="section-label">Acciones recomendadas</div>
+        <div class="acciones">La Comuna está conformada por 14 consecojos comunales, de los cuales solo tres resultaron afectados de manera directa: Indico Catia, Santa Cruz y Unión Comunitaria Las Casitas. El Circuito Comunal Catia La Mar I está ubicado en una zona con fuerte presencia del Estado: un hospital, una Clínica Popular, Escuela Naval, Infantería de Marina, Universidad Marítima del Caribe, entre otros. La cohabitación con estas instituciones públicas ha facilitado las intervenciones del Estado y la respuesta oportuna en materia de salud y alimentación. Todas las escuelas y ambulatorios afectados están siendo reparados por distintas instancias del Estado. La comuna ha sido intervenida igualmente por organizaciones privadacon programas de transferencias monetarias enfocados en la rehabilitación de viviendas, así como jornadas SMAPS, programas de recreación infantil y similares. La líder reconoce que solo requieren apoyo en materia de alimentación (proteinas) y asesoría/capital semilla y créditos dirigidos a los emprendedores de la zona para recuperar la economía.</div>
       </div>
     </div>
     </div>
