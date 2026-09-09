@@ -1,0 +1,25 @@
+name: Backfill ID Kobo en items existentes (una sola vez)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Backfill ID Kobo
+        env:
+          DRY_RUN: "false"
+          KOBO_API_TOKEN: ${{ secrets.KOBO_API_TOKEN }}
+          KOBO_ASSET_UID: ${{ secrets.KOBO_ASSET_UID }}
+          MONDAY_API_TOKEN: ${{ secrets.MONDAY_API_TOKEN }}
+          MONDAY_BOARD_ID: ${{ secrets.MONDAY_BOARD_ID }}
+        run: |
+          cd src
+          python backfill_id_kobo.py
