@@ -1,8 +1,7 @@
 """
 Diagnóstico de solo lectura: muestra cuántas submissions hay en Kobo y el
 rango de sus _id (mínimo y máximo), sin imprimir ningún valor de las
-respuestas. Sirve para comparar contra ultimo_id_sincronizado.txt y
-entender por qué sync.py no encuentra submissions nuevas.
+respuestas.
 """
 import os
 import requests

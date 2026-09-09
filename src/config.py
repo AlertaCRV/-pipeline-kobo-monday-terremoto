@@ -95,6 +95,21 @@ MONDAY_COLUMN_MAP = {
 # monday_client.upload_photos_to_item().
 FOTOS_COLUMN_ID = "file_mm71v7va"
 
+# Columna de Monday (tipo Texto) donde se guarda el _id de la submission
+# de Kobo. Permite reconocer si una submission ya tiene item creado y
+# ACTUALIZARLO en vez de crear un duplicado -- asi, editar una respuesta
+# ya aplicada en Kobo se refleja en Monday sin tener que borrar todo.
+KOBO_ID_COLUMN_ID = "text_mm718zj1"
+
+# Columna de Progreso: se fija sola vez al crear el item (ver
+# PROGRESO_DEFAULT); en actualizaciones NUNCA se vuelve a escribir, para
+# no pisar el estado que el equipo cambia a mano en Monday.
+PROGRESO_COLUMN_ID = MONDAY_COLUMN_MAP["progreso"]
+
+# Columnas que son manuales en Monday y jamas vienen ni se sobreescriben
+# desde Kobo (se llenan a mano ahi mismo): Mapa (URL/notas del mapa).
+MONDAY_ONLY_COLUMN_IDS = {"text_mm6vbwtv"}  # Mapa
+
 # Grupos antiguos, basados en Cuadrante. Ya no se usan para ubicar items
 # nuevos (ver PROGRESO_GROUP_MAP más abajo); se conservan solo por si
 # reorganizar_grupos.py necesita consultarlos para migraciones históricas.
