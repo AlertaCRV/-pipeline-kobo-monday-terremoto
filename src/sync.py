@@ -49,19 +49,25 @@ def run():
         if kobo_id in kobo_id_map:
             item_id = kobo_id_map[kobo_id]
             result = update_item(item_id, item_name, column_values)
-            actualizados += 1
-            print(f"  ~ actualizado: {item_name} ({score['nivel_urgencia']} urgencia / "
-                  f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']})")
+            if isinstance(result, dict) and result.get("errors"):
+                print(f"  ❌ ERROR actualizando '{item_name}' ({item_id}): {result['errors']}")
+            else:
+                actualizados += 1
+                print(f"  ~ actualizado: {item_name} ({score['nivel_urgencia']} urgencia / "
+                      f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']})")
         else:
             result = upsert_item(item_name, column_values, kobo_id)
-            creados += 1
-            print(f"  + creado: {item_name} ({score['nivel_urgencia']} urgencia / "
-                  f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']})")
+            if isinstance(result, dict) and result.get("errors"):
+                print(f"  ❌ ERROR creando '{item_name}': {result['errors']}")
+            else:
+                creados += 1
+                print(f"  + creado: {item_name} ({score['nivel_urgencia']} urgencia / "
+                      f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']})")
 
-            item_id = get_created_item_id(result)
-            attachments = extract_attachments(raw)
-            if attachments:
-                upload_photos_to_item(item_id, attachments)
+                item_id = get_created_item_id(result)
+                attachments = extract_attachments(raw)
+                if attachments:
+                    upload_photos_to_item(item_id, attachments)
 
         results.append({"item_name": item_name, "cuadrante": score["cuadrante"], "result": result})
 
