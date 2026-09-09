@@ -46,6 +46,17 @@ def select_kpi_record(flat: dict) -> dict:
     return {k: v for k, v in flat.items() if k in KPI_FIELD_NAMES}
 
 
+def extract_attachments(raw: dict) -> list:
+    """
+    Devuelve la lista de adjuntos (fotos) de una submission, tal como los
+    reporta Kobo en "_attachments" (cada uno con al menos "filename" y
+    "download_url"). El formulario solo tiene un campo de tipo imagen
+    (dentro del grupo repetible "grupo_fotos"), asi que todos los
+    adjuntos de la submission corresponden a esas fotos.
+    """
+    return raw.get("_attachments", []) or []
+
+
 def build_item_name(flat: dict) -> str:
     return (
         flat.get("nombre_o_sector")

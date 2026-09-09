@@ -10,7 +10,12 @@ que se habria enviado, para poder revisar el resultado sin credenciales.
 """
 import json
 import requests
-from config import DRY_RUN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID, MONDAY_COLUMN_MAP, MONDAY_DEFAULT_GROUP_ID, PROGRESO_DEFAULT
+from config import (
+    DRY_RUN, KOBO_API_TOKEN, MONDAY_API_TOKEN, MONDAY_API_URL, MONDAY_BOARD_ID,
+    MONDAY_COLUMN_MAP, MONDAY_DEFAULT_GROUP_ID, PROGRESO_DEFAULT, FOTOS_COLUMN_ID,
+)
+
+MONDAY_FILE_UPLOAD_URL = "https://api.monday.com/v2/file"
 
 
 def build_column_values(record: dict, score: dict) -> dict:
@@ -51,3 +56,57 @@ def upsert_item(item_name: str, column_values: dict) -> dict:
     resp = requests.post(MONDAY_API_URL, json=payload, headers=headers, timeout=30)
     resp.raise_for_status()
     return resp.json()
+
+
+def get_created_item_id(upsert_result: dict):
+    """Extrae el id del item recien creado a partir del resultado de upsert_item."""
+    try:
+        return upsert_result["data"]["create_item"]["id"]
+    except (KeyError, TypeError):
+        return None
+
+
+def upload_photos_to_item(item_id, attachments: list) -> None:
+    """
+    Descarga cada foto adjunta de la submission (via la API de Kobo) y la
+    sube a la columna Fotos del item correspondiente en Monday.
+    """
+    if not attachments:
+        return
+
+    if DRY_RUN:
+        print(f"[DRY_RUN] Se subirian {len(attachments)} foto(s) al item {item_id}, columna '{FOTOS_COLUMN_ID}'")
+        return
+
+    if not item_id:
+        print("  ⚠️ No se pudo subir fotos: no hay item_id (¿fallo la creacion del item?).")
+        return
+
+    mutation = (
+        "mutation add_file($file: File!) { "
+        f'add_file_to_column (file: $file, item_id: {item_id}, column_id: "{FOTOS_COLUMN_ID}") {{ id }} '
+        "}"
+    )
+
+    for att in attachments:
+        url = att.get("download_url")
+        if not url:
+            continue
+        filename = (att.get("filename") or "foto.jpg").split("/")[-1]
+
+        img_resp = requests.get(url, headers={"Authorization": f"Token {KOBO_API_TOKEN}"}, timeout=60)
+        img_resp.raise_for_status()
+
+        upload_resp = requests.post(
+            MONDAY_FILE_UPLOAD_URL,
+            headers={"Authorization": MONDAY_API_TOKEN},
+            data={"query": mutation},
+            files={"variables[file]": (filename, img_resp.content)},
+            timeout=60,
+        )
+        upload_resp.raise_for_status()
+        result = upload_resp.json()
+        if "errors" in result:
+            print(f"  ❌ Error subiendo foto '{filename}' al item {item_id}: {result['errors']}")
+        else:
+            print(f"  📷 Foto subida: '{filename}' -> item {item_id}")

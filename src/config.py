@@ -89,6 +89,12 @@ MONDAY_COLUMN_MAP = {
     "progreso": "color_mm6vybqh",  # Progreso (no viene de Kobo, se fija en monday_client.py)
 }
 
+# Columna de Monday (tipo Archivo) donde se suben las fotos del grupo
+# repetible "grupo_fotos" del formulario de Kobo. No es un valor de texto
+# como las demas columnas -- las fotos se suben aparte, en sync.py, vía
+# monday_client.upload_photos_to_item().
+FOTOS_COLUMN_ID = "file_mm71v7va"
+
 # Grupos antiguos, basados en Cuadrante. Ya no se usan para ubicar items
 # nuevos (ver PROGRESO_GROUP_MAP más abajo); se conservan solo por si
 # reorganizar_grupos.py necesita consultarlos para migraciones históricas.

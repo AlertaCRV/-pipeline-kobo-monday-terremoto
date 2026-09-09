@@ -14,9 +14,9 @@ Uso:
 from pathlib import Path
 from config import DRY_RUN
 from kobo_client import get_new_submissions
-from transform import flatten_submission, select_kpi_record, build_item_name
+from transform import flatten_submission, select_kpi_record, build_item_name, extract_attachments
 from scoring import compute_score
-from monday_client import build_column_values, upsert_item
+from monday_client import build_column_values, upsert_item, get_created_item_id, upload_photos_to_item
 
 STATE_FILE = Path(__file__).parent.parent / "ultimo_id_sincronizado.txt"
 
@@ -56,6 +56,11 @@ def run(since_id: int = None):
 
         print(f"  -> {item_name}: {score['nivel_urgencia']} urgencia / "
               f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']}")
+
+        attachments = extract_attachments(raw)
+        if attachments:
+            item_id = get_created_item_id(result)
+            upload_photos_to_item(item_id, attachments)
 
         sub_id = raw.get("_id", 0)
         if sub_id > max_id_procesado:
