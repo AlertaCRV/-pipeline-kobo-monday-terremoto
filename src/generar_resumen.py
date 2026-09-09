@@ -8,6 +8,8 @@ esos quedan solo en Monday, nunca en esta pagina publica.
 Se guarda en docs/comunidades.html. Se corre despues de cada sincronizacion.
 """
 import os
+import re
+import shutil
 import datetime
 import requests
 
@@ -40,11 +42,22 @@ QUERY = """
 query ($board: ID!, $cols: [String!]) {
   boards (ids: [$board]) {
     items_page (limit: 200) {
-      items { id name column_values (ids: $cols) { id text } }
+      items {
+        id name
+        column_values (ids: $cols) { id text }
+        assets { id name public_url }
+      }
     }
   }
 }
 """
+
+IMG_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp")
+
+
+def slug(texto, maxlen=40):
+    s = re.sub(r"[^A-Za-z0-9]+", "-", texto or "").strip("-").lower()
+    return s[:maxlen] or "archivo"
 
 ORDEN_CUADRANTE = ["Intervenir ya", "Resolver acceso primero", "Intervenir con gestión de riesgo",
                    "Oportunidad", "Programar con preparación", "Monitorear"]
@@ -73,10 +86,40 @@ resp = requests.post(
 resp.raise_for_status()
 items_raw = resp.json()["data"]["boards"][0]["items_page"]["items"]
 
+docs_dir = os.path.join(os.path.dirname(__file__), "..", "docs")
+fotos_dir = os.path.join(docs_dir, "fotos")
+shutil.rmtree(fotos_dir, ignore_errors=True)
+os.makedirs(fotos_dir, exist_ok=True)
+
+
+def descargar_fotos(item_id, nombre_item, assets):
+    rutas = []
+    for asset in (assets or []):
+        nombre = asset.get("name") or ""
+        if not nombre.lower().endswith(IMG_EXTENSIONS):
+            continue
+        url = asset.get("public_url")
+        if not url:
+            continue
+        ext = os.path.splitext(nombre)[1].lower()
+        filename = f"{item_id}_{asset['id']}_{slug(nombre_item)}{ext}"
+        try:
+            img_resp = requests.get(url, timeout=30)
+            img_resp.raise_for_status()
+            with open(os.path.join(fotos_dir, filename), "wb") as f:
+                f.write(img_resp.content)
+            rutas.append(f"fotos/{filename}")
+        except requests.RequestException as e:
+            print(f"  ⚠️ No se pudo descargar la foto '{nombre}' del item {item_id}: {e}")
+    return rutas
+
+
 items = []
 for it in items_raw:
     vals = {cv["id"]: cv["text"] for cv in it["column_values"]}
+    fotos = descargar_fotos(it["id"], it["name"], it.get("assets"))
     items.append({
+        "fotos": fotos,
         "name": it["name"],
         "fecha": vals.get(COLS["fecha_eval"]) or "",
         "estado": vals.get(COLS["estado"]) or "",
@@ -135,12 +178,21 @@ for it in items:
     seguridad_filtro = it["evaluacion_seguridad"] or "Sin dato"
 
     if it["mapa_fotos"] and it["mapa_fotos"].startswith("http"):
-        mapa_valor_html = f'<a class="mapa-link" href="{esc(it["mapa_fotos"])}" target="_blank" rel="noopener">📍 Ver mapa y fotos</a>'
+        mapa_valor_html = f'<a class="mapa-link" href="{esc(it["mapa_fotos"])}" target="_blank" rel="noopener">📍 Ver mapa</a>'
     elif it["mapa_fotos"]:
         mapa_valor_html = f'<div class="acciones">{esc(it["mapa_fotos"])}</div>'
     else:
         mapa_valor_html = '<span class="muted">Sin dato</span>'
-    mapa_html = f'<div class="section-label">Mapa y fotos</div>{mapa_valor_html}'
+    mapa_html = f'<div class="section-label">Mapa</div>{mapa_valor_html}'
+
+    if it["fotos"]:
+        fotos_valor_html = '<div class="fotos-grid">' + "".join(
+            f'<a href="{esc(ruta)}" target="_blank" rel="noopener"><img src="{esc(ruta)}" loading="lazy" alt="Foto de {esc(it["name"])}"></a>'
+            for ruta in it["fotos"]
+        ) + '</div>'
+    else:
+        fotos_valor_html = '<span class="muted">Sin dato</span>'
+    fotos_html = f'<div class="section-label">Fotos</div>{fotos_valor_html}'
 
     card = f'''
     <div class="card" data-fecha="{esc(it["fecha"])}" data-progreso="{esc(progreso_txt)}" data-seguridad="{esc(seguridad_filtro)}">
@@ -165,6 +217,7 @@ for it in items:
         <div class="tags">{tag_list(it["condiciones"]) or '<span class="muted">Ninguna</span>'}</div>
         {seguridad_html}
         {mapa_html}
+        {fotos_html}
         <div class="section-label">Acciones recomendadas</div>
         <div class="acciones">{acciones_txt}</div>
       </div>
@@ -223,6 +276,8 @@ html_parts.append(".contador-filtro { font-size:11.5px; color:#8A93A0; margin-le
 html_parts.append(".sin-resultados { text-align:center; color:#8A93A0; font-size:13px; padding:40px 0; }")
 html_parts.append(".mapa-link { display:inline-block; font-size:12px; color:#2C6FB0; text-decoration:none; font-weight:600; }")
 html_parts.append(".mapa-link:hover { text-decoration:underline; }")
+html_parts.append(".fotos-grid { display:flex; flex-wrap:wrap; gap:6px; }")
+html_parts.append(".fotos-grid img { width:64px; height:64px; object-fit:cover; border-radius:6px; border:1px solid #E1E6EC; }")
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
@@ -284,7 +339,6 @@ html_parts.append("</body></html>")
 
 html = "\n".join(html_parts)
 
-docs_dir = os.path.join(os.path.dirname(__file__), "..", "docs")
 os.makedirs(docs_dir, exist_ok=True)
 with open(os.path.join(docs_dir, "comunidades.html"), "w", encoding="utf-8") as f:
     f.write(html)
