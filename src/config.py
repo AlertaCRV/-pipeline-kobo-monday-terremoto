@@ -23,7 +23,7 @@ MONDAY_COLUMN_MAP = {
     "municipio": "color_mm6rcbv4",
     "parroquia": "color_mm6r6yre",
     "comuna_nombre": "text_mm6watd6",
-    "sector_comunidad": "long_text_mm6r1nky",
+    "sector_comunidad": "long_text_mm71wpm7",
     "nombre_campamento": "long_text_mm6r5k8r",
     "tipo_campamento": "color_mm6rvkj1",
     "ubicacion": "long_text_mm6rwcs",
