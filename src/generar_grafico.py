@@ -238,6 +238,7 @@ for (u, f), (color, numero, desc) in ZONE_INFO.items():
     )
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+now_iso = datetime.datetime.now().isoformat(timespec="seconds")
 
 svg_content = (
     "".join(rects_svg) + "".join(labels_svg) + "".join(lines_svg) + axes_svg
@@ -250,6 +251,7 @@ html_parts.append("<!DOCTYPE html>")
 html_parts.append('<html lang="es">')
 html_parts.append("<head>")
 html_parts.append('<meta charset="UTF-8">')
+html_parts.append(f'<meta name="generated-at" content="{now_iso}">')
 html_parts.append("<title>Matriz de Urgencia \u00d7 Factibilidad (Casos)</title>")
 html_parts.append("<style>")
 html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#fff; color:#20303F; margin:0; }')
@@ -287,6 +289,23 @@ nota_html = ('<div class="nota">El tama\u00f1o de cada punto representa el n\u00
 html_parts.append('<div class="legend-col"><h2>Cuadrantes</h2><div class="legend">' + legend_content + '</div>' + nota_html + '</div>')
 html_parts.append('</div>')
 html_parts.append('</div>')
+html_parts.append("""
+<script>
+(function () {
+  var generadoEn = document.querySelector('meta[name="generated-at"]').content;
+  function revisarActualizacion() {
+    fetch(window.location.pathname + '?_=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var m = html.match(/<meta name="generated-at" content="([^"]+)"/);
+        if (m && m[1] !== generadoEn) { location.reload(); }
+      })
+      .catch(function () {});
+  }
+  setInterval(revisarActualizacion, 180000);
+})();
+</script>
+""")
 html_parts.append("</body></html>")
 
 html = "\n".join(html_parts)

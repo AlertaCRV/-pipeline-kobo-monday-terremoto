@@ -250,12 +250,14 @@ opciones_seguridad = "".join(f'<option value="{esc(p)}">{esc(p)}</option>' for p
 opciones_seguridad += '<option value="Sin dato">Sin dato</option>'
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+now_iso = datetime.datetime.now().isoformat(timespec="seconds")
 
 html_parts = []
 html_parts.append("<!DOCTYPE html>")
 html_parts.append('<html lang="es">')
 html_parts.append("<head>")
 html_parts.append('<meta charset="UTF-8">')
+html_parts.append(f'<meta name="generated-at" content="{now_iso}">')
 html_parts.append("<title>Resumen de casos — CRV Terremoto 2026</title>")
 html_parts.append("<style>")
 html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#F5F7FA; color:#20303F; margin:0; }')
@@ -350,6 +352,20 @@ function limpiarFiltro() {
   aplicarFiltros();
 }
 document.addEventListener('DOMContentLoaded', aplicarFiltros);
+
+(function () {
+  var generadoEn = document.querySelector('meta[name="generated-at"]').content;
+  function revisarActualizacion() {
+    fetch(window.location.pathname + '?_=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var m = html.match(/<meta name="generated-at" content="([^"]+)"/);
+        if (m && m[1] !== generadoEn) { location.reload(); }
+      })
+      .catch(function () {});
+  }
+  setInterval(revisarActualizacion, 180000);
+})();
 </script>
 """)
 html_parts.append("</body></html>")
