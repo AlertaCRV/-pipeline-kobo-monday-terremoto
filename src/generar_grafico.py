@@ -34,18 +34,18 @@ query ($board: ID!, $cols: [String!]) {
 PUNTO_COLOR = "#1C4269"
 
 ZONE_INFO = {
-    ("alta_urg", "alta_fac"):  ("#A63A2E", "I", "Intervenir ya",
-        "Urgente y con buen acceso: desplegar de inmediato."),
-    ("alta_urg", "media_fac"): ("#C9822E", "III", "Intervenir con gestión de riesgo",
-        "Urgente con dificultades moderadas: actuar con planificación."),
-    ("alta_urg", "baja_fac"):  ("#8C2F26", "II", "Resolver acceso primero",
-        "Urgente pero con acceso bloqueado: gestionar la vía antes de desplegar."),
-    ("baja_urg", "alta_fac"):  ("#3F7D6B", "IV", "Oportunidad",
-        "No urgente y de fácil acceso: atender cuando haya capacidad libre."),
-    ("baja_urg", "media_fac"): ("#6E8A9E", "V", "Programar con preparación",
-        "No urgente, con dificultades moderadas: programar con anticipación."),
-    ("baja_urg", "baja_fac"):  ("#8A8D89", "VI", "Monitorear",
-        "Ni urgente ni accesible por ahora: revisar en la próxima ronda."),
+    ("alta_urg", "alta_fac"):  ("#A63A2E", "I",
+        "Casos con necesidades urgentes de atención, ubicados en zonas de fácil acceso."),
+    ("alta_urg", "media_fac"): ("#C9822E", "III",
+        "Casos con necesidades urgentes de atención, con dificultades moderadas de acceso."),
+    ("alta_urg", "baja_fac"):  ("#8C2F26", "II",
+        "Casos con necesidades urgentes de atención, pero con acceso actualmente bloqueado."),
+    ("baja_urg", "alta_fac"):  ("#3F7D6B", "IV",
+        "Casos sin necesidades urgentes, ubicados en zonas de fácil acceso."),
+    ("baja_urg", "media_fac"): ("#6E8A9E", "V",
+        "Casos sin necesidades urgentes, con dificultades moderadas de acceso."),
+    ("baja_urg", "baja_fac"):  ("#8A8D89", "VI",
+        "Casos sin necesidades urgentes y con acceso limitado por el momento."),
 }
 
 def hex_to_rgb(h):
@@ -134,7 +134,7 @@ for i in range(len(urg_bounds) - 1):
         x0, x1 = fac_bounds[j], fac_bounds[j + 1]
         mid_x = (x0 + x1) / 2
         fac_key = "alta_fac" if mid_x >= UMBRAL_FAC_ALTA else ("media_fac" if mid_x >= UMBRAL_FAC_MEDIA else "baja_fac")
-        base_color, numero, zona_nombre, _ = ZONE_INFO.get((urg_key, fac_key), ("#DDDDDD", "", "", ""))
+        base_color, numero, _ = ZONE_INFO.get((urg_key, fac_key), ("#DDDDDD", "", ""))
         color = tint(base_color)
         rx, ry = sx(x0), sy(y1)
         rw, rh = sx(x1) - sx(x0), sy(y0) - sy(y1)
@@ -227,16 +227,14 @@ for p in raw_points:
     tooltip = f"{it['name']}\\nFamilias: {int(it['familias'])}"
     points_svg.append(
         f'<g class="punto"><circle cx="{dx:.1f}" cy="{dy:.1f}" r="{r:.1f}" fill="{PUNTO_COLOR}" '
-        f'fill-opacity="0.82" stroke="#0F2A47" stroke-width="1.2"><title>{tooltip}</title></circle>'
-        f'<text x="{dx:.1f}" y="{dy - r - 6:.1f}" text-anchor="middle" font-size="10" '
-        f'fill="#2A3038" font-family="Open Sans, sans-serif">{it["name"][:24]}</text></g>'
+        f'fill-opacity="0.82" stroke="#0F2A47" stroke-width="1.2"><title>{tooltip}</title></circle></g>'
     )
 
 legend_rows = []
-for (u, f), (color, numero, nombre, desc) in ZONE_INFO.items():
+for (u, f), (color, numero, desc) in ZONE_INFO.items():
     legend_rows.append(
         f'<div class="legend-row"><span class="num-badge" style="background:{color}">{numero}</span>'
-        f'<div><div class="legend-title">{nombre}</div><div class="legend-desc">{desc}</div></div></div>'
+        f'<div class="legend-desc">{desc}</div></div>'
     )
 
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -252,7 +250,7 @@ html_parts.append("<!DOCTYPE html>")
 html_parts.append('<html lang="es">')
 html_parts.append("<head>")
 html_parts.append('<meta charset="UTF-8">')
-html_parts.append("<title>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</title>")
+html_parts.append("<title>Matriz de Urgencia \u00d7 Factibilidad (Casos)</title>")
 html_parts.append("<style>")
 html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#fff; color:#20303F; margin:0; }')
 html_parts.append(".topbar { background:#1C4269; color:#fff; padding:10px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }")
@@ -268,16 +266,15 @@ html_parts.append('.legend-col h2 { font-size:12px; margin:4px 0 12px; color:#20
 html_parts.append(".legend { display:flex; flex-direction:column; gap:13px; }")
 html_parts.append(".legend-row { display:flex; align-items:flex-start; gap:10px; }")
 html_parts.append(".num-badge { flex-shrink:0; width:22px; height:22px; border-radius:5px; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; }")
-html_parts.append(".legend-title { font-size:12.5px; font-weight:700; color:#20303F; }")
-html_parts.append(".legend-desc { font-size:11.5px; color:#5B6672; margin-top:1px; line-height:1.3; }")
+html_parts.append(".legend-desc { font-size:12px; color:#3A4048; line-height:1.35; padding-top:1px; }")
 html_parts.append(".nota { font-size:11px; color:#8A93A0; margin-top:14px; }")
 html_parts.append("@media (max-width:760px){ .layout{flex-direction:column;} .legend-col{max-width:100%;} }")
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
-html_parts.append('<div class="topbar"><div><h1>Matriz de Urgencia \u00d7 Factibilidad (Comunidades)</h1>'
+html_parts.append('<div class="topbar"><div><h1>Matriz de Urgencia \u00d7 Factibilidad (Casos)</h1>'
                    '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
-                   '<a href="comunidades.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen por comunidad \u2192</a></div>')
+                   '<a href="comunidades.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen de casos \u2192</a></div>')
 html_parts.append('<div class="wrap">')
 html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now}</div>')
 html_parts.append('<div class="layout">')

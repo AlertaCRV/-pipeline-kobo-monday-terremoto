@@ -256,7 +256,7 @@ html_parts.append("<!DOCTYPE html>")
 html_parts.append('<html lang="es">')
 html_parts.append("<head>")
 html_parts.append('<meta charset="UTF-8">')
-html_parts.append("<title>Resumen por comunidad — CRV Terremoto 2026</title>")
+html_parts.append("<title>Resumen de casos — CRV Terremoto 2026</title>")
 html_parts.append("<style>")
 html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#F5F7FA; color:#20303F; margin:0; }')
 html_parts.append(".topbar { background:#1C4269; color:#fff; padding:14px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }")
@@ -298,7 +298,7 @@ html_parts.append(".fotos-grid img { width:64px; height:64px; object-fit:cover; 
 html_parts.append("</style>")
 html_parts.append("</head>")
 html_parts.append("<body>")
-html_parts.append('<div class="topbar"><div><h1>Resumen por comunidad</h1>'
+html_parts.append('<div class="topbar"><div><h1>Resumen de casos</h1>'
                    '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
                    '<a href="index.html">Ver matriz de cuadrantes \u2192</a></div>')
 html_parts.append('<div class="wrap">')
@@ -316,7 +316,7 @@ html_parts.append(
     '</div>'
 )
 html_parts.append('<div class="grid" id="grid-comunidades">' + "".join(cards_html) + '</div>')
-html_parts.append('<div id="sin-resultados" class="sin-resultados" style="display:none;">No hay comunidades evaluadas en ese periodo.</div>')
+html_parts.append('<div id="sin-resultados" class="sin-resultados" style="display:none;">No hay casos evaluados en ese periodo.</div>')
 html_parts.append('</div>')
 html_parts.append("""
 <script>
@@ -339,7 +339,7 @@ function aplicarFiltros() {
     card.style.display = mostrar ? '' : 'none';
     if (mostrar) visibles++;
   });
-  document.getElementById('contador-filtro').textContent = visibles + ' de ' + tarjetas.length + ' comunidades visibles';
+  document.getElementById('contador-filtro').textContent = visibles + ' de ' + tarjetas.length + ' casos visibles';
   document.getElementById('sin-resultados').style.display = (visibles === 0) ? 'block' : 'none';
 }
 function limpiarFiltro() {
