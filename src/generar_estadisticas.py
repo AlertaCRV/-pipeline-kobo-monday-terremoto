@@ -30,31 +30,35 @@ CATEGORIA_COLS = {
     "progreso": ("Progreso", "color_mm6vybqh", ["Evaluada", "Contactada", "Intervenida"]),
     "tipo_area": ("Tipo de área", "color_mm6r3ja7", None),
     "cuadrante": ("Cuadrante de prioridad", "color_mm6rzjwx", None),
-    "nivel_urgencia": ("Nivel de urgencia", "color_mm6rr2g5", ["Alta", "Media", "Baja"]),
-    "nivel_factibilidad": ("Nivel de factibilidad", "color_mm6rkghg", ["Alta", "Media", "Baja"]),
     "evaluacion_seguridad": ("Evaluación de seguridad", "color_mm6vwnfn", ["Sí", "No"]),
-    "situacion_critica": ("Situación crítica", "color_mm6rcjds", ["Sí", "No"]),
 }
 
 # --- Campos de selección múltiple: contar menciones de cada etiqueta ---
 MULTI_COLS = {
     "servicios_afectados": ("Servicios afectados", "dropdown_mm6r9z18"),
     "sectores_prioritarios": ("Sectores prioritarios", "dropdown_mm6rw0wh"),
-    "necesidades_principales": ("Necesidades principales", "dropdown_mm6r93b3"),
     "brechas_necesidades": ("Brechas sin atender", "dropdown_mm6rztw"),
-    "riesgos_terremoto": ("Riesgos terremoto/réplicas", "dropdown_mm6r6sq9"),
-    "condiciones_distribucion": ("Condiciones que dificultan distribución", "dropdown_mm6s4s4x"),
-    "riesgos_proteccion": ("Riesgos de protección", "dropdown_mm6rywsd"),
 }
 
-TOP_N_MENCIONES = 5
+# Etiquetas y colores de las 6 zonas de la Matriz de Urgencia × Factibilidad
+# (ver ZONE_INFO en generar_grafico.py -- mismos valores, para que el
+# "Cuadrante de prioridad" se lea igual en ambas páginas del sitio).
+CUADRANTE_ZONA = {
+    "Intervenir ya": ("I", "#A63A2E"),
+    "Intervenir con gestión de riesgo": ("II", "#8C2F26"),
+    "Resolver acceso primero": ("III", "#C9822E"),
+    "Oportunidad": ("IV", "#3F7D6B"),
+    "Programar con preparación": ("V", "#6E8A9E"),
+    "Monitorear": ("VI", "#8A8D89"),
+}
+CUADRANTE_ORDEN = ["Intervenir ya", "Intervenir con gestión de riesgo", "Resolver acceso primero",
+                   "Oportunidad", "Programar con preparación", "Monitorear"]
 
 # Colores de estado reutilizados de las otras páginas (mismo significado
 # en todo el sitio: Progreso, y semáforo Sí/No según si implica alerta).
 PROGRESO_COLOR = {"Evaluada": "#8C2F26", "Contactada": "#C9822E", "Intervenida": "#3F7D6B"}
 SI_NO_COLOR = {
     "evaluacion_seguridad": {"Sí": "#3F7D6B", "No": "#C9822E"},
-    "situacion_critica": {"Sí": "#A63A2E", "No": "#3F7D6B"},
 }
 BARRA_COLOR_DEFAULT = "#2C6FB0"
 BARRA_COLOR_MENCIONES = "#1C4269"
@@ -132,13 +136,24 @@ def orden_categoria(conteo, orden_fijo):
 def color_categoria(campo, valor):
     if campo == "progreso":
         return PROGRESO_COLOR.get(valor, "#8A8D89")
+    if campo == "cuadrante":
+        return CUADRANTE_ZONA.get(valor, (None, "#8A8D89"))[1]
     if campo in SI_NO_COLOR:
         return SI_NO_COLOR[campo].get(valor, "#8A8D89")
     return BARRA_COLOR_DEFAULT
 
 
+def etiqueta_categoria(campo, valor):
+    if campo == "cuadrante":
+        numero = CUADRANTE_ZONA.get(valor, (None, None))[0]
+        return f"Zona {numero} · {valor}" if numero else valor
+    return valor
+
+
 def bloque_categoria(campo, etiqueta, col_id, orden_fijo):
     conteo = contar_categoria(col_id)
+    if campo == "cuadrante":
+        orden_fijo = CUADRANTE_ORDEN
     claves = orden_categoria(conteo, orden_fijo)
     max_val = max(conteo.values(), default=1)
     filas_html = []
@@ -148,7 +163,7 @@ def bloque_categoria(campo, etiqueta, col_id, orden_fijo):
         color = color_categoria(campo, clave)
         filas_html.append(f'''
         <div class="barra-fila">
-          <div class="barra-label">{esc(clave)}</div>
+          <div class="barra-label">{esc(etiqueta_categoria(campo, clave))}</div>
           <div class="barra-pista"><div class="barra-relleno" style="width:{pct:.1f}%; background:{color}"></div></div>
           <div class="barra-valor">{n}</div>
         </div>''')
@@ -174,11 +189,9 @@ def bloque_menciones(etiqueta, col_id):
     if not conteo:
         return f'<div class="bloque"><h3>{esc(etiqueta)}</h3><div class="sin-dato">Sin datos registrados.</div></div>'
     ordenadas = sorted(conteo.items(), key=lambda kv: -kv[1])
-    top = ordenadas[:TOP_N_MENCIONES]
-    resto = len(ordenadas) - len(top)
-    max_val = top[0][1] if top else 1
+    max_val = ordenadas[0][1] if ordenadas else 1
     filas_html = []
-    for clave, n in top:
+    for clave, n in ordenadas:
         pct = (n / max_val * 100) if max_val else 0
         filas_html.append(f'''
         <div class="barra-fila">
@@ -186,8 +199,7 @@ def bloque_menciones(etiqueta, col_id):
           <div class="barra-pista"><div class="barra-relleno" style="width:{pct:.1f}%; background:{BARRA_COLOR_MENCIONES}"></div></div>
           <div class="barra-valor">{n}</div>
         </div>''')
-    nota = f'<div class="mas-nota">+{resto} etiqueta(s) más, no mostradas</div>' if resto > 0 else ""
-    return f'<div class="bloque"><h3>{esc(etiqueta)}</h3>{"".join(filas_html)}{nota}</div>'
+    return f'<div class="bloque"><h3>{esc(etiqueta)}</h3>{"".join(filas_html)}</div>'
 
 
 # --- Construcción de la página ------------------------------------------
@@ -229,7 +241,7 @@ html_parts.append(".stat-valor { font-size:26px; font-weight:800; color:#14202C;
 html_parts.append(".secciones { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; align-items:start; }")
 html_parts.append(".bloque { background:#fff; border:1px solid #E1E6EC; border-radius:10px; padding:16px 18px; }")
 html_parts.append(".bloque h3 { margin:0 0 12px; font-size:13px; color:#20303F; text-transform:uppercase; letter-spacing:.3px; }")
-html_parts.append(".barra-fila { display:grid; grid-template-columns:minmax(90px,140px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }")
+html_parts.append(".barra-fila { display:grid; grid-template-columns:minmax(90px,190px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }")
 html_parts.append(".barra-label { font-size:12px; color:#3A4048; }")
 html_parts.append(".barra-pista { background:#F0F2F5; border-radius:6px; height:12px; overflow:hidden; }")
 html_parts.append(".barra-relleno { height:100%; border-radius:6px; }")
