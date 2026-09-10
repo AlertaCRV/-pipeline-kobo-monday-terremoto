@@ -147,7 +147,8 @@
  },
  "tipo_area": {
   "comunidad": "Comunidad",
-  "campamento": "Campamento transitorio"
+  "campamento": "Campamento transitorio",
+  "otro": "Otro"
  },
  "servicios_afectados": {
   "agua": "Agua",
