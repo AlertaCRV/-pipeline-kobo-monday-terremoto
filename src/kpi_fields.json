@@ -5,6 +5,11 @@
   "pregunta": "Tipo de área"
  },
  {
+  "campo": "Especfique",
+  "tipo": "Texto",
+  "pregunta": "Especifique (detalle cuando Tipo de área = Otro)"
+ },
+ {
   "campo": "estado",
   "tipo": "Selección única",
   "pregunta": "Estado"

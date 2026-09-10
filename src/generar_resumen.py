@@ -31,10 +31,12 @@ COLS = {
     "cuadrante": "color_mm6rzjwx",
     "acciones_siguientes": "text_mm6vfd10",
     "tipo_area": "color_mm6r3ja7",
+    "tipo_area_detalle": "text_mm723y58",
     "mapa_fotos": "text_mm6vbwtv",
     "evaluacion_seguridad": "color_mm6vwnfn",
     "persona_seguridad": "text_mm6vmk98",
     "progreso": "color_mm6vybqh",
+    "id_kobo": "text_mm718zj1",
 }
 COL_IDS = list(COLS.values())
 
@@ -58,9 +60,6 @@ IMG_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp")
 def slug(texto, maxlen=40):
     s = re.sub(r"[^A-Za-z0-9]+", "-", texto or "").strip("-").lower()
     return s[:maxlen] or "archivo"
-
-ORDEN_CUADRANTE = ["Intervenir ya", "Resolver acceso primero", "Intervenir con gestión de riesgo",
-                   "Oportunidad", "Programar con preparación", "Monitorear"]
 
 # Colores de la cabecera de cada tarjeta, según el valor de Progreso
 # (mismos colores usados para los grupos en Monday: Evaluada=rojo,
@@ -134,18 +133,24 @@ for it in items_raw:
         "cuadrante": vals.get(COLS["cuadrante"]) or "Sin cuadrante",
         "acciones": vals.get(COLS["acciones_siguientes"]) or "",
         "tipo_area": vals.get(COLS["tipo_area"]) or "",
+        "tipo_area_detalle": vals.get(COLS["tipo_area_detalle"]) or "",
         "mapa_fotos": vals.get(COLS["mapa_fotos"]) or "",
         "evaluacion_seguridad": vals.get(COLS["evaluacion_seguridad"]) or "",
         "persona_seguridad": vals.get(COLS["persona_seguridad"]) or "",
         "progreso": vals.get(COLS["progreso"]) or "",
+        "id_kobo": vals.get(COLS["id_kobo"]) or "",
     })
 
 def orden_key(it):
+    # Mas reciente primero, segun el _id de la submission en Kobo (ID
+    # Kobo es un entero que crece de forma monotona con cada envio
+    # nuevo). Los items sin ID Kobo (no deberia pasar, pero por las
+    # dudas) quedan al final.
     try:
-        idx = ORDEN_CUADRANTE.index(it["cuadrante"])
-    except ValueError:
-        idx = len(ORDEN_CUADRANTE)
-    return (idx, it["name"])
+        id_kobo = int(it["id_kobo"])
+    except (TypeError, ValueError):
+        id_kobo = -1
+    return -id_kobo
 
 items.sort(key=orden_key)
 
@@ -160,9 +165,21 @@ for it in items:
     progreso_txt = it["progreso"] or "Sin dato"
     color = PROGRESO_COLOR.get(it["progreso"], PROGRESO_COLOR_DEFAULT)
     familias_txt = f'{int(float(it["familias"]))} familias' if it["familias"] else "Familias: sin dato"
-    ubicacion_txt = it["ubicacion"] or "Sin coordenadas"
+
+    # Kobo entrega el geopunto como "lat lon altitud precision"; solo
+    # interesan lat/lon para la tarjeta.
+    partes_coord = it["ubicacion"].split()
+    if len(partes_coord) >= 2:
+        ubicacion_txt = f"{partes_coord[0]}, {partes_coord[1]}"
+    else:
+        ubicacion_txt = "Sin coordenadas"
+
     breadcrumb = " / ".join(x for x in [it["estado"], it["municipio"], it["parroquia"], it["comuna"]] if x)
     acciones_txt = esc(it["acciones"]) or "<span class=\"muted\">Sin acciones registradas</span>"
+
+    tipo_area_txt = it["tipo_area"]
+    if tipo_area_txt == "Otro" and it["tipo_area_detalle"]:
+        tipo_area_txt = f'{tipo_area_txt} ({it["tipo_area_detalle"]})'
 
     comuna_valor = esc(it["comuna"]) if it["comuna"] else '<span class="muted">Sin dato</span>'
     comuna_html = f'<div class="comuna-label">Nombre Comuna</div><div class="comuna-nombre">{comuna_valor}</div>'
@@ -203,7 +220,7 @@ for it in items:
         {comuna_html}
         <h3>{esc(it["name"])}</h3>
         <div class="meta-row">
-          <span class="pill-tipo">{esc(it["tipo_area"])}</span>
+          <span class="pill-tipo">{esc(tipo_area_txt)}</span>
           <span class="fecha">{esc(it["fecha"]) or "Sin fecha"}</span>
         </div>
         <div class="breadcrumb">{esc(breadcrumb) or "Sin ubicación administrativa"}</div>
@@ -285,7 +302,7 @@ html_parts.append('<div class="topbar"><div><h1>Resumen por comunidad</h1>'
                    '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
                    '<a href="index.html">Ver matriz de cuadrantes \u2192</a></div>')
 html_parts.append('<div class="wrap">')
-html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now} \u00b7 {len(items)} evaluaciones \u00b7 Ordenadas por prioridad</div>')
+html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now} \u00b7 {len(items)} evaluaciones \u00b7 M\u00e1s recientes primero</div>')
 html_parts.append(
     '<div class="filtro-bar">'
     '<label>Desde <input type="date" id="fecha-desde" onchange="aplicarFiltros()"></label>'

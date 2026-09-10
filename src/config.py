@@ -19,6 +19,7 @@ MONDAY_API_URL = "https://api.monday.com/v2"
 
 MONDAY_COLUMN_MAP = {
     "tipo_area": "color_mm6r3ja7",
+    "Especfique": "text_mm723y58",  # detalle de Tipo de área = Otro
     "estado": "color_mm6rjg61",
     "municipio": "color_mm6rcbv4",
     "parroquia": "color_mm6r6yre",
