@@ -44,12 +44,18 @@ MULTI_COLS = {
 # (ver ZONE_INFO en generar_grafico.py -- mismos valores, para que el
 # "Cuadrante de prioridad" se lea igual en ambas páginas del sitio).
 CUADRANTE_ZONA = {
-    "Intervenir ya": ("I", "#A63A2E"),
-    "Intervenir con gestión de riesgo": ("II", "#8C2F26"),
-    "Resolver acceso primero": ("III", "#C9822E"),
-    "Oportunidad": ("IV", "#3F7D6B"),
-    "Programar con preparación": ("V", "#6E8A9E"),
-    "Monitorear": ("VI", "#8A8D89"),
+    "Intervenir ya": ("I", "#A63A2E",
+        "Casos con necesidades urgentes de atención, ubicados en zonas de fácil acceso."),
+    "Intervenir con gestión de riesgo": ("II", "#8C2F26",
+        "Casos con necesidades urgentes de atención, pero con acceso actualmente bloqueado."),
+    "Resolver acceso primero": ("III", "#C9822E",
+        "Casos con necesidades urgentes de atención, con dificultades moderadas de acceso."),
+    "Oportunidad": ("IV", "#3F7D6B",
+        "Casos sin necesidades urgentes, ubicados en zonas de fácil acceso."),
+    "Programar con preparación": ("V", "#6E8A9E",
+        "Casos sin necesidades urgentes, con dificultades moderadas de acceso."),
+    "Monitorear": ("VI", "#8A8D89",
+        "Casos sin necesidades urgentes y con acceso limitado por el momento."),
 }
 CUADRANTE_ORDEN = ["Intervenir ya", "Intervenir con gestión de riesgo", "Resolver acceso primero",
                    "Oportunidad", "Programar con preparación", "Monitorear"]
@@ -137,23 +143,37 @@ def color_categoria(campo, valor):
     if campo == "progreso":
         return PROGRESO_COLOR.get(valor, "#8A8D89")
     if campo == "cuadrante":
-        return CUADRANTE_ZONA.get(valor, (None, "#8A8D89"))[1]
+        return CUADRANTE_ZONA.get(valor, (None, "#8A8D89", None))[1]
     if campo in SI_NO_COLOR:
         return SI_NO_COLOR[campo].get(valor, "#8A8D89")
     return BARRA_COLOR_DEFAULT
 
 
-def etiqueta_categoria(campo, valor):
-    if campo == "cuadrante":
-        numero = CUADRANTE_ZONA.get(valor, (None, None))[0]
-        return f"Zona {numero} · {valor}" if numero else valor
-    return valor
+def bloque_cuadrante(etiqueta, col_id):
+    conteo = contar_categoria(col_id)
+    claves = orden_categoria(conteo, CUADRANTE_ORDEN)
+    max_val = max(conteo.values(), default=1)
+    filas_html = []
+    for clave in claves:
+        n = conteo[clave]
+        pct = (n / max_val * 100) if max_val else 0
+        numero, color, desc = CUADRANTE_ZONA.get(clave, ("?", "#8A8D89", clave))
+        filas_html.append(f'''
+        <div class="cuadrante-fila">
+          <div class="cuadrante-cabeza">
+            <span class="num-badge" style="background:{color}">{esc(numero)}</span>
+            <div class="cuadrante-desc">{esc(desc)}</div>
+            <div class="barra-valor">{n}</div>
+          </div>
+          <div class="barra-pista"><div class="barra-relleno" style="width:{pct:.1f}%; background:{color}"></div></div>
+        </div>''')
+    return f'<div class="bloque"><h3>{esc(etiqueta)}</h3>{"".join(filas_html)}</div>'
 
 
 def bloque_categoria(campo, etiqueta, col_id, orden_fijo):
-    conteo = contar_categoria(col_id)
     if campo == "cuadrante":
-        orden_fijo = CUADRANTE_ORDEN
+        return bloque_cuadrante(etiqueta, col_id)
+    conteo = contar_categoria(col_id)
     claves = orden_categoria(conteo, orden_fijo)
     max_val = max(conteo.values(), default=1)
     filas_html = []
@@ -163,7 +183,7 @@ def bloque_categoria(campo, etiqueta, col_id, orden_fijo):
         color = color_categoria(campo, clave)
         filas_html.append(f'''
         <div class="barra-fila">
-          <div class="barra-label">{esc(etiqueta_categoria(campo, clave))}</div>
+          <div class="barra-label">{esc(clave)}</div>
           <div class="barra-pista"><div class="barra-relleno" style="width:{pct:.1f}%; background:{color}"></div></div>
           <div class="barra-valor">{n}</div>
         </div>''')
@@ -241,12 +261,15 @@ html_parts.append(".stat-valor { font-size:26px; font-weight:800; color:#14202C;
 html_parts.append(".secciones { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; align-items:start; }")
 html_parts.append(".bloque { background:#fff; border:1px solid #E1E6EC; border-radius:10px; padding:16px 18px; }")
 html_parts.append(".bloque h3 { margin:0 0 12px; font-size:13px; color:#20303F; text-transform:uppercase; letter-spacing:.3px; }")
-html_parts.append(".barra-fila { display:grid; grid-template-columns:minmax(90px,190px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }")
+html_parts.append(".barra-fila { display:grid; grid-template-columns:minmax(90px,140px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }")
+html_parts.append(".cuadrante-fila { margin-bottom:12px; }")
+html_parts.append(".cuadrante-cabeza { display:flex; align-items:flex-start; gap:8px; margin-bottom:5px; }")
+html_parts.append(".num-badge { flex-shrink:0; width:20px; height:20px; border-radius:5px; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; }")
+html_parts.append(".cuadrante-desc { flex:1; font-size:12px; color:#3A4048; line-height:1.35; }")
 html_parts.append(".barra-label { font-size:12px; color:#3A4048; }")
 html_parts.append(".barra-pista { background:#F0F2F5; border-radius:6px; height:12px; overflow:hidden; }")
 html_parts.append(".barra-relleno { height:100%; border-radius:6px; }")
 html_parts.append(".barra-valor { font-size:12px; color:#5B6672; text-align:right; font-variant-numeric:tabular-nums; }")
-html_parts.append(".mas-nota { font-size:11px; color:#8A93A0; font-style:italic; margin-top:4px; }")
 html_parts.append(".sin-dato { font-size:12px; color:#8A93A0; font-style:italic; }")
 html_parts.append(".subtitulo { font-size:13px; font-weight:700; color:#5B6672; text-transform:uppercase; letter-spacing:.4px; margin:28px 0 12px; }")
 html_parts.append("</style>")
