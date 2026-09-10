@@ -276,7 +276,9 @@ html_parts.append("</head>")
 html_parts.append("<body>")
 html_parts.append('<div class="topbar"><div><h1>Matriz de Urgencia \u00d7 Factibilidad (Casos)</h1>'
                    '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
-                   '<a href="comunidades.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen de casos \u2192</a></div>')
+                   '<div style="display:flex;gap:8px;">'
+                   '<a href="comunidades.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen de casos \u2192</a>'
+                   '<a href="estadisticas.html" style="color:#fff;font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.4);padding:6px 12px;border-radius:16px;">Ver resumen general \u2192</a></div></div>')
 html_parts.append('<div class="wrap">')
 html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now}</div>')
 html_parts.append('<div class="layout">')

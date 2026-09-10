@@ -264,6 +264,7 @@ html_parts.append('body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,
 html_parts.append(".topbar { background:#1C4269; color:#fff; padding:14px 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }")
 html_parts.append(".topbar h1 { margin:0; font-size:17px; font-weight:700; }")
 html_parts.append(".topbar .sub { font-size:11px; color:#AFC1D6; margin-top:2px; }")
+html_parts.append(".topbar nav { display:flex; gap:8px; }")
 html_parts.append(".topbar a { color:#fff; font-size:12px; text-decoration:none; border:1px solid rgba(255,255,255,.4); padding:6px 12px; border-radius:16px; }")
 html_parts.append(".topbar a:hover { background:rgba(255,255,255,.12); }")
 html_parts.append(".wrap { padding:18px 28px 40px; max-width:1400px; margin:0 auto; }")
@@ -302,7 +303,8 @@ html_parts.append("</head>")
 html_parts.append("<body>")
 html_parts.append('<div class="topbar"><div><h1>Resumen de casos</h1>'
                    '<div class="sub">Cruz Roja Venezolana \u00b7 Diagn\u00f3stico terreno, Terremoto 2026</div></div>'
-                   '<a href="index.html">Ver matriz de cuadrantes \u2192</a></div>')
+                   '<nav><a href="index.html">Ver matriz de cuadrantes \u2192</a>'
+                   '<a href="estadisticas.html">Ver resumen general \u2192</a></nav></div>')
 html_parts.append('<div class="wrap">')
 html_parts.append(f'<div class="updated">\u00daltima actualizaci\u00f3n: {now} \u00b7 {len(items)} evaluaciones \u00b7 M\u00e1s recientes primero</div>')
 html_parts.append(
