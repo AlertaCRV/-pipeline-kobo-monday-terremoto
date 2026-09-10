@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="generated-at" content="2026-09-10T18:47:21">
+<meta name="generated-at" content="2026-09-10T18:51:53">
 <title>Resumen general — CRV Terremoto 2026</title>
 <style>
 body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; background:#F5F7FA; color:#20303F; margin:0; }
@@ -21,12 +21,15 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 .secciones { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; align-items:start; }
 .bloque { background:#fff; border:1px solid #E1E6EC; border-radius:10px; padding:16px 18px; }
 .bloque h3 { margin:0 0 12px; font-size:13px; color:#20303F; text-transform:uppercase; letter-spacing:.3px; }
-.barra-fila { display:grid; grid-template-columns:minmax(90px,190px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }
+.barra-fila { display:grid; grid-template-columns:minmax(90px,140px) 1fr 28px; align-items:center; gap:10px; margin-bottom:8px; }
+.cuadrante-fila { margin-bottom:12px; }
+.cuadrante-cabeza { display:flex; align-items:flex-start; gap:8px; margin-bottom:5px; }
+.num-badge { flex-shrink:0; width:20px; height:20px; border-radius:5px; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; }
+.cuadrante-desc { flex:1; font-size:12px; color:#3A4048; line-height:1.35; }
 .barra-label { font-size:12px; color:#3A4048; }
 .barra-pista { background:#F0F2F5; border-radius:6px; height:12px; overflow:hidden; }
 .barra-relleno { height:100%; border-radius:6px; }
 .barra-valor { font-size:12px; color:#5B6672; text-align:right; font-variant-numeric:tabular-nums; }
-.mas-nota { font-size:11px; color:#8A93A0; font-style:italic; margin-top:4px; }
 .sin-dato { font-size:12px; color:#8A93A0; font-style:italic; }
 .subtitulo { font-size:13px; font-weight:700; color:#5B6672; text-transform:uppercase; letter-spacing:.4px; margin:28px 0 12px; }
 </style>
@@ -34,7 +37,7 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
 <body>
 <div class="topbar"><div><h1>Resumen general</h1><div class="sub">Cruz Roja Venezolana · Diagnóstico terreno, Terremoto 2026</div></div><nav><a href="index.html">Matriz de cuadrantes</a><a href="comunidades.html">Resumen de casos</a></nav></div>
 <div class="wrap">
-<div class="updated">Última actualización: 2026-09-10 18:47 · 17 casos</div>
+<div class="updated">Última actualización: 2026-09-10 18:51 · 17 casos</div>
 <div class="stat-grid"><div class="stat-tile"><div class="stat-label">Total de casos</div><div class="stat-valor">17</div></div><div class="stat-tile"><div class="stat-label">Familias (total)</div><div class="stat-valor">26.044</div></div><div class="stat-tile"><div class="stat-label">Personas (total)</div><div class="stat-valor">38.985</div></div><div class="stat-tile"><div class="stat-label">Familias afectadas</div><div class="stat-valor">8.724</div></div><div class="stat-tile"><div class="stat-label">Familias que no permanecen</div><div class="stat-valor">794</div></div><div class="stat-tile"><div class="stat-label">Viviendas dañadas (n.º)</div><div class="stat-valor">322</div></div><div class="stat-tile"><div class="stat-label">Apartamentos dañados (n.º)</div><div class="stat-valor">334</div></div><div class="stat-tile"><div class="stat-label">Familias que requieren alojamiento</div><div class="stat-valor">677</div></div></div>
 <div class="subtitulo">Distribución por categoría</div>
 <div class="secciones"><div class="bloque"><h3>Progreso</h3>
@@ -58,25 +61,37 @@ body { font-family:"Open Sans",-apple-system,Segoe UI,Roboto,sans-serif; backgro
           <div class="barra-pista"><div class="barra-relleno" style="width:6.2%; background:#2C6FB0"></div></div>
           <div class="barra-valor">1</div>
         </div></div><div class="bloque"><h3>Cuadrante de prioridad</h3>
-        <div class="barra-fila">
-          <div class="barra-label">Zona I · Intervenir ya</div>
+        <div class="cuadrante-fila">
+          <div class="cuadrante-cabeza">
+            <span class="num-badge" style="background:#A63A2E">I</span>
+            <div class="cuadrante-desc">Casos con necesidades urgentes de atención, ubicados en zonas de fácil acceso.</div>
+            <div class="barra-valor">7</div>
+          </div>
           <div class="barra-pista"><div class="barra-relleno" style="width:100.0%; background:#A63A2E"></div></div>
-          <div class="barra-valor">7</div>
         </div>
-        <div class="barra-fila">
-          <div class="barra-label">Zona II · Intervenir con gestión de riesgo</div>
+        <div class="cuadrante-fila">
+          <div class="cuadrante-cabeza">
+            <span class="num-badge" style="background:#8C2F26">II</span>
+            <div class="cuadrante-desc">Casos con necesidades urgentes de atención, pero con acceso actualmente bloqueado.</div>
+            <div class="barra-valor">6</div>
+          </div>
           <div class="barra-pista"><div class="barra-relleno" style="width:85.7%; background:#8C2F26"></div></div>
-          <div class="barra-valor">6</div>
         </div>
-        <div class="barra-fila">
-          <div class="barra-label">Zona III · Resolver acceso primero</div>
+        <div class="cuadrante-fila">
+          <div class="cuadrante-cabeza">
+            <span class="num-badge" style="background:#C9822E">III</span>
+            <div class="cuadrante-desc">Casos con necesidades urgentes de atención, con dificultades moderadas de acceso.</div>
+            <div class="barra-valor">3</div>
+          </div>
           <div class="barra-pista"><div class="barra-relleno" style="width:42.9%; background:#C9822E"></div></div>
-          <div class="barra-valor">3</div>
         </div>
-        <div class="barra-fila">
-          <div class="barra-label">Zona V · Programar con preparación</div>
+        <div class="cuadrante-fila">
+          <div class="cuadrante-cabeza">
+            <span class="num-badge" style="background:#6E8A9E">V</span>
+            <div class="cuadrante-desc">Casos sin necesidades urgentes, con dificultades moderadas de acceso.</div>
+            <div class="barra-valor">1</div>
+          </div>
           <div class="barra-pista"><div class="barra-relleno" style="width:14.3%; background:#6E8A9E"></div></div>
-          <div class="barra-valor">1</div>
         </div></div><div class="bloque"><h3>Evaluación de seguridad</h3>
         <div class="barra-fila">
           <div class="barra-label">Sí</div>
