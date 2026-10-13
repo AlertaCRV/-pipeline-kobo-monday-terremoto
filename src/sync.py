@@ -6,8 +6,10 @@ Kobo (no solo las nuevas), y por cada una:
   - Si ya existe un item en Monday con ese _id de Kobo (columna ID Kobo),
     lo ACTUALIZA con los valores actuales de Kobo -- asi, si alguien edita
     una respuesta ya aplicada en Kobo, el cambio llega a Monday sin tener
-    que borrar nada.
-  - Si no existe, crea el item nuevo (y le sube las fotos, si trae).
+    que borrar nada. Si la edicion trae fotos nuevas, tambien se suben
+    (se comparan contra las que ya estan en la columna Fotos, por nombre
+    de archivo, para no volver a subir las mismas fotos cada corrida).
+  - Si no existe, crea el item nuevo y sube todas sus fotos.
 
 Las columnas que el equipo llena a mano en Monday (Progreso, Mapa) NUNCA
 se sobreescriben en una actualizacion -- ver MONDAY_ONLY_COLUMN_IDS y
@@ -23,8 +25,12 @@ from transform import flatten_submission, select_kpi_record, build_item_name, ex
 from scoring import compute_score
 from monday_client import (
     build_column_values, upsert_item, update_item, get_created_item_id,
-    upload_photos_to_item, fetch_kobo_id_map, fetch_valid_column_ids,
+    upload_photos_to_item, fetch_kobo_id_map, fetch_valid_column_ids, fetch_fotos_map,
 )
+
+
+def filename_de(attachment: dict) -> str:
+    return (attachment.get("filename") or "foto.jpg").split("/")[-1]
 
 
 def run():
@@ -34,6 +40,7 @@ def run():
     print(f"Items existentes en Monday (con ID Kobo reconocido): {len(kobo_id_map)}\n")
 
     columnas_validas = fetch_valid_column_ids()
+    fotos_map = fetch_fotos_map()
 
     submissions = get_new_submissions(since_id=0)
     print(f"Submissions encontradas en Kobo: {len(submissions)}\n")
@@ -65,6 +72,13 @@ def run():
                 actualizados += 1
                 print(f"  ~ actualizado: {item_name} ({score['nivel_urgencia']} urgencia / "
                       f"{score['nivel_factibilidad']} factibilidad => {score['cuadrante']})")
+
+                attachments = extract_attachments(raw)
+                ya_subidas = fotos_map.get(item_id, set())
+                nuevas = [a for a in attachments if filename_de(a) not in ya_subidas]
+                if nuevas:
+                    print(f"    📷 {len(nuevas)} foto(s) nueva(s) detectada(s), subiendo...")
+                    upload_photos_to_item(item_id, nuevas)
         else:
             result = upsert_item(item_name, column_values, kobo_id)
             if isinstance(result, dict) and result.get("errors"):

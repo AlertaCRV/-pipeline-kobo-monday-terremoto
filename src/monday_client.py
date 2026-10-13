@@ -102,6 +102,54 @@ def fetch_kobo_id_map() -> dict:
     return mapa
 
 
+def fetch_fotos_map() -> dict:
+    """
+    Devuelve {item_id: {nombres de archivo ya subidos}} leyendo la columna
+    Fotos de todos los items. Se usa para subir SOLO las fotos nuevas de
+    una submission editada -- evita volver a subir, cada sincronizacion,
+    las mismas fotos que ya estan en Monday (ver sync.py).
+    """
+    if DRY_RUN:
+        return {}
+
+    query = """
+        query ($board: ID!, $col: [String!]) {
+          boards (ids: [$board]) {
+            items_page (limit: 200) {
+              items { id column_values (ids: $col) { value } }
+            }
+          }
+        }
+    """
+    headers = {"Authorization": MONDAY_API_TOKEN, "Content-Type": "application/json"}
+    resp = requests.post(
+        MONDAY_API_URL,
+        json={"query": query, "variables": {"board": MONDAY_BOARD_ID, "col": [FOTOS_COLUMN_ID]}},
+        headers=headers,
+        timeout=30,
+    )
+    resp.raise_for_status()
+    data = resp.json()
+    if "errors" in data:
+        print("  ⚠️ No se pudo leer el mapa de fotos existentes:", data["errors"])
+        return {}
+
+    items = data["data"]["boards"][0]["items_page"]["items"]
+    mapa = {}
+    for it in items:
+        valor = it["column_values"][0]["value"]
+        if not valor:
+            continue
+        try:
+            archivos = json.loads(valor).get("files", [])
+        except (json.JSONDecodeError, TypeError, AttributeError):
+            continue
+        nombres = {f.get("name") for f in archivos if f.get("name")}
+        if nombres:
+            mapa[it["id"]] = nombres
+    return mapa
+
+
 def upsert_item(item_name: str, column_values: dict, kobo_id: str) -> dict:
     """Crea un item NUEVO (usar solo cuando kobo_id no esta en fetch_kobo_id_map())."""
     group_id = MONDAY_DEFAULT_GROUP_ID
