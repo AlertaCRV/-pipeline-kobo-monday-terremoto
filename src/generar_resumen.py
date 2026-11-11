@@ -9,9 +9,14 @@ Se guarda en docs/comunidades.html. Se corre despues de cada sincronizacion.
 """
 import os
 import re
+import io
 import shutil
 import datetime
 import requests
+from PIL import Image
+import pillow_heif
+
+pillow_heif.register_heif_opener()
 
 MONDAY_API_TOKEN = os.environ["MONDAY_API_TOKEN"]
 MONDAY_BOARD_ID = os.environ["MONDAY_BOARD_ID"]
@@ -55,6 +60,7 @@ query ($board: ID!, $cols: [String!]) {
 """
 
 IMG_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".webp")
+HEIC_EXTENSIONS = (".heic", ".heif")
 
 
 def slug(texto, maxlen=40):
@@ -95,21 +101,41 @@ def descargar_fotos(item_id, nombre_item, assets):
     rutas = []
     for asset in (assets or []):
         nombre = asset.get("name") or ""
-        if not nombre.lower().endswith(IMG_EXTENSIONS):
+        nombre_lower = nombre.lower()
+        es_heic = nombre_lower.endswith(HEIC_EXTENSIONS)
+        if not es_heic and not nombre_lower.endswith(IMG_EXTENSIONS):
             continue
         url = asset.get("public_url")
         if not url:
             continue
-        ext = os.path.splitext(nombre)[1].lower()
-        filename = f"{item_id}_{asset['id']}_{slug(nombre_item)}{ext}"
         try:
             img_resp = requests.get(url, timeout=30)
             img_resp.raise_for_status()
-            with open(os.path.join(fotos_dir, filename), "wb") as f:
-                f.write(img_resp.content)
-            rutas.append(f"fotos/{filename}")
         except requests.RequestException as e:
             print(f"  ⚠️ No se pudo descargar la foto '{nombre}' del item {item_id}: {e}")
+            continue
+
+        if es_heic:
+            # Las fotos .heic/.heif (formato nativo de iPhone) no se ven en
+            # la mayoria de navegadores -- se convierten a .jpeg antes de
+            # publicarlas, para que se vean bien en cualquier dispositivo.
+            ext = ".jpeg"
+            try:
+                imagen = Image.open(io.BytesIO(img_resp.content))
+                buffer = io.BytesIO()
+                imagen.convert("RGB").save(buffer, format="JPEG", quality=85)
+                contenido = buffer.getvalue()
+            except Exception as e:
+                print(f"  ⚠️ No se pudo convertir la foto '{nombre}' (heic) del item {item_id}: {e}")
+                continue
+        else:
+            ext = os.path.splitext(nombre)[1].lower()
+            contenido = img_resp.content
+
+        filename = f"{item_id}_{asset['id']}_{slug(nombre_item)}{ext}"
+        with open(os.path.join(fotos_dir, filename), "wb") as f:
+            f.write(contenido)
+        rutas.append(f"fotos/{filename}")
     return rutas
 
 
